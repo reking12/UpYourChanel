@@ -1,0 +1,36 @@
+﻿@model UpYourChanel.Web.ViewModels.AddVideoInputViewModel
+<h1>Add Your Video</h1>
+
+<div class="col-md-4">
+    <form asp-controller="Video" asp-action="AddVideo" method="post">
+        @*<input asp-for="Name" />    *@
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Link"></label>
+            <input asp-for="Link" class="form-control" />
+            <span asp-validation-for="Link" class=" = text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <hr />
+        <input type="submit" class="btn btn-primary" value="Add">
+    </form>
+</div>
