@@ -13,7 +13,7 @@ namespace UpYourChanel.Web.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Video> AllVieos()
+        public IEnumerable<Video> AllVideos()
         {
             throw new NotImplementedException();
         }

@@ -1,9 +1,7 @@
 ﻿@model UpYourChanel.Web.ViewModels.AddVideoInputViewModel
 <h1>Add Your Video</h1>
-
 <div class="col-md-4">
     <form asp-controller="Video" asp-action="AddVideo" method="post">
-        @*<input asp-for="Name" />    *@
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="form-group">

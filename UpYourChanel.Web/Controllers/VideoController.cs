@@ -23,5 +23,10 @@ namespace UpYourChanel.Web.Controllers
             }
             return Json(input);
         }
+        [HttpGet]
+        public IActionResult AllVideos()
+        {
+            return View();
+        }
     }
 }

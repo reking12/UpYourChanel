@@ -10,7 +10,7 @@ namespace UpYourChanel.Web.Services
     {
         void AddVideo();
 
-        IEnumerable<Video> AllVieos();
+        IEnumerable<Video> AllVideos();
 
 
     }
