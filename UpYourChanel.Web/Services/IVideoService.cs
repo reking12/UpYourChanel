@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChanel.Web.Models;
+using UpYourChanel.Web.ViewModels;
+using UpYourChanel.Web.ViewModels.Video;
 
 namespace UpYourChanel.Web.Services
 {
     public interface IVideoService 
     {
-        void AddVideo();
+        void AddVideo(AddVideoInputViewModel input);
 
-        IEnumerable<Video> AllVideos();
+        AllVideosViewModel AllVideos();
 
-
+        AllVideosViewModel VideosBySearch(string word);
     }
 }

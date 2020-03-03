@@ -8,15 +8,14 @@ namespace UpYourChanel.Web.ViewModels
 {
     public class AddVideoInputViewModel
     {
+        [Required]
         public string Title { get; set; }
         
         [Required]
         [Url(ErrorMessage = "Invalid Url")]
         public string Link { get; set; }
 
+        [Required]
         public string Description { get; set; }
-
-        [EmailAddress]
-        public string Email { get; set; }
     }
 }

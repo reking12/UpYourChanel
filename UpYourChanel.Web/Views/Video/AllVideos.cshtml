@@ -1,52 +1,97 @@
-﻿<div class="text-center">
-    <h1 class="display-4">All Videos</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-<div class="container">
+﻿@using UpYourChanel.Web.ViewModels.Video
+@model AllVideosViewModel
+<div class="container text-center">
     <div class="row">
-        <div class="col-sm-4">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RMtz9aokaio" allowfullscreen></iframe>
+        <div class="col-sm-4 text-center">
+            <div class="text-center bottom-align-text">
+                <h2>Feel free to add your video:</h2>
             </div>
-            <label text-justify">Tigre Tigre</label>
         </div>
-        <div class="text-center col-sm-4">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RMtz9aokaio" allowfullscreen></iframe>
+        <div class="col-sm-4 text-center">
+            <div class="text-center">
+                <h1 class="display-4">All Videos</h1>
             </div>
-            <label text-justify">Tigre Tigre</label>      
         </div>
-        <div class="col-sm-4">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RMtz9aokaio" allowfullscreen></iframe>
+    </div>
+</div>
+<br />
+<div class="container text-center">
+    <div class="row">
+        <div class="col-sm-4 text-center">
+            <a asp-controller="Video" asp-action="AddVideo" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add your Video</a>
+        </div>
+        @*<div class="input-group col-sm-4 text-center text-">
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+        </div>*@
+    <form method="post" asp-controller="Video" asp-action="AllVideos" class="col-sm-4 form-inline d-flex text-center input-group ">
+        <input asp-for="Search" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+               aria-label="Search">
+        <span asp-validation-for="Search" class="text-danger"></span>
+    </form>
+        @*<input class="search-xeon mx-auto ui-autocomplete-input" id="Search" type="text" name="Search" placeholder="Search" autocomplete="off">*@
+        <div class="col-sm-4 text-center">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort by:
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Separated link</a>
+                </div>
             </div>
-            <label text-justify">Tigre Tigre</label>
+
+            <div class="btn-group">
+                <div class="dropdown show">
+                    <a class="btn btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Category:
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a asp- class="dropdown-item" href="#">FilmAndAnimation</a>
+                        <a class="dropdown-item" data->Music</a>
+                        <a class="dropdown-item" href="#">Sport</a>
+                        <a class="dropdown-item" href="#">CarsAndVehicles</a>
+                        <a class="dropdown-item" href="#">PetsAndAnimals</a>
+                        <a class="dropdown-item" href="#">TravelAndEvents</a>
+                        <a class="dropdown-item" href="#">Gaming</a>
+                        <a class="dropdown-item" href="#">PeopleAndBlogs</a>
+                        <a class="dropdown-item" href="#">Comedy</a>
+                        <a class="dropdown-item" href="#">Entertainment</a>
+                        <a class="dropdown-item" href="#">NewsAndPolitics</a>
+                        <a class="dropdown-item" href="#">HowToAndStyle</a>
+                        <a class="dropdown-item" href="#">Education</a>
+                        <a class="dropdown-item" href="#">ScienceAndTechnology</a>
+                    </div>
+                </div>
+            </div>
+            @*izpolzvaiki enumeraciqta   <div class="btn-group">
+                <select class="btn btn-danger dropdown-toggle form-control" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
+                        asp-for="Category" asp-items="@Html.GetEnumSelectList<Category>()">
+                    <option value="1">sdfsdfsdf</option>
+                </select>
+            </div>*@
+
         </div>
     </div>
 </div>
 <br />
 
-
 <div class="container">
     <div class="row">
-        <div class="col-sm-4">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RMtz9aokaio" allowfullscreen></iframe>
+        @foreach (var video in Model.AllVideos)
+        {
+            <div class="col-sm-4">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src=@video.IFrameSource allowfullscreen></iframe>
+                </div>
+                <label text-justify text-dark">@video.Title</label>
             </div>
-            <label text-justify">Tigre Tigre</label>
-        </div>
-        <div class="col-sm-4">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RMtz9aokaio" allowfullscreen></iframe>
-            </div>
-            <label text-justify">Tigre Tigre</label>
-        </div>
-        <div class="col-sm-4">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RMtz9aokaio" allowfullscreen></iframe>
-            </div>
-            <label text-justify">Tigre Tigre</label>
-        </div>
+        }
     </div>
 </div>
+<br />
+
+

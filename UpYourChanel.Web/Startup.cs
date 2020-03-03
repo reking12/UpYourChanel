@@ -12,6 +12,7 @@ using UpYourChanel.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using UpYourChanel.Web.Services;
 
 namespace UpYourChanel.Web
 {
@@ -34,6 +35,8 @@ namespace UpYourChanel.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<IVideoService,VideoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
