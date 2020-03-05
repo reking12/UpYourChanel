@@ -20,26 +20,18 @@
         <div class="col-sm-4 text-center">
             <a asp-controller="Video" asp-action="AddVideo" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add your Video</a>
         </div>
-        @*<div class="input-group col-sm-4 text-center text-">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
-        </div>*@
     <form method="post" asp-controller="Video" asp-action="AllVideos" class="col-sm-4 form-inline d-flex text-center input-group ">
-        <input asp-for="Search" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+        <input required asp-for="Search" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
                aria-label="Search">
         <span asp-validation-for="Search" class="text-danger"></span>
     </form>
-        @*<input class="search-xeon mx-auto ui-autocomplete-input" id="Search" type="text" name="Search" placeholder="Search" autocomplete="off">*@
         <div class="col-sm-4 text-center">
             <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Sort by:
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
+                    <a class="dropdown-item" href="#">Date</a>
                 </div>
             </div>
 

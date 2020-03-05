@@ -1,5 +1,7 @@
 ﻿@model UpYourChanel.Web.ViewModels.AddVideoInputViewModel
-<h1>Add Your Video</h1>
+<div class="col-md-4">
+    <h1>Add Your Video:</h1>
+</div>
 <div class="col-md-4">
     <form asp-controller="Video" asp-action="AddVideo" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -18,12 +20,12 @@
 
         <div class="form-group">
             <label asp-for="Description"></label>
-            <input asp-for="Description" class="form-control" />
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea asp-for="Description" rows="7" class="form-control" aria-label="With textarea"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <hr />
         <input type="submit" class="btn btn-primary" value="Add">
+        <a class="btn btn-primary float-right" asp-controller="Video" asp-action="AllVideos" role="button">Go to videos</a>
     </form>
 </div>
