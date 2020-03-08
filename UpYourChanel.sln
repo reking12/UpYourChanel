@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpYourChannel.Web", "UpYourChanel.Web\UpYourChannel.Web.csproj", "{B728857C-8F10-48A3-A262-FBBA9728CD0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpYourChannel.Data", "UpYourChannel.Data\UpYourChannel.Data.csproj", "{5B90DBEB-EBE9-48AC-B6A4-60F697E20127}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpYourChannel.Data", "UpYourChannel.Data\UpYourChannel.Data.csproj", "{5B90DBEB-EBE9-48AC-B6A4-60F697E20127}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

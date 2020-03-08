@@ -8,13 +8,12 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
+using WebApplication1.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using UpYourChannel.Data.Data;
-using UpYourChannel.Web.Services;
 
-namespace UpYourChannel.Web
+namespace WebApplication1
 {
     public class Startup
     {
@@ -35,9 +34,6 @@ namespace UpYourChannel.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
-
-            services.AddTransient<IVideoService, VideoService>();
-            services.AddTransient<ITagService, TagService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
