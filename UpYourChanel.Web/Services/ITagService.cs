@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UpYourChanel.Web.Models;
+﻿using System.Collections.Generic;
+using UpYourChannel.Data.Models;
 
-namespace UpYourChanel.Web.Services
+namespace UpYourChannel.Web.Services
 {
     public interface ITagService
     {

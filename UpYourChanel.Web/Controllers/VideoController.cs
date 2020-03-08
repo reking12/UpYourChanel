@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UpYourChanel.Web.Services;
-using UpYourChanel.Web.ViewModels;
-using UpYourChanel.Web.ViewModels.Video;
+﻿using Microsoft.AspNetCore.Mvc;
+using UpYourChannel.Web.Services;
+using UpYourChannel.Web.ViewModels;
+using UpYourChannel.Web.ViewModels.Video;
 
-namespace UpYourChanel.Web.Controllers
+namespace UpYourChannel.Web.Controllers
 {
     public class VideoController : Controller
     {

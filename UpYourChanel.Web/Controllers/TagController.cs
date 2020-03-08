@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UpYourChanel.Web.Controllers
+namespace UpYourChannel.Web.Controllers
 {
     public class TagController : Controller
     {

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using UpYourChanel.Web.Models;
+using UpYourChannel.Data.Models;
 
-namespace UpYourChanel.Web.Controllers
+namespace UpYourChannel.Web.Controllers
 {
     public class HomeController : Controller
     {

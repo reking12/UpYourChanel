@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UpYourChanel.Web.Models;
-using UpYourChanel.Web.ViewModels;
-using UpYourChanel.Web.ViewModels.Video;
+using UpYourChannel.Web.ViewModels;
+using UpYourChannel.Web.ViewModels.Video;
 
-namespace UpYourChanel.Web.Services
+namespace UpYourChannel.Web.Services
 {
     public interface IVideoService 
     {

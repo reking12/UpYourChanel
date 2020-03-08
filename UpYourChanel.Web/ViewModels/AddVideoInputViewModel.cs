@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UpYourChanel.Web.ViewModels
+namespace UpYourChannel.Web.ViewModels
 {
     public class AddVideoInputViewModel
     {

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UpYourChanel.Web.Data;
+using UpYourChannel.Data.Data;
 
-namespace UpYourChanel.Web.Data.Migrations
+namespace UpYourChannel.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200303180357_Create")]
-    partial class Create
+    [Migration("20200308210541_CreateAgain")]
+    partial class CreateAgain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,7 +221,7 @@ namespace UpYourChanel.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("UpYourChanel.Web.Models.User", b =>
+            modelBuilder.Entity("UpYourChannel.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -273,7 +273,7 @@ namespace UpYourChanel.Web.Data.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("UpYourChanel.Web.Models.Video", b =>
+            modelBuilder.Entity("UpYourChannel.Data.Models.Video", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -362,9 +362,9 @@ namespace UpYourChanel.Web.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("UpYourChanel.Web.Models.Video", b =>
+            modelBuilder.Entity("UpYourChannel.Data.Models.Video", b =>
                 {
-                    b.HasOne("UpYourChanel.Web.Models.User", "User")
+                    b.HasOne("UpYourChannel.Data.Models.User", "User")
                         .WithMany("Videos")
                         .HasForeignKey("UserId1");
                 });

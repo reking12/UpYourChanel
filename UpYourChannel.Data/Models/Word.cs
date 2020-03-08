@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace UpYourChanel.Web.Models
+namespace UpYourChannel.Data.Models
 {
     public class Word
     {

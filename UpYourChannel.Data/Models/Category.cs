@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace UpYourChanel.Web.Models
+﻿namespace UpYourChannel.Data.Models
 {
     public enum Category
     {

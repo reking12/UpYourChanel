@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UpYourChanel.Web.Data;
-using UpYourChanel.Web.Models;
-using UpYourChanel.Web.ViewModels;
-using UpYourChanel.Web.ViewModels.Video;
+﻿using System.Linq;
+using UpYourChannel.Data.Data;
+using UpYourChannel.Data.Models;
+using UpYourChannel.Web.ViewModels;
+using UpYourChannel.Web.ViewModels.Video;
 
-namespace UpYourChanel.Web.Services
+namespace UpYourChannel.Web.Services
 {
     public class VideoService : IVideoService
     {

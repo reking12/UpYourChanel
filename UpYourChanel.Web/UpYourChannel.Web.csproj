@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-UpYourChanel.Web-734348A7-1B8D-4D80-A74D-568FA6363DF2</UserSecretsId>
+    <UserSecretsId>aspnet-UpYourChannel.Web-734348A7-1B8D-4D80-A74D-568FA6363DF2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +13,6 @@
     <None Include="wwwroot\css\d.css" />
   </ItemGroup>
 
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
@@ -21,6 +20,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\UpYourChannel.Data\UpYourChannel.Data.csproj" />
   </ItemGroup>
 
 </Project>

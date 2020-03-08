@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace UpYourChanel.Web.ViewModels.Video
+namespace UpYourChannel.Web.ViewModels.Video
 {
     public class VideoInputModel
     {

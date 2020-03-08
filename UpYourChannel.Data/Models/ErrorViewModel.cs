@@ -1,6 +1,4 @@
-using System;
-
-namespace UpYourChanel.Web.Models
+namespace UpYourChannel.Data.Models
 {
     public class ErrorViewModel
     {

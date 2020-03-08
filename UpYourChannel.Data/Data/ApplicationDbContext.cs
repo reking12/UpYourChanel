@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using UpYourChanel.Web.Models;
+using UpYourChannel.Data.Models;
 
-namespace UpYourChanel.Web.Data
+namespace UpYourChannel.Data.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -13,7 +13,7 @@ namespace UpYourChanel.Web.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-
+          //  options.UseSqlServer(connection, b => b.MigrationsAssembly("UpYourChannel.Web"));
         }
     }
 }
