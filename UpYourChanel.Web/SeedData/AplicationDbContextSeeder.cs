@@ -13,13 +13,13 @@ namespace UpYourChannel.Web.SeedData
     public class AplicationDbContextSeeder
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
         public AplicationDbContextSeeder(IServiceProvider serviceProvider, ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-            this.userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
+            this.userManager = serviceProvider.GetService<UserManager<User>>();
             this.roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
         }
         public async Task SeedDataAsync()
@@ -72,7 +72,7 @@ namespace UpYourChannel.Web.SeedData
                 return;
             }
 
-            await userManager.CreateAsync(new IdentityUser()
+            await userManager.CreateAsync(new User()
             {
                 UserName = GlobalConstants.AdminName,
                 Email = GlobalConstants.AdminEmail,

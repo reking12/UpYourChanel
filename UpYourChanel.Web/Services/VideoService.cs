@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using AutoMapper;
+using System.Linq;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
 using UpYourChannel.Web.ViewModels;
@@ -9,19 +10,16 @@ namespace UpYourChannel.Web.Services
     public class VideoService : IVideoService
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
 
-        public VideoService(ApplicationDbContext db)
+        public VideoService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
         public void AddVideo(AddVideoInputViewModel input)
         {
-            var video = new Video()
-            {
-                Title = input.Title,
-                Link = input.Link,
-                Description = input.Description,
-            };
+            var video = mapper.Map<Video>(input);
             db.Add(video);
             db.SaveChanges();
         }

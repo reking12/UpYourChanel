@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UpYourChannel.Data.Models
 {
-    public class User : IdentityUser<string>
+    public class User : IdentityUser
     {
         public User()
         {

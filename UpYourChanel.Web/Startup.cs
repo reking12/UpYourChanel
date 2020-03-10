@@ -14,6 +14,9 @@ using Microsoft.Extensions.Hosting;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Web.Services;
 using UpYourChannel.Web.SeedData;
+using UpYourChannel.Data.Models;
+using AutoMapper;
+using UpYourChannel.Web.MappingConfiguration;
 
 namespace UpYourChannel.Web
 {
@@ -33,20 +36,25 @@ namespace UpYourChannel.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 3;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredUniqueChars = 0;
-            }
+
+            services.AddIdentity<User, IdentityRole>(options =>
+             {
+                 options.Password.RequireDigit = false;
+                 options.Password.RequiredLength = 3;
+                 options.Password.RequireLowercase = false;
+                 options.Password.RequireNonAlphanumeric = false;
+                 options.Password.RequireUppercase = false;
+                 options.Password.RequiredUniqueChars = 0;
+             }
 
            ).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAutoMapper(c =>
+                c.AddProfile<UpYourChannelProfile>(), typeof(Startup));
+
 
             services.AddTransient<IVideoService, VideoService>();
             services.AddTransient<ITagService, TagService>();
@@ -89,11 +97,13 @@ namespace UpYourChannel.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                     name: "areaRoute",
+                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute(
-                    name:"areaRoute",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }
