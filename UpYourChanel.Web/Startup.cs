@@ -17,6 +17,7 @@ using UpYourChannel.Web.SeedData;
 using UpYourChannel.Data.Models;
 using AutoMapper;
 using UpYourChannel.Web.MappingConfiguration;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace UpYourChannel.Web
 {
@@ -48,7 +49,9 @@ namespace UpYourChannel.Web
              }
 
            ).AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -58,6 +61,9 @@ namespace UpYourChannel.Web
 
             services.AddTransient<IVideoService, VideoService>();
             services.AddTransient<ITagService, TagService>();
+            services.AddTransient<IRequestedVideoService, RequestedVideoService>();
+
+            services.AddSingleton<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

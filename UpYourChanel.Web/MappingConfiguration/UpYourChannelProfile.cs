@@ -14,6 +14,7 @@ namespace UpYourChannel.Web.MappingConfiguration
         public UpYourChannelProfile()
         {
             CreateMap<AddVideoInputViewModel, Video>();
+            CreateMap<AddVideoInputViewModel, RequestedVideo>();
         }
     }
 }
