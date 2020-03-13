@@ -21,7 +21,7 @@ namespace UpYourChannel.Web.Controllers
         }
         
         [HttpPost]
-        public IActionResult AddVideo(AddVideoInputViewModel input)
+        public IActionResult AddVideo(VideoInputModel input)
         {
             if (!ModelState.IsValid)
             {

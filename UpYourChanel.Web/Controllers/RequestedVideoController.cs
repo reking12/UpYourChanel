@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using UpYourChannel.Data.Data;
 using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels;
 
@@ -17,6 +13,7 @@ namespace UpYourChannel.Web.Controllers
         {
             this.requestedVideoService = requestedVideoService;
         }
+
         public IActionResult AddRequestedVideo()
         {
             return this.View("~/Views/Video/AddVideo.cshtml");
@@ -31,12 +28,6 @@ namespace UpYourChannel.Web.Controllers
             }
             await requestedVideoService.AddRequestedVideoAsync(input);
             return Redirect("/Video/AllVideos");
-        }
-
-        public IActionResult AllRequestedVideos()
-        {
-            var allRequestedVideos = requestedVideoService.AllRequestedVideos();
-            return this.View(allRequestedVideos);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace UpYourChannel.Web.Services
 {
     public interface IVideoService 
     {
-        void AddVideo(AddVideoInputViewModel input);
+        void AddVideo(VideoInputModel input);
 
         AllVideosViewModel AllVideos();
 

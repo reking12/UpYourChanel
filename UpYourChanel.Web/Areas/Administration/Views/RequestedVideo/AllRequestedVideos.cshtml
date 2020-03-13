@@ -1,0 +1,35 @@
+﻿@using UpYourChannel.Web.ViewModels.RequestedVideo
+@model AllRequestedVideosViewModel
+<head>
+    <link rel="stylesheet" href="~/css/d.css" />
+</head>
+<div class="text-center">
+    <h1 class="display-4">Requested Videos!</h1>
+</div>
+<br />
+<div class="container">
+    <div class="row">
+        @foreach (var video in Model.AllVideos)
+        {
+
+            <div class="col-sm-4">
+                <br />
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src=@video.IFrameSource allowfullscreen></iframe>
+                </div>
+                <label text-justify text-dark">Title: @video.Title</label>
+                <div>Description: @video.Description</div>
+                <br />
+                <div>
+                    <p class="float-left">
+                        @Html.ActionLink("Add","AddVideoAndRemoveItFromRequested","RequestedVideo", video, new { @class = "btn btn-primary" })
+                    </p>
+                    <p class="float-right">
+                        @Html.ActionLink("Remove","AddVideoAndRemoveItFromRequested","RequestedVideo", video, new { @class = "btn btn-primary" })
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<br />

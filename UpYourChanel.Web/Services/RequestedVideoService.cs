@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
@@ -33,8 +32,10 @@ namespace UpYourChannel.Web.Services
             {
                 AllVideos = db.RequestedVideos.Select(x => new VideoInputModel()
                 {
+                    Id = x.Id,
                     Title = x.Title,
-                    Link = x.Link
+                    Link = x.Link,
+                    Description = x.Description
                 })
             };
         }

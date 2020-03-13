@@ -23,24 +23,24 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Video" asp-action="AllVideos">Videos</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Video" asp-action="AllVideos">Videos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="RequestedVideo" asp-action="AddRequestedVideo"> AddVideo</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="RequestedVideo" asp-action="AddRequestedVideo"> AddVideo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Forum" asp-action="Forum"> Forum</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Forum" asp-action="Forum"> Forum</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Video"> VideoHelper</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Video"> VideoHelper</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Tag" asp-action="TagHelper"> TagHelper</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tag" asp-action="TagHelper"> TagHelper</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"  asp-controller="RequestedVideo" asp-action="AllRequestedVideos"> RequestedVideos</a>
+                                <a class="nav-link text-dark"  asp-area="Administration" asp-controller="RequestedVideo" asp-action="AllRequestedVideos"> RequestedVideos</a>
                             </li>
                         }
                     </ul>

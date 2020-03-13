@@ -17,9 +17,17 @@ namespace UpYourChannel.Web.Services
             this.db = db;
             this.mapper = mapper;
         }
-        public void AddVideo(AddVideoInputViewModel input)
+        public void AddVideo(VideoInputModel input)
         {
-            var video = mapper.Map<Video>(input);
+            // var video = mapper.Map<Video>(input);
+            // TODO: ADD USER
+            // TODO: MAKE IT WITH AUTOMAPPER AND TO WORK WITH ID
+            var video = new Video
+            {
+                Link = input.Link,
+                Title= input.Title,
+                Description = input.Description
+            };
             db.Add(video);
             db.SaveChanges();
         }
