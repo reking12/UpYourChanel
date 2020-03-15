@@ -38,6 +38,7 @@ namespace UpYourChannel.Web.Services
             {
                 AllVideos = db.Videos.Select(x => new VideoInputModel()
                 {
+                    Id= x.Id,
                     Title = x.Title,
                     Link = x.Link
                 })

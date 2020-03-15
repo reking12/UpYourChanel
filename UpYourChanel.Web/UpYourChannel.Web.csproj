@@ -30,4 +30,9 @@
     <ProjectReference Include="..\UpYourChannel.Data\UpYourChannel.Data.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Views\Video\" />
+  </ItemGroup>
+
 </Project>

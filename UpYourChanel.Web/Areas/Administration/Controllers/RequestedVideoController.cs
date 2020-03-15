@@ -28,6 +28,12 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
             return Redirect("/Administration/RequestedVideo/AllRequestedVideos");
         }
 
+        public async Task<IActionResult> RemoveRequestedVideo(VideoInputModel input)
+        {
+            await requestedVideoService.RemoveRequestedVideoAsync(input.Id);
+            return Redirect("/Administration/RequestedVideo/AllRequestedVideos");
+        }
+
         public IActionResult AllRequestedVideos()
         {
             var allRequestedVideos = requestedVideoService.AllRequestedVideos();

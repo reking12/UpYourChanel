@@ -40,7 +40,13 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"  asp-area="Administration" asp-controller="RequestedVideo" asp-action="AllRequestedVideos"> RequestedVideos</a>
+                                <a class="nav-link text-dark" asp-area="Administration" asp-controller="RequestedVideo" asp-action="AllRequestedVideos"> RequestedVideos</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Administration" asp-controller="RequestedVideo" asp-action="AllRequestedVideos"> VideosManager</a>
                             </li>
                         }
                     </ul>

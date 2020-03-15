@@ -18,6 +18,7 @@ using UpYourChannel.Data.Models;
 using AutoMapper;
 using UpYourChannel.Web.MappingConfiguration;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UpYourChannel.Web
 {
@@ -34,6 +35,11 @@ namespace UpYourChannel.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options => 
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -47,7 +53,6 @@ namespace UpYourChannel.Web
                  options.Password.RequireUppercase = false;
                  options.Password.RequiredUniqueChars = 0;
              }
-
            ).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
