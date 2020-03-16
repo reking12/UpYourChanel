@@ -24,8 +24,8 @@
             <a asp-controller="Video" asp-action="AddVideo" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add your Video</a>
         </div>
         <form method="post" asp-controller="Video" asp-action="AllVideos" class="col-md-4 @*form-inline d-flex*@ text-center form-group has-search">
-            <span asp-validation-for="Search" class="fa fa-search form-control-feedback"></span>
-            <input required asp-for="Search" class="form-control" type="text" placeholder="Search"
+            <span class="fa fa-search form-control-feedback"></span>
+            <input required name="searchString" class="form-control" type="text" placeholder="Search"
                    aria-label="Search">
         </form>
         <div class="col-sm-4 text-center">

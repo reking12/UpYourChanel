@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UpYourChannel.Web.ViewModels;
 using UpYourChannel.Web.ViewModels.Video;
 
@@ -11,6 +12,8 @@ namespace UpYourChannel.Web.Services
 
         AllVideosViewModel AllVideos();
 
-        AllVideosViewModel VideosBySearch(string word);
+        AllVideosViewModel VideosBySearch(string searchString);
+
+        Task RemoveVideoByIdAsync(int id); 
     }
 }

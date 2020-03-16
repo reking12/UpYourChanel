@@ -14,7 +14,6 @@ namespace UpYourChannel.Web.Controllers
             this.videoService = videoService;
         }
 
-        [HttpGet]
         public IActionResult AddVideo()
         {
             return this.View();
@@ -30,19 +29,20 @@ namespace UpYourChannel.Web.Controllers
             videoService.AddVideo(input);
             return Redirect("/Video/AllVideos");
         }
-        [HttpGet]
+
         public IActionResult AllVideos()
         {
             return this.View(videoService.AllVideos());
         }
+
         [HttpPost]
-        public IActionResult AllVideos(AllVideosViewModel model)
+        public IActionResult AllVideos(string searchString)
         {
             if (!ModelState.IsValid)
             {
                 return Redirect("/Video/AllVideos");
             }
-            return this.View(videoService.VideosBySearch(model.Search));
+            return this.View(videoService.VideosBySearch(searchString));
         }
     }
 }

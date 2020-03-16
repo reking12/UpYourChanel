@@ -14,5 +14,7 @@ namespace UpYourChannel.Web
         public const string AdminPassword = "1234";
 
         public const string AdminRoleName = "Admin";
+
+        public const int PageSize = 6;
     }
 }

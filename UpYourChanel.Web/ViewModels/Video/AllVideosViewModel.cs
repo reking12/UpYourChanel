@@ -8,10 +8,10 @@ namespace UpYourChannel.Web.ViewModels.Video
 {
     public class AllVideosViewModel
     {
-        public IEnumerable<VideoInputModel> AllVideos { get; set; }
+        public IQueryable<VideoInputModel> AllVideos { get; set; }
 
-        [Required]
-        [MinLength(1)]
-        public string Search { get; set; }
+       // [Required]
+       // [MinLength(1)]
+       // public string Search { get; set; }
     }
 }

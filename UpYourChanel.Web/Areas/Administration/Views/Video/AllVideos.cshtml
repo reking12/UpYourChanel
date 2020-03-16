@@ -1,0 +1,59 @@
+﻿@using UpYourChannel.Web.ViewModels.Video
+@using UpYourChannel.Web.Paging
+@model PaginatedList<VideoInputModel>
+
+<head>
+    <link rel="stylesheet" href="~/css/d.css" />
+</head>
+
+
+<form method="post" asp-area="Administration" asp-controller="Video" asp-action="AllVideos" class="col-md-4 @*form-inline d-flex*@ text-center form-group has-search">
+    <span class="fa fa-search form-control-feedback"></span>
+    <input required name="SearchString" value="@ViewData["currentFilter"]" class="form-control" type="text" placeholder="Search"
+           aria-label="Search">
+</form>
+<div class="container">
+    <div class="row">
+        @foreach (var video in Model)
+        {
+            <div class="col-sm-4">
+                <br />
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src=@video.IFrameSource allowfullscreen></iframe>
+                </div>
+                <label text-justify text-dark">@video.Title </label>
+                <a class="btn btn-danger float-right" asp-area="Administration" asp-controller="Video" asp-action="RemoveVideoById"
+                   asp-route-id="@video.Id">Delele</a>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="text-center">
+    <a asp-area="Administration" asp-controller="Video" asp-action="AllVideos"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default  @prevDisabled">
+        Previous
+    </a>
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a asp-area="Administration" asp-controller="Video" asp-action="AllVideos"
+           asp-route-pageNumber="@(i)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @nextDisabled">
+        @i
+        </a>
+    }
+    <a asp-area="Administration" asp-controller="Video" asp-action="AllVideos"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+</div>
