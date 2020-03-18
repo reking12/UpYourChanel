@@ -27,7 +27,7 @@ namespace UpYourChannel.Web.Services
             var video = new Video
             {
                 Link = input.Link,
-                Title= input.Title,
+                Title = input.Title,
                 Description = input.Description
             };
             db.Add(video);

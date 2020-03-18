@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace UpYourChannel.Data.Models
 {
     public class Post
     {
+        public Post()
+        {
+            Comments = new HashSet<Comment>();
+            CreatedOn = DateTime.UtcNow;
+        }
         public int Id { get; set; }
 
         public string Title { get; set; }
 
         public string Content { get; set; }
-
-        public DateTime CreatedOn { get; set; }
 
         public int Likes { get; set; }
 
@@ -28,5 +30,7 @@ namespace UpYourChannel.Data.Models
         public Category Category { get; set; }
 
         public int CommentsCount => Comments.Count();
+
+        public DateTime CreatedOn { get; set; }
     }
 }

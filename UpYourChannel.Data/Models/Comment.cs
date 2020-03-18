@@ -4,6 +4,10 @@ namespace UpYourChannel.Data.Models
 {
     public class Comment
     {
+        public Comment()
+        {
+            CreatedOn = DateTime.UtcNow;
+        }
         public int Id { get; set; }
 
         public string Content { get; set; }
@@ -11,8 +15,6 @@ namespace UpYourChannel.Data.Models
         public int Likes { get; set; }
 
         public int Dislikes { get; set; }
-
-        public DateTime CreatedOn { get; set; }
 
         public Category Category { get; set; }
 
@@ -22,6 +24,8 @@ namespace UpYourChannel.Data.Models
 
         public Post Post { get; set; }
 
-        public int  PostId { get; set; }
+        public int PostId { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

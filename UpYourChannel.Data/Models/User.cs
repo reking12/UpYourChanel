@@ -11,8 +11,17 @@ namespace UpYourChannel.Data.Models
         public User()
         {
             Videos = new HashSet<Video>();
+            Posts = new HashSet<Post>();
         }
 
+        public IEnumerable<Post> Posts { get; set; }
+
         public IEnumerable<Video> Videos { get; set; }
+
+        public int PostsCount => Posts.Count();
+
+        public int VideosCount => Videos.Count();
+
+
     }
 }

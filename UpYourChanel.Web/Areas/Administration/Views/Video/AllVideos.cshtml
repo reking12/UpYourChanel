@@ -38,7 +38,7 @@
     <a asp-area="Administration" asp-controller="Video" asp-action="AllVideos"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
        asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default  @prevDisabled">
+       class="btn btn-default page-item  @prevDisabled">
         Previous
     </a>
     @for (int i = 1; i <= Model.TotalPages; i++)
@@ -46,7 +46,7 @@
         <a asp-area="Administration" asp-controller="Video" asp-action="AllVideos"
            asp-route-pageNumber="@(i)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-default @nextDisabled">
+           class="btn btn-default">
         @i
         </a>
     }

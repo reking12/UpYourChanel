@@ -67,6 +67,7 @@ namespace UpYourChannel.Web
             services.AddTransient<IVideoService, VideoService>();
             services.AddTransient<ITagService, TagService>();
             services.AddTransient<IRequestedVideoService, RequestedVideoService>();
+            services.AddTransient<IPostService, PostService>();
 
             services.AddSingleton<IEmailSender, EmailSender>();
         }

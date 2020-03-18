@@ -22,7 +22,7 @@ namespace UpYourChannel.Web.Services
         public async Task AddRequestedVideoAsync(AddVideoInputViewModel input)
         {
             var requestedVideo = mapper.Map<RequestedVideo>(input);
-            db.RequestedVideos.Add(requestedVideo);
+            await db.RequestedVideos.AddAsync(requestedVideo);
             await db.SaveChangesAsync();
         }
 
