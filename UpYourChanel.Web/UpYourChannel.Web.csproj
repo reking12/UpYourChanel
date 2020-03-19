@@ -31,4 +31,14 @@
     <ProjectReference Include="..\UpYourChannel.Data\UpYourChannel.Data.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Update="Views\Post\PostSubjects.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\css\forumSubjects.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

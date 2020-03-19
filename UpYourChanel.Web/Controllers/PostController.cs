@@ -34,5 +34,10 @@ namespace UpYourChannel.Web.Controllers
         {
             return this.View(postService.AllPosts());
         }
+
+        public IActionResult PostSubjects()
+        {
+            return this.View();
+        }
     }
 }
