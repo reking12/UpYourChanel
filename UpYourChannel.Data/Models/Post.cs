@@ -27,6 +27,8 @@ namespace UpYourChannel.Data.Models
 
         public virtual IEnumerable<Comment> Comments { get; set; }
 
+        //maybe public virtual IEnumerable<Vote> Comments { get; set; }
+
         public Category Category { get; set; }
 
         public int CommentsCount => Comments.Count();
