@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +17,13 @@ namespace UpYourChannel.Web.Services
         {
             this.db = db;
             this.mapper = mapper;
+        }
+
+        public PostViewModel ById(int id)
+        {
+            var postFromDb = db.Posts.FirstOrDefault(x => x.Id == id);
+            var postById = mapper.Map<PostViewModel>(postFromDb);
+            return postById;
         }
 
         public async Task CreatePost(PostInputViewModel input)

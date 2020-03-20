@@ -35,11 +35,6 @@ namespace UpYourChannel.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => 
-            {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            });
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -57,8 +52,16 @@ namespace UpYourChannel.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
             services.AddRazorPages();
+
 
             services.AddAutoMapper(c =>
                 c.AddProfile<UpYourChannelProfile>(), typeof(Startup));
@@ -68,6 +71,7 @@ namespace UpYourChannel.Web
             services.AddTransient<ITagService, TagService>();
             services.AddTransient<IRequestedVideoService, RequestedVideoService>();
             services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IVoteService, VoteService>();
 
             services.AddSingleton<IEmailSender, EmailSender>();
         }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UpYourChannel.Web.Services;
-using UpYourChannel.Web.ViewModels;
 using UpYourChannel.Web.ViewModels.Video;
 
 namespace UpYourChannel.Web.Controllers

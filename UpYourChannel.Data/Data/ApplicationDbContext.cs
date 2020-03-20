@@ -17,6 +17,8 @@ namespace UpYourChannel.Data.Data
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Vote> Votes { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

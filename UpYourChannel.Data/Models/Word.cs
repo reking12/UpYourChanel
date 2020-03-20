@@ -12,7 +12,7 @@ namespace UpYourChannel.Data.Models
 
         public string SearchingWord { get; set; }
 
-        public IEnumerable<Tag> Tags { get; set; }
+        public virtual IEnumerable<Tag> Tags { get; set; }
     }
 }
                       

@@ -8,10 +8,12 @@ namespace UpYourChannel.Web.Controllers
     public class PostController : Controller
     {
         private readonly IPostService postService;
+        private readonly IVoteService voteService;
 
-        public PostController(IPostService postService)
+        public PostController(IPostService postService,IVoteService voteService)
         {
             this.postService = postService;
+            this.voteService = voteService;
         }
 
         public IActionResult CreatePost()
@@ -38,6 +40,16 @@ namespace UpYourChannel.Web.Controllers
         public IActionResult PostSubjects()
         {
             return this.View();
+        }
+        public IActionResult ById(int id)
+        {
+            var postViewModel = this.postService.ById(id);
+            if (postViewModel == null)
+            {
+                return this.NotFound();
+            }
+            postViewModel.VotesCount = voteService.AllVotesForPost(id);
+            return this.View(postViewModel);
         }
     }
 }
