@@ -17,9 +17,9 @@ namespace UpYourChannel.Data.Models
 
         public string Content { get; set; }
 
-        public int Likes { get; set; }
-
-        public int Dislikes { get; set; }
+       // public int Likes { get; set; }
+       
+       // public int Dislikes { get; set; }
 
         public virtual User User { get; set; }
 

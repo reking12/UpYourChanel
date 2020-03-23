@@ -1,83 +1,22 @@
 ﻿@model UpYourChannel.Web.ViewModels.Post.AllPostsViewModel
 
-<a method="post" asp-controller="Vote" asp-action="Hello" type="submit" class="btn btn-primary"> s </a>
+
+<h1 class="text-center"> All Posts</h1>
 @foreach (var post in Model.Posts)
 {
-<div class="media-body">
-    <h4 class="media-heading"><a asp-controller="Post" asp-action="ById" asp-route-id="@post.Id">@post.Title</a></h4>
-    <p>@post.Content</p>
-    <ul class="list-inline list-unstyled text-left">
-        <li class="list-inline-item">
-            <i class="fas fa-user-edit"></i> @post.UserUserName
-        </li>
-        <li class="list-inline-item">
-            <i class="far fa-calendar"></i> @post.CreatedOn
-        </li>
-        <li class="list-inline-item">
-            <i class="fas fa-comments"></i> @post.CommentsCount
-        </li>
-    </ul>
-</div>
-    <h1>@post.Title</h1>
-    <div class="container-fluid mt-100">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <div class="media flex-wrap w-100 align-items-center">
-                            <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
-                            <div class="media-body ml-3">
-
-                                <div class="text-muted small">@post.CreatedOn</div>
-                            </div>
-                            <div class="text-muted small ml-3">
-                                <form id="votesForm" method="post"></form>
-                                <div>
-                                    <a href="#" onclick="sendVote(@post.Id, true)">
-                                        <i class="fa fa-thumbs-up"></i>
-                                    </a>
-                                </div>
-                                <div id="votesCount">@post.VotesCount</div>
-                                <div>
-                                    <a href="#" onclick="sendVote(@post.Id, false)">
-                                        <i class="fa fa-thumbs-down"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        @Html.Raw(post.SanitizedContent)
-                    </div>
-                    <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
-                        <div class="px-4 pt-3">
-                            <i class="fa fa-heart text-danger"></i>&nbsp; <span class="align-middle">0</span> <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
-                                <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">0</span>
-                            </span>
-                        </div>
-                        <div class="px-4 pt-3"> <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Reply</button> </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="media-body">
+        <h4 class="media-heading"><a asp-controller="Post" asp-action="ById" asp-route-id="@post.Id">@post.Title</a></h4>
+        <p>@post.Content</p>
+        <ul class="list-inline list-unstyled text-left">
+            <li class="list-inline-item">
+                <i class="fas fa-user-edit"></i> @post.UserUserName
+            </li>
+            <li class="list-inline-item">
+                <i class="far fa-calendar"></i> @post.CreatedOn
+            </li>
+            <li class="list-inline-item">
+                <i class="fas fa-comments"></i> @post.CommentsCount
+            </li>
+        </ul>
     </div>
-}
-@section Scripts {
-    <script>
-        function sendVote(postId, isUpVote) {
-            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
-            var json = { postId: postId, isUpVote: isUpVote };
-            $.ajax({
-                url: "/api/VoteApi",
-                type: "POST",
-                data: JSON.stringify(json),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                headers: { 'X-CSRF-TOKEN': token },
-                success: function (data) {
-                    $("#votesCount").html(data.votesCount);
-                }
-            });
-        }
-    </script>
 }

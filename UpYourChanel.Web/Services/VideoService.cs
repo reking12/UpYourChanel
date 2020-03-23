@@ -30,7 +30,7 @@ namespace UpYourChannel.Web.Services
                 Title = input.Title,
                 Description = input.Description
             };
-            db.Add(video);
+            db.Videos.Add(video);
             db.SaveChanges();
         }
 
