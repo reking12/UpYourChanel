@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UpYourChannel.Web.ViewModels.Comment;
 
 namespace UpYourChannel.Web.ViewModels.Post
 {
@@ -21,6 +22,8 @@ namespace UpYourChannel.Web.ViewModels.Post
         public int VotesCount { get; set; }
 
         public int CommentsCount { get; set; }
+
+        public IEnumerable<CommentViewModel> Comments { get; set; }
 
         public string SanitizedContent => new HtmlSanitizer().Sanitize(this.Content);
     }

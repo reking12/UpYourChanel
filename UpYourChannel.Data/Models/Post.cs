@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace UpYourChannel.Data.Models
@@ -17,17 +18,14 @@ namespace UpYourChannel.Data.Models
 
         public string Content { get; set; }
 
-       // public int Likes { get; set; }
-       
-       // public int Dislikes { get; set; }
-
-        public virtual User User { get; set; }
-
         public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
 
-        //maybe public virtual IEnumerable<Vote> Comments { get; set; }
+        public virtual IEnumerable<Vote> Votes { get; set; }
 
         public Category Category { get; set; }
 

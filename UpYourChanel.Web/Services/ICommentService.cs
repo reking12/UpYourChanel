@@ -4,6 +4,6 @@ namespace UpYourChannel.Web.Services
 {
     public interface ICommentService
     {
-        Task AddCommentToPost(int postId, string UserId, string content);
+        Task AddCommentToPostAsync(int postId, string UserId, string content);
     }
 }

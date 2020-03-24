@@ -15,7 +15,7 @@ namespace UpYourChannel.Web.Services
         {
             this.db = db;
         }
-        public async Task AddCommentToPost(int postId, string userId, string content)
+        public async Task AddCommentToPostAsync(int postId, string userId, string content)
         {
             var comment = new Comment()
             {

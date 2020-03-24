@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace UpYourChannel.Web.ViewModels.Comment
 {
-    public class CommentInputModel
+    public class CommentViewModel
     {
         public string Content { get; set; }
-
-        public int PostId { get; set; }
-
-        public string UserId { get; set; }
     }
 }

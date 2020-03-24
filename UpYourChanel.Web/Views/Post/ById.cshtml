@@ -1,9 +1,9 @@
-﻿@model UpYourChannel.Web.ViewModels.Post.PostViewModel
+﻿@model UpYourChannel.Web.ViewModels.Post.PostIndexModel
 @{
-    this.ViewData["Title"] = Model.Title;
+    this.ViewData["Title"] = Model.Post.Title;
 }
 
-<h1 class="text-center">@Model.Title</h1>
+<h1 class="text-center">@Model.Post.Title</h1>
 <div class="container-fluid mt-100">
     <div class="row">
         <div class="col-md-12">
@@ -12,19 +12,19 @@
                     <div class="media flex-wrap w-100 align-items-center">
                         <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
                         <div class="media-body ml-3">
-                            @Model.UserUserName
-                            <div class="text-muted small">@Model.CreatedOn</div>
+                            @Model.Post.UserUserName
+                            <div class="text-muted small">@Model.Post.CreatedOn</div>
                         </div>
                         <div class="text-muted small ml-3">
                             <form id="votesForm" method="post"></form>
                             <div>
-                                <a href="#" onclick="sendVote(@Model.Id, true)">
+                                <a href="#" onclick="sendVote(@Model.Post.Id, true)">
                                     <i class="fa fa-thumbs-up"></i>
                                 </a>
                             </div>
-                            <div id="votesCount">@Model.VotesCount</div>
+                            <div id="votesCount">@Model.Post.VotesCount</div>
                             <div>
-                                <a href="#" onclick="sendVote(@Model.Id, false)">
+                                <a href="#" onclick="sendVote(@Model.Post.Id, false)">
                                     <i class="fa fa-thumbs-down"></i>
                                 </a>
                             </div>
@@ -35,19 +35,30 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @Html.Raw(Model.SanitizedContent)
+                    @Html.Raw(Model.Post.SanitizedContent)
                 </div>
-                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
-                    <div class="px-4 pt-3">
-                        <i class="fa fa-heart text-danger"></i>&nbsp; <span class="align-middle">0</span> <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
-                            <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">0</span>
-                        </span>
-                    </div>
-                    <div class="px-4 pt-3"> <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Reply</button> </div>
+                <div class="card-footer d-flex flex-wrap align-items-center px-0 pt-0 pb-3">
+                    <form asp-controller="Post" asp-action="AddCommentToPost" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="px-4 pt-3">
+                            <input type="hidden" name="Comment.PostId" value="@Model.Post.Id">
+                            <textarea asp-for="Comment.Content" rows="1" cols="60" class="form-control" aria-label="With textarea" placeholder="Comment..."></textarea>
+                        </div>
+                        <div class="px-4 pt-3"> <button type="submit" class="btn btn-primary">Comment &nbsp;<i class="far fa-comment-dots"></i></button> </div>
+                        <hr />
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div>
+    @foreach (var comment in Model.Post.Comments)
+    {
+        <div>
+            @comment.Content
+        </div>
+    }
 </div>
 
 @section Scripts {

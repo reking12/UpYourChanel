@@ -5,7 +5,7 @@ namespace UpYourChannel.Web.Services
 {
      public interface IPostService
     {
-        PostViewModel ById(int id);
+        PostIndexModel ById(int id);
 
         Task CreatePost(PostInputViewModel input);
 

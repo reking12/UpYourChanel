@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
@@ -19,11 +21,15 @@ namespace UpYourChannel.Web.Services
             this.mapper = mapper;
         }
 
-        public PostViewModel ById(int id)
+        public PostIndexModel ById(int id)
         {
-            var postFromDb = db.Posts.FirstOrDefault(x => x.Id == id);
-            var postById = mapper.Map<PostViewModel>(postFromDb);
-            return postById;
+            var postFromDb = db.Posts.Include(x => x.User)
+                .Include(x => x.Comments).FirstOrDefault(x => x.Id == id);
+            var post = new PostIndexModel()
+            {
+                Post = mapper.Map<PostViewModel>(postFromDb)
+            };
+            return post;
         }
 
         public async Task CreatePost(PostInputViewModel input)

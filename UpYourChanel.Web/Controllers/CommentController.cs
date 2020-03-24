@@ -1,20 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels.Comment;
+using UpYourChannel.Web.ViewModels.Post;
 
 namespace UpYourChannel.Web.Controllers
 {
     public class CommentController : Controller
     {
-        public IActionResult AddCommentToPost()
-        {
-            return this.View();
-        }
+        private readonly ICommentService commentService;
 
-        [HttpPost]
-        public async Task<IActionResult> AddCommentToPost(CommentInputModel input)
+        public CommentController(ICommentService commentService)
         {
-            return this.View();
+            this.commentService = commentService;
         }
     }
 }
