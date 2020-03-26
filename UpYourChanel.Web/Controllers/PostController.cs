@@ -45,10 +45,6 @@ namespace UpYourChannel.Web.Controllers
             return this.View(postService.AllPosts());
         }
 
-        public IActionResult PostSubjects()
-        {
-            return this.View();
-        }
         public IActionResult ById(int id)
         {
             var postViewModel = this.postService.ById(id);
@@ -72,6 +68,15 @@ namespace UpYourChannel.Web.Controllers
             input.Comment.UserId = userManager.GetUserId(this.User);
             await commentService.AddCommentToPostAsync(input.Comment.PostId, input.Comment.UserId, input.Comment.Content);
             return Redirect($"/Post/ById/{input.Comment.PostId}");
+        }
+
+        public IActionResult PostSubjects()
+        {
+            var postSubect = new PostSubjectViewModel()
+            {
+                TotalPosts = postService.PostsCount()
+            };
+            return this.View(postSubect);
         }
     }
 }

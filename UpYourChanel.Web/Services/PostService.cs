@@ -48,5 +48,9 @@ namespace UpYourChannel.Web.Services
             };
             return posts;
         }
+
+        public int PostsCount()
+        => db.Posts.Count();
+
     }
 }

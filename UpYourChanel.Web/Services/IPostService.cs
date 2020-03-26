@@ -10,5 +10,7 @@ namespace UpYourChannel.Web.Services
         Task CreatePost(PostInputViewModel input);
 
         AllPostsViewModel AllPosts();
+
+        int PostsCount();
     }
 }

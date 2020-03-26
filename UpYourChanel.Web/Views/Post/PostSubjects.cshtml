@@ -1,4 +1,6 @@
-﻿<head>
+﻿@model UpYourChannel.Web.ViewModels.Post.PostSubjectViewModel
+
+<head>
     <link rel="stylesheet" href="~/css/forumSubjects.css" />
 </head>
 
@@ -24,9 +26,9 @@
 
                     <div class="forum-title">
                         <div class="pull-right forum-desc">
-                            <samll>Total posts: 320,800</samll>
+                            <samll>Total posts: @Model.TotalPosts</samll>
                         </div>
-                        <h3>General subjects</h3>
+                        <h3>Topics</h3>
                     </div>
 
                     <div class="forum-item active">
@@ -35,8 +37,8 @@
                                 <div class="forum-icon">
                                     <i class="fa fa-shield"></i>
                                 </div>
-                                <a asp-controller="Post" asp-action="AllPosts" class="forum-item-title">General Discussion</a>
-                                <div class="forum-sub-title">Talk about sports, entertainment, music, movies, your favorite color, talk about enything.</div>
+                                <a asp-controller="Post" asp-action="AllPosts" class="forum-item-title">General Discussions</a>
+                                <div class="forum-sub-title">Discuss about general things in youtube system!</div>
                             </div>
                             <div class="col-md-1 forum-info">
                                 <span class="views-number">
@@ -70,8 +72,8 @@
                                 <div class="forum-icon">
                                     <i class="fa fa-bolt"></i>
                                 </div>
-                                <a href="forum_post.html" class="forum-item-title">Introductions</a>
-                                <div class="forum-sub-title">New to the community? Please stop by, say hi and tell us a bit about yourself. </div>
+                                <a href="forum_post.html" class="forum-item-title">Introduction</a>
+                                <div class="forum-sub-title">New to the youtube community? How to start youtube channel? </div>
                             </div>
                             <div class="col-md-1 forum-info">
                                 <span class="views-number">
