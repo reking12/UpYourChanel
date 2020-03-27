@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="~/css/d.css" />
 </head>
 
-
+<br />
+<br />
+<br />
+<br />
 <form method="post" asp-area="Administration" asp-controller="Video" asp-action="AllVideos" class="col-md-4 @*form-inline d-flex*@ text-center form-group has-search">
     <span class="fa fa-search form-control-feedback"></span>
     <input required name="SearchString" value="@ViewData["currentFilter"]" class="form-control" type="text" placeholder="Search"
@@ -47,7 +50,7 @@
            asp-route-pageNumber="@(i)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
            class="btn btn-default">
-        @i
+            @i
         </a>
     }
     <a asp-area="Administration" asp-controller="Video" asp-action="AllVideos"

@@ -1,8 +1,14 @@
 ﻿@using UpYourChannel.Web.ViewModels.Video
 @model AllVideosViewModel
 
-
-<div class="container text-center">
+<br />
+<br />
+<br />
+<br />
+<head>
+    <link rel="stylesheet" href="~/css/d.css" />
+</head>
+<div class="container  text-center">
     <div class="row">
         <div class="col-sm-4 text-center">
             <div class="text-center bottom-align-text">
@@ -20,7 +26,7 @@
 <div class="container text-center">
     <div class="row">
         <div class="col-sm-4 text-center">
-            <a asp-controller="Video" asp-action="AddVideo" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add your Video</a>
+            <a asp-controller="Video" asp-action="AddVideo" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Add your Video</a>
         </div>
         <form method="post" asp-controller="Video" asp-action="AllVideos" class="col-md-4 @*form-inline d-flex*@ text-center form-group has-search">
             <span class="fa fa-search form-control-feedback"></span>
@@ -36,29 +42,25 @@
                     <a class="dropdown-item" href="#">Date</a>
                 </div>
             </div>
-
             <div class="btn-group">
-                <div class="dropdown show">
-                    <a class="btn btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Category:
-                    </a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a asp- class="dropdown-item" href="#">FilmAndAnimation</a>
-                        <a class="dropdown-item" data->Music</a>
-                        <a class="dropdown-item" href="#">Sport</a>
-                        <a class="dropdown-item" href="#">CarsAndVehicles</a>
-                        <a class="dropdown-item" href="#">PetsAndAnimals</a>
-                        <a class="dropdown-item" href="#">TravelAndEvents</a>
-                        <a class="dropdown-item" href="#">Gaming</a>
-                        <a class="dropdown-item" href="#">PeopleAndBlogs</a>
-                        <a class="dropdown-item" href="#">Comedy</a>
-                        <a class="dropdown-item" href="#">Entertainment</a>
-                        <a class="dropdown-item" href="#">NewsAndPolitics</a>
-                        <a class="dropdown-item" href="#">HowToAndStyle</a>
-                        <a class="dropdown-item" href="#">Education</a>
-                        <a class="dropdown-item" href="#">ScienceAndTechnology</a>
-                    </div>
+                <a class="btn btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Category:
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a asp- class="dropdown-item" href="#">FilmAndAnimation</a>
+                    <a class="dropdown-item" data->Music</a>
+                    <a class="dropdown-item" href="#">Sport</a>
+                    <a class="dropdown-item" href="#">CarsAndVehicles</a>
+                    <a class="dropdown-item" href="#">PetsAndAnimals</a>
+                    <a class="dropdown-item" href="#">TravelAndEvents</a>
+                    <a class="dropdown-item" href="#">Gaming</a>
+                    <a class="dropdown-item" href="#">PeopleAndBlogs</a>
+                    <a class="dropdown-item" href="#">Comedy</a>
+                    <a class="dropdown-item" href="#">Entertainment</a>
+                    <a class="dropdown-item" href="#">NewsAndPolitics</a>
+                    <a class="dropdown-item" href="#">HowToAndStyle</a>
+                    <a class="dropdown-item" href="#">Education</a>
+                    <a class="dropdown-item" href="#">ScienceAndTechnology</a>
                 </div>
             </div>
             @*izpolzvaiki enumeraciqta   <div class="btn-group">
