@@ -21,7 +21,7 @@ namespace UpYourChannel.Web.ViewModels.Post
 
         public int VotesCount { get; set; }
 
-        public int CommentsCount { get; set; }
+        public int CommentsCount => Comments.Count();
 
         public IEnumerable<CommentViewModel> Comments { get; set; }
 

@@ -1,19 +1,23 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
+using UpYourChannel.Web.ViewModels.Comment;
 
 namespace UpYourChannel.Web.Services
 {
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
 
-        public CommentService(ApplicationDbContext db)
+        public CommentService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
         public async Task AddCommentToPostAsync(int postId, string userId, string content)
         {
@@ -25,6 +29,12 @@ namespace UpYourChannel.Web.Services
             };
             await db.Comments.AddAsync(comment);
             await db.SaveChangesAsync();
+        }
+
+        public IEnumerable<CommentViewModel> AllCommentsForPost(int postId)
+        {
+            return mapper.Map<IEnumerable<CommentViewModel>>(db.Comments.Where(x => x.PostId == postId));
+           
         }
     }
 }

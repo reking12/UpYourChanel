@@ -1,13 +1,13 @@
-﻿@model UpYourChannel.Web.ViewModels.Post.AllPostsViewModel
-
-
+﻿@using UpYourChannel.Web.ViewModels.Post
+@using UpYourChannel.Web.Paging
+@model PaginatedList<PostViewModel>
 <br />
 <br />
 <br />
 <br />
 <h1 class="text-center"> All Posts</h1>
 <div class="container">
-    @foreach (var post in Model.Posts)
+    @foreach (var post in Model)
     {
         <div class="media-body">
             <h4 class="media-heading"><a asp-controller="Post" asp-action="ById" asp-route-id="@post.Id">@post.Title</a></h4>
@@ -25,4 +25,31 @@
             </ul>
         </div>
     }
+</div>
+<br />
+<br />
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="text-center">
+    <a asp-area="" asp-controller="Post" asp-action="AllPosts"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn btn-default page-item  @prevDisabled">
+        Previous
+    </a>
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a asp-area="" asp-controller="Post" asp-action="AllPosts"
+           asp-route-pageNumber="@(i)"
+           class="btn btn-default">
+            @i
+        </a>
+    }
+    <a asp-area="" asp-controller="Post" asp-action="AllPosts"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
 </div>

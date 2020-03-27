@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Models;
+using UpYourChannel.Web.Paging;
 using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels.Post;
+using UpYourChannel.Web.ViewModels.Video;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -40,9 +42,10 @@ namespace UpYourChannel.Web.Controllers
             return Redirect("/Post/AllPosts");
         }
 
-        public IActionResult AllPosts()
+        public async Task<IActionResult> AllPosts(int? pageNumber)
         {
-            return this.View(postService.AllPosts());
+            var allPosts = postService.AllPosts();
+            return View(await PaginatedList<PostViewModel>.CreateAsync(allPosts.Posts, pageNumber ?? 1, GlobalConstants.PageSize));
         }
 
         public IActionResult ById(int id)

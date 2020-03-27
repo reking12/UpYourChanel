@@ -4,21 +4,23 @@
 <br />
 <br />
 <br />
-<form asp-controller="Post" asp-action="CreatePost" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+<div class="container">
+    <form asp-controller="Post" asp-action="CreatePost" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
 
-    <div class="form-group md-f">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
+        <div class="form-group md-f">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Content"></label>
-        <textarea asp-for="Content" rows="7" class="form-control" aria-label="With textarea"></textarea>
-        <span asp-validation-for="Content" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Content"></label>
+            <textarea asp-for="Content" rows="7" class="form-control" aria-label="With textarea"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
 
-    <hr />
-    <input type="submit" class="btn btn-primary" value="Post">
-</form>
+        <hr />
+        <input type="submit" class="btn btn-primary" value="Post">
+    </form>
+</div>
