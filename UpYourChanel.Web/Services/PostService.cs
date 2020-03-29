@@ -56,7 +56,7 @@ namespace UpYourChannel.Web.Services
             });
             var posts = new AllPostsViewModel()
             {
-                Posts = dbPosts.ProjectTo<PostViewModel>(configuration)
+                Posts = dbPosts.ProjectTo<PostViewModel>(configuration).ToList()
             };
             //----- Old Way
             //var posts = new AllPostsViewModel()

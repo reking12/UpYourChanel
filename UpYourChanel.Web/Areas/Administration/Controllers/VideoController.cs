@@ -31,12 +31,12 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
             return Redirect("/Administration/Video/AllVideos");
         }
 
-        public async Task<IActionResult> AllVideos(string searchString, int? pageNumber)
+        public IActionResult AllVideos(string searchString, int? pageNumber)
         {
             ViewData["CurrentFilter"] = searchString;
             var videos = string.IsNullOrEmpty(searchString) ? videoService.AllVideos()
                 : videoService.VideosBySearch(searchString);
-            return View(await PaginatedList<VideoInputModel>.CreateAsync(videos.AllVideos, pageNumber ?? 1, GlobalConstants.PageSize));
+            return View(PaginatedList<VideoInputModel>.Create(videos.AllVideos, pageNumber ?? 1, GlobalConstants.PageSize));
         }
     }
 }

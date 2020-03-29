@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UpYourChannel.Web.ViewModels.Comment;
 
 namespace UpYourChannel.Web.ViewModels.Post
@@ -17,6 +16,8 @@ namespace UpYourChannel.Web.ViewModels.Post
 
         public string Content { get; set; }
 
+        public string UserId { get; set; }
+
         public string UserUserName { get; set; }
 
         public int VotesCount { get; set; }
@@ -26,5 +27,7 @@ namespace UpYourChannel.Web.ViewModels.Post
         public IEnumerable<CommentViewModel> Comments { get; set; }
 
         public string SanitizedContent => new HtmlSanitizer().Sanitize(this.Content);
+
+        public bool IsThisUser { get; set; }
     }
 }

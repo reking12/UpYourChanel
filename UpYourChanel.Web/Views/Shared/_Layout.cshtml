@@ -31,8 +31,9 @@
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto ">
+            <div class="collapse navbar-collapse d-sm-inline-flex flex-sm-row-reverse" id="navbarResponsive">
+                <partial name="_LoginPartial" />
+                <ul class="navbar-nav ml-auto flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger text-dark" href="#about">About</a>
                     </li>
@@ -66,6 +67,7 @@
                             <a class="nav-link js-scroll-trigger text-dark" asp-area="Administration" asp-controller="Video" asp-action="AllVideos"> VideosManager</a>
                         </li>
                     }
+
                 </ul>
             </div>
         </div>

@@ -7,6 +7,6 @@ namespace UpYourChannel.Web.ViewModels.Post
 {
     public class AllPostsViewModel
     {
-        public IQueryable<PostViewModel> Posts { get; set; }
+        public List<PostViewModel> Posts { get; set; }
     }
 }

@@ -34,7 +34,12 @@ namespace UpYourChannel.Web.Services
         public IEnumerable<CommentViewModel> AllCommentsForPost(int postId)
         {
             return mapper.Map<IEnumerable<CommentViewModel>>(db.Comments.Where(x => x.PostId == postId));
-           
+        }
+
+        public IEnumerable<CommentViewModel> Top3CommentsForPost(int postId)
+        {
+            var comments = db.Comments.Where(x => x.PostId == postId).OrderBy(x => x).Take(3);
+            return mapper.Map<IEnumerable<CommentViewModel>>(comments);
         }
     }
 }

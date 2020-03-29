@@ -4,6 +4,15 @@
 <br />
 <br />
 <br />
+<script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "image paste table link code media"
+        ]
+    });
+</script>
 <div class="container">
     <form asp-controller="Post" asp-action="CreatePost" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>

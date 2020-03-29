@@ -34,11 +34,12 @@ namespace UpYourChannel.Web.Paging
                 return (PageIndex < TotalPages);
             }
         }
-
-        public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
+        // it was IQueryable but cant set value on property
+        // make it IQueryable
+        public static PaginatedList<T> Create(IEnumerable<T> source, int pageIndex, int pageSize)
         {
-            var count = await source.CountAsync();
-            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            var count = source.Count();
+            var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }

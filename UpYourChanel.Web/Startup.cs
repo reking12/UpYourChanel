@@ -61,8 +61,11 @@ namespace UpYourChannel.Web
                 options.HeaderName = "X-CSRF-TOKEN";
             });
             services.AddRazorPages();
-
-
+            // add options for https
+            services.AddResponseCompression(options => 
+            {
+                options.EnableForHttps = true;
+            });
             services.AddAutoMapper(c =>
                 c.AddProfile<UpYourChannelProfile>(), typeof(Startup));
 
@@ -103,6 +106,8 @@ namespace UpYourChannel.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -9,7 +9,8 @@
 <br />
 <h1 class="text-center">@Model.Post.Title</h1>
 <br />
-<div class="container"> <!-- maybe container-fluid -->
+<div class="container">
+    <!-- maybe container-fluid -->
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
@@ -65,6 +66,19 @@
         </div>
         <br />
 
+    }
+</div>
+<br />
+<br />
+<h1 class="text-center">Top 3 Comments</h1>
+<br />
+<div class="container">
+    @foreach (var comment in Model.Top3Comments)
+    {
+        <div>
+            @comment.Content;
+        </div>
+        <br />
     }
 </div>
 @section Scripts {

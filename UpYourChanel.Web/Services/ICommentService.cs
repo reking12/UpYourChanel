@@ -9,5 +9,7 @@ namespace UpYourChannel.Web.Services
         Task AddCommentToPostAsync(int postId, string UserId, string content);
 
         IEnumerable<CommentViewModel> AllCommentsForPost(int postId);
+
+        IEnumerable<CommentViewModel> Top3CommentsForPost(int postId);
     }
 }

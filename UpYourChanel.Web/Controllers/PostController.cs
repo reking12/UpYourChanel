@@ -1,6 +1,12 @@
-﻿using AngleSharp.Dom;
+﻿using AngleSharp.Common;
+using AngleSharp.Dom;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Models;
 using UpYourChannel.Web.Paging;
@@ -17,7 +23,7 @@ namespace UpYourChannel.Web.Controllers
         private readonly ICommentService commentService;
         private readonly UserManager<User> userManager;
 
-        public PostController(IPostService postService,IVoteService voteService,ICommentService commentService,UserManager<User> userManager)
+        public PostController(IPostService postService, IVoteService voteService, ICommentService commentService, UserManager<User> userManager)
         {
             this.postService = postService;
             this.voteService = voteService;
@@ -42,10 +48,12 @@ namespace UpYourChannel.Web.Controllers
             return Redirect("/Post/AllPosts");
         }
 
-        public async Task<IActionResult> AllPosts(int? pageNumber)
+        public IActionResult AllPosts(int? pageNumber)
         {
             var allPosts = postService.AllPosts();
-            return View(await PaginatedList<PostViewModel>.CreateAsync(allPosts.Posts, pageNumber ?? 1, GlobalConstants.PageSize));
+            var userId = userManager.GetUserId(this.User);
+            allPosts.Posts.Where(x => x.UserId == userId).ToList().ForEach(x => x.IsThisUser = true);
+            return View(PaginatedList<PostViewModel>.Create(allPosts.Posts, pageNumber ?? 1, GlobalConstants.PageSize));
         }
 
         public IActionResult ById(int id)
@@ -56,6 +64,7 @@ namespace UpYourChannel.Web.Controllers
                 return this.NotFound();
             }
             postViewModel.Post.VotesCount = voteService.AllVotesForPost(id);
+            postViewModel.Top3Comments = commentService.Top3CommentsForPost(id);
             return this.View(postViewModel);
         }
 
