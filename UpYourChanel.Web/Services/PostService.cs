@@ -44,6 +44,14 @@ namespace UpYourChannel.Web.Services
             await db.SaveChangesAsync();
         }
 
+        public async Task EditPostAsync(int postId, string newContent, string newTitle)
+        {
+            var post = await db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
+            post.Content = newContent;
+            post.Title = newTitle;
+            await db.SaveChangesAsync();
+        }
+
         //TODO: make it async
         public AllPostsViewModel AllPosts()
         {
@@ -75,9 +83,14 @@ namespace UpYourChannel.Web.Services
             //};
             return posts;
         }
+        public async Task<PostInputViewModel> ReturnPostByIdAsync(int postId)
+        {
+            return mapper.Map<PostInputViewModel>(await db.Posts.FirstOrDefaultAsync(x => x.Id == postId));
+        }
 
-        public int PostsCount()
-        => db.Posts.Count();
+        public async Task<int> PostsCountAsync()
+        => await db.Posts.CountAsync();
 
+        
     }
 }

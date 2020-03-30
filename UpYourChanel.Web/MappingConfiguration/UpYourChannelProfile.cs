@@ -12,11 +12,12 @@ namespace UpYourChannel.Web.MappingConfiguration
     {
         public UpYourChannelProfile()
         {
-            CreateMap<Comment, CommentViewModel>();
             CreateMap<VideoInputModel, Video>();
             CreateMap<AddVideoInputViewModel, RequestedVideo>();
             CreateMap<PostInputViewModel, Post>();
+            CreateMap<Post, PostInputViewModel>();
             CreateMap<Post, PostViewModel>();
+            CreateMap<Comment, CommentViewModel>();
             CreateMap<Comment, CommentViewModel>();
         }
     }

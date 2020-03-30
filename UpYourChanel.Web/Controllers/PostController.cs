@@ -1,18 +1,12 @@
-﻿using AngleSharp.Common;
-using AngleSharp.Dom;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Models;
 using UpYourChannel.Web.Paging;
 using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels.Post;
-using UpYourChannel.Web.ViewModels.Video;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -35,7 +29,19 @@ namespace UpYourChannel.Web.Controllers
         {
             return this.View();
         }
-
+        public async Task<IActionResult> EditPost(int postId)
+        {
+            TempData["postId"] = postId;
+            var post = await postService.ReturnPostByIdAsync(postId);
+            return View(post);
+        }
+        [HttpPost] 
+        public async Task<IActionResult> EditPost(PostInputViewModel input, int postId)
+        {
+            await postService.EditPostAsync(postId, input.Content, input.Title);
+            return Redirect("/Post/AllPosts");
+        }
+        
         [HttpPost]
         public async Task<IActionResult> CreatePost(PostInputViewModel input)
         {
@@ -82,11 +88,11 @@ namespace UpYourChannel.Web.Controllers
             return Redirect($"/Post/ById/{input.Comment.PostId}");
         }
 
-        public IActionResult PostSubjects()
+        public async Task<IActionResult> PostSubjects()
         {
             var postSubect = new PostSubjectViewModel()
             {
-                TotalPosts = postService.PostsCount()
+                TotalPosts = await postService.PostsCountAsync()
             };
             return this.View(postSubect);
         }

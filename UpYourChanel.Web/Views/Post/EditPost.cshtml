@@ -14,10 +14,10 @@
     });
 </script>
 <div class="container">
-    <h1>Add your post:</h1>
-    <form asp-controller="Post" asp-action="CreatePost" method="post">
+    <h1>Edit your post:</h1>
+    <form asp-controller="Post" asp-action="EditPost" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
-
+        <input type="hidden" name="postId" value="@TempData["postId"]">
         <div class="form-group md-f">
             <label asp-for="Title"></label>
             <input asp-for="Title" class="form-control" />
@@ -31,6 +31,6 @@
         </div>
 
         <hr />
-        <input type="submit" class="btn btn-primary" value="Post">
+        <input type="submit" class="btn btn-primary" value="Edit">
     </form>
 </div>

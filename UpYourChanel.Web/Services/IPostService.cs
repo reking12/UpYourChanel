@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using UpYourChannel.Data.Models;
 using UpYourChannel.Web.ViewModels.Post;
 
 namespace UpYourChannel.Web.Services
@@ -9,8 +10,12 @@ namespace UpYourChannel.Web.Services
 
         Task CreatePost(PostInputViewModel input);
 
+        Task EditPostAsync(int postId, string newContent, string newTitle);
+
         AllPostsViewModel AllPosts();
 
-        int PostsCount();
+        Task<int> PostsCountAsync();
+
+        Task<PostInputViewModel> ReturnPostByIdAsync(int postId);
     }
 }
