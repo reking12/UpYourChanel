@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace UpYourChannel.Data.Models
 {
@@ -12,10 +13,6 @@ namespace UpYourChannel.Data.Models
 
         public string Content { get; set; }
 
-        public int Likes { get; set; }
-
-        public int Dislikes { get; set; }
-
         public Category Category { get; set; }
 
         public virtual User User { get; set; }
@@ -26,6 +23,12 @@ namespace UpYourChannel.Data.Models
 
         public int PostId { get; set; }
 
+        public int? ParentId { get; set; }
+
+        public virtual Comment Parent { get; set; }
+
         public DateTime CreatedOn { get; set; }
+
+        public virtual IEnumerable<Vote> Votes { get; set; }
     }
 }

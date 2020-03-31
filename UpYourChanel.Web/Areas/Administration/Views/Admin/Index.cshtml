@@ -1,0 +1,23 @@
+﻿<br />
+<br />
+<br />
+<br />
+<div class="text-center">
+    <h1 class="display-4">Admin Area!</h1>
+</div>
+<br />
+<br />
+<div class="container">
+    @if (User.IsInRole("Admin"))
+    {
+
+        <a class="btn btn-primary" asp-area="Administration" asp-controller="RequestedVideo" asp-action="AllRequestedVideos"> RequestedVideos</a>
+
+    }
+    @if (User.IsInRole("Admin"))
+    {
+
+        <a class="btn btn-primary" asp-area="Administration" asp-controller="Video" asp-action="AllVideos"> VideoManager</a>
+
+    }
+</div>

@@ -118,6 +118,8 @@ namespace UpYourChannel.Web
 
             app.UseEndpoints(endpoints =>
             {
+   
+
                 endpoints.MapControllerRoute(
                      name: "areaRoute",
                      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

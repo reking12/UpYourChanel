@@ -29,19 +29,13 @@ namespace UpYourChannel.Web.Controllers
             return Redirect("/Video/AllVideos");
         }
 
-        public IActionResult AllVideos()
+        public IActionResult AllVideos(string search)
         {
-            return this.View(videoService.AllVideos());
-        }
-
-        [HttpPost]
-        public IActionResult AllVideos(string searchString)
-        {
-            if (!ModelState.IsValid)
+            if (string.IsNullOrWhiteSpace(search))
             {
-                return Redirect("/Video/AllVideos");
+                return this.View(videoService.AllVideos());
             }
-            return this.View(videoService.VideosBySearch(searchString));
+            return this.View(videoService.VideosBySearch(search));
         }
     }
 }
