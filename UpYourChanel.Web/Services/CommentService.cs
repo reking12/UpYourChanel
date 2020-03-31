@@ -19,13 +19,14 @@ namespace UpYourChannel.Web.Services
             this.db = db;
             this.mapper = mapper;
         }
-        public async Task AddCommentToPostAsync(int postId, string userId, string content)
+        public async Task CreateCommentAsync(int postId, string userId, string content,int? parentId)
         {
             var comment = new Comment()
             {
                 Content = content,
                 PostId = postId,
-                UserId = userId
+                UserId = userId,
+                ParentId = parentId
             };
             await db.Comments.AddAsync(comment);
             await db.SaveChangesAsync();

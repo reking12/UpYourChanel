@@ -84,7 +84,7 @@ namespace UpYourChannel.Web.Controllers
         {
             // maybe remove PostId from comment ViewModel
             input.Comment.UserId = userManager.GetUserId(this.User);
-            await commentService.AddCommentToPostAsync(input.Comment.PostId, input.Comment.UserId, input.Comment.Content);
+            await commentService.CreateCommentAsync(input.Comment.PostId, input.Comment.UserId, input.Comment.Content, input.Comment.ParentId);
             return Redirect($"/Post/ById/{input.Comment.PostId}");
         }
 
