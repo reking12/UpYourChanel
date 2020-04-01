@@ -16,30 +16,40 @@
             <div class="container-fluid mt-100">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <div class="media flex-wrap w-100 align-items-center">
-                                    <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
-                                    <div class="media-body ml-3">
-                                        @comment.UserUserName
-                                        <div class="text-muted small">
-                                            <time datetime="@comment.CreatedOn.ToString("O")"></time>
-                                        </div>
-                                    </div>
-                                    <div class="text-muted small ml-3">
-                                        @if (this.User.Identity.IsAuthenticated)
-                                        {
-                                            <div class="px-4 pt-3"> <button type="button" class="btn btn-secondary" onclick="showAddCommentForm(@comment.Id)"><i class="fa fa-plus"></i>&nbsp; Answer</button> </div>
-                                        }
+                        @*<div class="card mb-4">
+                            <div class="card-header">*@
+                        <div class="media flex-wrap w-100 ml-4">
+                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="d-block  rounded-circle" height="60">
+                            <div class="media-body ml-3">
+                                <strong class="mt-0 text-success">@Model.Post.UserUserName</strong>
+                                <div class="mt-0 text-muted small">@comment.CreatedOn.ToString()</div>
+                                <div>
+                                    <a href="#">edit</a>
+                                    <a href="#" onclick="showAddComment(@comment.Id)">reply</a>
+                                </div>
+                                @Html.Raw(comment.SanitizedContent)
+                                <div class="text-muted small">
+                                    <a href="#" onclick="sendVote(@Model.Post.Id, true)">
+                                        <i class="fa fa-thumbs-up"></i>
+                                    </a>
+                                    <a id="votesCount">@Model.Post.VotesCount</a>
+                                    <a href="#" onclick="sendVote(@Model.Post.Id, false)">
+                                        <i class="fa fa-thumbs-down"></i>
+                                    </a>
+                                </div>
+                                <div id="@comment.Id" style="display : none">
+                                    <br />
+                                    <div class="col-md-3">
+                                        <textarea rows="1" cols="1" class="form-control" aria-label="With textarea"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <article>
-                                    @Html.Raw(comment.SanitizedContent)
-                                </article>
-                                @{ DisplayComments(comment.Id); }
-                            </div>
+
+                            <button type="submit" class="btn btn-primary" onclick="showAddCommentForm(@comment.Id)">Comment &nbsp;<i class="far fa-comment-dots"></i></button>
+                        </div>
+                        <hr />
+                        <div class="card-body">
+                            @{ DisplayComments(comment.Id); }
                         </div>
                     </div>
                 </div>
@@ -59,7 +69,6 @@
         });
     </script>
 </head>
-
 <br />
 <br />
 <br />
@@ -78,7 +87,7 @@
                             @Model.Post.UserUserName
                             <div class="text-muted small">@Model.Post.CreatedOn</div>
                         </div>
-                        <div class="text-muted small ml-3">
+                        <div class="text-muted ml-3">
                             <form id="votesForm" method="post"></form>
                             <div>
                                 <a href="#" onclick="sendVote(@Model.Post.Id, true)">
@@ -105,40 +114,12 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="px-4 pt-3 form-inline">
                             <input type="hidden" name="Comment.PostId" value="@Model.Post.Id">
-                            <textarea asp-for="Comment.Content" rows="2" cols="90" class="form-control" aria-label="With textarea" placeholder="Comment..."></textarea>
+                            <textarea required asp-for="Comment.Content" rows="2" cols="90" class="form-control" aria-label="With textarea" placeholder="Comment..."></textarea>
                             <div class="px-4 "> <button type="submit" class="btn btn-primary">Comment &nbsp;<i class="far fa-comment-dots"></i></button> </div>
                         </div>
                     </form>
                     <br />
-                    <div class="container">
-                        <div class="col-md-8 col-md-offset-2 col-sm-12">
-                            <div class="comment-wrapper">
-                                <div class="panel-body">
-                                    <ul class="media-list">
-                                        @foreach (var comment in Model.Post.Comments)
-                                        {
-                                            <li class="media">
-                                                <a href="#" class="pull-left">
-                                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="d-block ui-w-40 rounded-circle">
-                                                </a>
-                                                <div class="media-body ml-3">
-                                                    <strong class="text-success">@Model.Post.UserUserName</strong>
-                                                    <span class="text-muted pull-right">
-                                                        <small class="text-muted">30 min ago</small>
-                                                    </span>
-                                                    <p>
-                                                        @Html.Raw(comment.SanitizedContent)
-                                                    </p>
-                                                    <button type="submit" class="btn btn-primary" onclick="showAddCommentForm(@comment.Id)">Comment &nbsp;<i class="far fa-comment-dots"></i></button>
-                                                </div>
-                                            </li>
-                                        }
-                                        @{ DisplayComments(null); }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @{ DisplayComments(null); }
                 </div>
             </div>
         </div>
@@ -146,6 +127,17 @@
 </div>
 <br />
 <br />
+<div class="container">
+    @foreach (var comment in Model.Top3Comments)
+    {
+        <div>
+            @comment.Content;
+        </div>
+        <br />
+    }
+</div>
+<button type="submit" class="btn btn-primary" onclick="showAddComment()">Comment &nbsp;<i class="far fa-comment-dots"></i></button>
+<a href="#" onclick="showAddComment()">reply</a>
 <div class="container">
     <form asp-controller="Comment" asp-action="CreateComment" method="post" id="AddCommentForm" style="display: none">
         <input type="hidden" name="PostId" value="@Model.Post.Id" />
@@ -161,17 +153,20 @@
 </div>
 <h1 class="text-center">Top 3 Comments</h1>
 <br />
-<div class="container">
-    @foreach (var comment in Model.Top3Comments)
-    {
-        <div>
-            @comment.Content;
-        </div>
-        <br />
-    }
-</div>
 @section Scripts {
     <script>
+        //function AddComment() {
+        //    var html = "<h1>Hello i am Kris bruh!!!!!!!!!!!</h1>"
+        //    $("#comment").empty().append(html).show("slow");
+        //}
+
+        function showAddComment(commentId) {
+            $('#' + commentId).show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $('#' + commentId).offset().top
+            }, 1000);
+        }
+
         function showAddCommentForm(parentId) {
             $("#AddCommentForm input[name='ParentId']").val(parentId);
             $("#AddCommentForm").show();
