@@ -1,0 +1,10 @@
+﻿@model UpYourChannel.Web.ViewModels.Comment.CommentInputModel
+
+<form asp-controller="Comment" asp-action="CreateComment" method="post">
+    <input type="hidden" name="PostId" value="@Model.PostId" />
+    <input type="hidden" name="ParentId" value="@Model.ParentId" />
+    <textarea name="Content" rows="2" style="width:50%"; class="form-control" aria-label="With textarea" placeholder="comment..."></textarea>
+    <div>
+        <input type="submit" class="btn btn-primary" value="add comment" />
+    </div>
+</form>

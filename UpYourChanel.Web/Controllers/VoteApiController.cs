@@ -10,7 +10,7 @@ namespace UpYourChannel.Web.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class VoteApiController : ControllerBase
     {
         private readonly IVoteService votesService;
@@ -29,11 +29,21 @@ namespace UpYourChannel.Web.Controllers
         // Response body: {"votesCount":16}
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<VoteResponseModel>> Post(VoteInputViewModel input)
+        public async Task<ActionResult<VoteResponseModel>> VoteForPost(VoteInputViewModel input)
         {
             var userId = this.userManager.GetUserId(this.User);
             await this.votesService.VoteAsync(userId, input.PostId, input.IsUpVote);
             var votes = this.votesService.AllVotesForPost(input.PostId);
+            return new VoteResponseModel { VotesCount = votes };
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<VoteResponseModel>> VoteForComment(VoteInputViewModel input)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            await this.votesService.VoteForCommentAsync(userId, input.PostId, input.IsUpVote);
+            var votes = this.votesService.AllVotesForComment(input.PostId);
             return new VoteResponseModel { VotesCount = votes };
         }
     }

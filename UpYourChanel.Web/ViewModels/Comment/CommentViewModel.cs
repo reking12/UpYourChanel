@@ -19,5 +19,7 @@ namespace UpYourChannel.Web.ViewModels.Comment
         public string SanitizedContent => new HtmlSanitizer().Sanitize(Content);
 
         public DateTime CreatedOn { get; set; }
+
+        public int VotesCount { get; set; }
     }
 }

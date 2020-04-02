@@ -3,7 +3,7 @@
     this.ViewData["Title"] = Model.Post.Title;
 
     this.ViewData["Title"] = Model.Post.Title;
-    void DisplayComments(int? parentId)
+    async Task DisplayComments(int? parentId)
     {
         var comments = this.Model.Post.Comments.Where(x => x.ParentId == parentId);
         if (!comments.Any())
@@ -13,43 +13,52 @@
 
         @foreach (var comment in comments)
         {
+            var id = "v" + comment.Id;
             <div class="container-fluid mt-100">
                 <div class="row">
                     <div class="col-md-12">
                         @*<div class="card mb-4">
                             <div class="card-header">*@
                         <div class="media flex-wrap w-100 ml-4">
-                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="d-block  rounded-circle" height="60">
+                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="d-block rounded-circle" height="60">
                             <div class="media-body ml-3">
                                 <strong class="mt-0 text-success">@Model.Post.UserUserName</strong>
                                 <div class="mt-0 text-muted small">@comment.CreatedOn.ToString()</div>
-                                <div>
-                                    <a href="#">edit</a>
-                                    <a href="#" onclick="showAddComment(@comment.Id)">reply</a>
-                                </div>
+
                                 @Html.Raw(comment.SanitizedContent)
-                                <div class="text-muted small">
-                                    <a href="#" onclick="sendVote(@Model.Post.Id, true)">
+                                <div class="text-muted ">
+                                    <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, true)">
                                         <i class="fa fa-thumbs-up"></i>
                                     </a>
-                                    <a id="votesCount">@Model.Post.VotesCount</a>
-                                    <a href="#" onclick="sendVote(@Model.Post.Id, false)">
+                                    <a id=@id>@comment.VotesCount</a>
+                                    <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, false)">
                                         <i class="fa fa-thumbs-down"></i>
                                     </a>
-                                </div>
-                                <div id="@comment.Id" style="display : none">
-                                    <br />
-                                    <div class="col-md-3">
-                                        <textarea rows="1" cols="1" class="form-control" aria-label="With textarea"></textarea>
+                                    <a href="javascript:void(0)">edit</a>
+                                    <a href="javascript:void(0)" onclick="showAddComment(@comment.Id)">reply</a>
+
+                                    <div id="@comment.Id" style="display : none">
+                                        <hr />
+                                        <form asp-controller="Comment" asp-action="CreateComment" method="post">
+                                            <input type="hidden" name="PostId" value="@Model.Post.Id" />
+                                            <input type="hidden" name="ParentId" value="@comment.Id" />
+                                            <textarea class="someTextBox form-control" name="Content" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
+                                            <div>
+                                                <a href="#" onclick="$(this).closest('form').submit()">add comment</a>
+                                            </div>
+                                        </form>
+                                        @*<partial name="_CreateCommentPartial" model="new UpYourChannel.Web.ViewModels.Comment.CommentInputModel
+                                            { ParentId = comment.Id, PostId = Model.Post.Id }" />*@
                                     </div>
                                 </div>
+
                             </div>
 
                             <button type="submit" class="btn btn-primary" onclick="showAddCommentForm(@comment.Id)">Comment &nbsp;<i class="far fa-comment-dots"></i></button>
                         </div>
                         <hr />
                         <div class="card-body">
-                            @{ DisplayComments(comment.Id); }
+                            @{ await DisplayComments(comment.Id); }
                         </div>
                     </div>
                 </div>
@@ -90,19 +99,16 @@
                         <div class="text-muted ml-3">
                             <form id="votesForm" method="post"></form>
                             <div>
-                                <a href="#" onclick="sendVote(@Model.Post.Id, true)">
+                                <a href="javascript:void(0)" onclick="sendVote(@Model.Post.Id, true)">
                                     <i class="fa fa-thumbs-up"></i>
                                 </a>
                             </div>
                             <div id="votesCount">@Model.Post.VotesCount</div>
                             <div>
-                                <a href="#" onclick="sendVote(@Model.Post.Id, false)">
+                                <a href="javascript:void(0)" onclick="sendVote(@Model.Post.Id, false)">
                                     <i class="fa fa-thumbs-down"></i>
                                 </a>
                             </div>
-                            <a href="#" onclick="AddNewHeader()">HELLO</a>
-                            <section id="tweets">
-                            </section>
                         </div>
                     </div>
                 </div>
@@ -114,12 +120,13 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="px-4 pt-3 form-inline">
                             <input type="hidden" name="Comment.PostId" value="@Model.Post.Id">
-                            <textarea required asp-for="Comment.Content" rows="2" cols="90" class="form-control" aria-label="With textarea" placeholder="Comment..."></textarea>
+                            <textarea required asp-for="Comment.Content" rows="2" cols="70" class="form-control" aria-label="With textarea" placeholder="Comment..."></textarea>
                             <div class="px-4 "> <button type="submit" class="btn btn-primary">Comment &nbsp;<i class="far fa-comment-dots"></i></button> </div>
+                            <div class="px-4 "> <button class="btn btn-primary">Answer &nbsp;<i class="far fa-comment-dots"></i></button> </div>
                         </div>
                     </form>
                     <br />
-                    @{ DisplayComments(null); }
+                    @{ await DisplayComments(null); }
                 </div>
             </div>
         </div>
@@ -155,16 +162,11 @@
 <br />
 @section Scripts {
     <script>
-        //function AddComment() {
-        //    var html = "<h1>Hello i am Kris bruh!!!!!!!!!!!</h1>"
-        //    $("#comment").empty().append(html).show("slow");
-        //}
-
         function showAddComment(commentId) {
-            $('#' + commentId).show();
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $('#' + commentId).offset().top
-            }, 1000);
+            $('#' + commentId).toggle();
+            //$([document.documentElement, document.body]).animate({
+            //    scrollTop: $('#' + commentId).offset().top
+            //}, 1000);
         }
 
         function showAddCommentForm(parentId) {
@@ -179,7 +181,7 @@
             var token = $("#votesForm input[name=__RequestVerificationToken]").val();
             var json = { postId: postId, isUpVote: isUpVote };
             $.ajax({
-                url: "/api/VoteApi",
+                url: "/api/VoteApi/VoteForPost",
                 type: "POST",
                 data: JSON.stringify(json),
                 contentType: "application/json; charset=utf-8",
@@ -191,9 +193,39 @@
             });
         }
 
-        function AddNewHeader() {
-            var html = "<h1>Hello i am Kris bruh!!!!!!!!!!!</h1>"
-            $("#tweets").append(html);
+
+        function sendVoteForComment(postId, isUpVote) {
+            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
+            var json = { postId: postId, isUpVote: isUpVote };
+            $.ajax({
+                url: "/api/VoteApi/VoteForComment",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: { 'X-CSRF-TOKEN': token },
+                success: function (data) {
+                    $("#v" + postId).html(data.votesCount);
+                }
+            });
         }
+
+//      $('#someTextBox').keypress(function (event) {
+//          var keycode = (event.keyCode ? event.keyCode : event.which);
+//          if (keycode == '13') {
+//              alert('You pressed a "enter" key in textbox');
+//          }
+//      });
+
+//      $(document).ready(function() {
+
+//$('.submit_on_enter').keydown(function(event) {
+//  // enter has keyCode = 13, change it if you want to use another button
+//  if (event.keyCode == 13) {
+//    this.form.submit();
+//    return false;
+//  }
+//});
+
     </script>
 }

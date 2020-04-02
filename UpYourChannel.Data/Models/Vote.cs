@@ -10,9 +10,13 @@ namespace UpYourChannel.Data.Models
 
         public virtual User User { get; set; }
 
-        public int PostId { get; set; }
+        public int? PostId { get; set; }
 
         public virtual Post Post { get; set; }
+
+        public int? CommentId { get; set; }
+
+        public virtual Comment Comment { get; set; }
 
         public VoteType VoteType { get; set; }
     }

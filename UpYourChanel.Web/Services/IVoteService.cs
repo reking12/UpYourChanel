@@ -9,6 +9,10 @@ namespace UpYourChannel.Web.Services
     {
         Task VoteAsync(string userId, int postId, bool isUpVote);
 
+        Task VoteForCommentAsync(string userId, int commentId, bool isUpVote);
+
         int AllVotesForPost(int postId);
+
+        int AllVotesForComment(int commentId);
     }
 }
