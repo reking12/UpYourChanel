@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using UpYourChannel.Data.Models;
 using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels;
 using UpYourChannel.Web.ViewModels.Video;
@@ -13,17 +15,20 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
     {
         private readonly IRequestedVideoService requestedVideoService;
         private readonly IVideoService videoService;
+        private readonly UserManager<User> userManager;
 
-        public RequestedVideoController(IRequestedVideoService requestedVideoService, IVideoService videoService)
+        public RequestedVideoController(IRequestedVideoService requestedVideoService, IVideoService videoService, UserManager<User> userManager)
         {
             this.requestedVideoService = requestedVideoService;
             this.videoService = videoService;
+            this.userManager = userManager;
         }    
 
 
         public async Task<IActionResult> AddVideoAndRemoveItFromRequested(VideoInputModel input)
         {
-            videoService.AddVideo(input);
+            var userId = userManager.GetUserId(this.User);
+            await videoService.AddVideoAsync(input.Link,input.Title,input.Description, userId);
             await requestedVideoService.RemoveRequestedVideoAsync(input.Id);
             return Redirect("/Administration/RequestedVideo/AllRequestedVideos");
         }

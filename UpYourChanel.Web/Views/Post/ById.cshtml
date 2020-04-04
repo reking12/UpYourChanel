@@ -14,6 +14,7 @@
         @foreach (var comment in comments)
         {
             var id = "v" + comment.Id;
+            var editComment = "e" + comment.Id;
             <div class="container-fluid mt-100">
                 <div class="row">
                     <div class="col-md-12">
@@ -22,7 +23,7 @@
                         <div class="media flex-wrap w-100 ml-4">
                             <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="d-block rounded-circle" height="60">
                             <div class="media-body ml-3">
-                                <strong class="mt-0 text-success">@Model.Post.UserUserName</strong>
+                                <strong class="mt-0 text-success">@comment.UserUserName</strong>
                                 <div class="mt-0 text-muted small">@comment.CreatedOn.ToString()</div>
 
                                 @Html.Raw(comment.SanitizedContent)
@@ -34,9 +35,22 @@
                                     <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, false)">
                                         <i class="fa fa-thumbs-down"></i>
                                     </a>
-                                    <a href="javascript:void(0)">edit</a>
+                                    @if (comment.IsThisUser == true)
+                                    {
+                                        <a href="javascript:void(0)" onclick="showEditComment(@comment.Id)">edit</a>
+                                    }
                                     <a href="javascript:void(0)" onclick="showAddComment(@comment.Id)">reply</a>
-
+                                    <div id="@editComment" style="display : none">
+                                        <hr />
+                                        <form asp-controller="Comment" asp-action="EditComment" method="post">
+                                            <input type="hidden" name="postId" value="@Model.Post.Id" />
+                                            <input type="hidden" name="commentId" value="@comment.Id" />
+                                            <textarea class="someTextBox form-control" name="newContent" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
+                                            <div>
+                                                <a href="#" onclick="$(this).closest('form').submit()">edit comment</a>
+                                            </div>
+                                        </form>
+                                    </div>
                                     <div id="@comment.Id" style="display : none">
                                         <hr />
                                         <form asp-controller="Comment" asp-action="CreateComment" method="post">
@@ -135,17 +149,6 @@
 <br />
 <br />
 <div class="container">
-    @foreach (var comment in Model.Top3Comments)
-    {
-        <div>
-            @comment.Content;
-        </div>
-        <br />
-    }
-</div>
-<button type="submit" class="btn btn-primary" onclick="showAddComment()">Comment &nbsp;<i class="far fa-comment-dots"></i></button>
-<a href="#" onclick="showAddComment()">reply</a>
-<div class="container">
     <form asp-controller="Comment" asp-action="CreateComment" method="post" id="AddCommentForm" style="display: none">
         <input type="hidden" name="PostId" value="@Model.Post.Id" />
         <input type="hidden" name="ParentId" value="0" />
@@ -160,6 +163,15 @@
 </div>
 <h1 class="text-center">Top 3 Comments</h1>
 <br />
+<div class="container">
+    @foreach (var comment in Model.Top3Comments)
+    {
+        <div>
+            @comment.Content;
+        </div>
+        <br />
+    }
+</div>
 @section Scripts {
     <script>
         function showAddComment(commentId) {
@@ -167,6 +179,10 @@
             //$([document.documentElement, document.body]).animate({
             //    scrollTop: $('#' + commentId).offset().top
             //}, 1000);
+        }
+
+        function showEditComment(commentId) {
+            $('#e' + commentId).toggle();
         }
 
         function showAddCommentForm(parentId) {

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UpYourChannel.Web.ViewModels;
+﻿using System.Threading.Tasks;
 using UpYourChannel.Web.ViewModels.Video;
 
 namespace UpYourChannel.Web.Services
 {
     public interface IVideoService 
     {
-        void AddVideo(VideoInputModel input);
+        Task AddVideoAsync(string link, string title, string description, string userId);
 
         AllVideosViewModel AllVideos();
 

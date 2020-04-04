@@ -27,5 +27,12 @@ namespace UpYourChannel.Web.Controllers
             await commentService.CreateCommentAsync(input.PostId, input.UserId, input.Content, input.ParentId);
             return Redirect($"/Post/ById/{input.PostId}");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditComment(int commentId, string newContent, int postId)
+        {
+            await commentService.EditComment(commentId,newContent);
+            return Redirect($"/Post/ById/{postId}");
+        }
     }
 }

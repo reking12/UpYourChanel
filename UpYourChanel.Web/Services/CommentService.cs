@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,13 @@ namespace UpYourChannel.Web.Services
         {
             var comments = db.Comments.Where(x => x.PostId == postId).OrderBy(x => x).Take(3);
             return mapper.Map<IEnumerable<CommentViewModel>>(comments);
+        }
+
+        public async Task EditComment(int commentId, string newContent)
+        {
+            var comment = await db.Comments.FirstOrDefaultAsync(x => x.Id == commentId);
+            comment.Content = newContent;
+            await db.SaveChangesAsync();
         }
     }
 }

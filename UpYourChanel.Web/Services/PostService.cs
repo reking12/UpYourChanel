@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.CodeAnalysis.FlowAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
-using UpYourChannel.Web.ViewModels.Comment;
 using UpYourChannel.Web.ViewModels.Post;
 
 namespace UpYourChannel.Web.Services
@@ -26,20 +22,21 @@ namespace UpYourChannel.Web.Services
             this.mapper = mapper;
         }
 
-        public PostIndexModel ById(int id)
+        public Post ById(int id)
         {
-            var postFromDb = db.Posts.Include(x => x.User)
-                .Include(x => x.Comments).FirstOrDefault(x => x.Id == id);
-            var post = new PostIndexModel()
-            {
-                Post = mapper.Map<PostViewModel>(postFromDb)
-            };
-            return post;
+            // then include e da se hodi navutre
+            return db.Posts.Include(x => x.User)
+                .Include(x => x.Comments).ThenInclude(x => x.User).FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task CreatePost(PostInputViewModel input)
+        public async Task CreatePostAsync(string title, string content, string userId)
         {
-            var post = mapper.Map<Post>(input);
+            var post = new Post
+            { 
+                Title = title,
+                Content = content,
+                UserId = userId
+            };
             await db.Posts.AddAsync(post);
             await db.SaveChangesAsync();
         }
@@ -53,19 +50,9 @@ namespace UpYourChannel.Web.Services
         }
 
         //TODO: make it async
-        public AllPostsViewModel AllPosts()
+        public IQueryable<Post> AllPosts()
         {
-            var dbPosts = db.Posts.Include(x => x.User).Include(x => x.Comments);
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Comment, CommentViewModel>();
-                cfg.CreateMap<Post, PostViewModel>()
-                .ForMember(x => x.Comments, y => y.MapFrom(p => p.Comments));
-            });
-            var posts = new AllPostsViewModel()
-            {
-                Posts = dbPosts.ProjectTo<PostViewModel>(configuration).ToList()
-            };
+            return db.Posts.Include(x => x.User).Include(x => x.Comments);  
             //----- Old Way
             //var posts = new AllPostsViewModel()
             //{
@@ -81,7 +68,6 @@ namespace UpYourChannel.Web.Services
             //        UserUserName = x.User.UserName
             //    })
             //};
-            return posts;
         }
         public async Task<PostInputViewModel> ReturnPostByIdAsync(int postId)
         {

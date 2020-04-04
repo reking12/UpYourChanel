@@ -11,5 +11,7 @@ namespace UpYourChannel.Web.Services
         IEnumerable<CommentViewModel> AllCommentsForPost(int postId);
 
         IEnumerable<CommentViewModel> Top3CommentsForPost(int postId);
+
+        Task EditComment(int commentId, string newContent);
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UpYourChannel.Data.Models;
 using UpYourChannel.Web.ViewModels.Post;
 
@@ -6,13 +8,13 @@ namespace UpYourChannel.Web.Services
 {
      public interface IPostService
     {
-        PostIndexModel ById(int id);
+        Post ById(int id);
 
-        Task CreatePost(PostInputViewModel input);
+        Task CreatePostAsync(string title, string content, string userId);
 
         Task EditPostAsync(int postId, string newContent, string newTitle);
 
-        AllPostsViewModel AllPosts();
+        IQueryable<Post> AllPosts();
 
         Task<int> PostsCountAsync();
 

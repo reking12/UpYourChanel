@@ -14,6 +14,8 @@ namespace UpYourChannel.Web.ViewModels.Comment
 
         public string UserUserName { get; set; }
 
+        public string UserId { get; set; }
+
         public string Content { get; set; }
 
         public string SanitizedContent => new HtmlSanitizer().Sanitize(Content);
@@ -21,5 +23,7 @@ namespace UpYourChannel.Web.ViewModels.Comment
         public DateTime CreatedOn { get; set; }
 
         public int VotesCount { get; set; }
+
+        public bool IsThisUser { get; set; }
     }
 }
