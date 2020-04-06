@@ -21,50 +21,53 @@
                         @*<div class="card mb-4">
                             <div class="card-header">*@
                         <div class="media flex-wrap w-100 ml-4">
-                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="d-block rounded-circle" height="60">
+                            <img src="https://www.haber.ba/wp-content/uploads/2018/03/Azis-450x270.jpg" alt="" class="d-block rounded-circle" style="width:50px; height:50px">
                             <div class="media-body ml-3">
                                 <strong class="mt-0 text-success">@comment.UserUserName</strong>
                                 <div class="mt-0 text-muted small">@comment.CreatedOn.ToString()</div>
 
                                 @Html.Raw(comment.SanitizedContent)
-                                <div class="text-muted ">
-                                    <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, true)">
-                                        <i class="fa fa-thumbs-up"></i>
-                                    </a>
-                                    <a id=@id>@comment.VotesCount</a>
-                                    <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, false)">
-                                        <i class="fa fa-thumbs-down"></i>
-                                    </a>
-                                    @if (comment.IsThisUser == true)
-                                    {
-                                        <a href="javascript:void(0)" onclick="showEditComment(@comment.Id)">edit</a>
-                                    }
-                                    <a href="javascript:void(0)" onclick="showAddComment(@comment.Id)">reply</a>
-                                    <div id="@editComment" style="display : none">
-                                        <hr />
-                                        <form asp-controller="Comment" asp-action="EditComment" method="post">
-                                            <input type="hidden" name="postId" value="@Model.Post.Id" />
-                                            <input type="hidden" name="commentId" value="@comment.Id" />
-                                            <textarea class="someTextBox form-control" name="newContent" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
-                                            <div>
-                                                <a href="#" onclick="$(this).closest('form').submit()">edit comment</a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div id="@comment.Id" style="display : none">
-                                        <hr />
-                                        <form asp-controller="Comment" asp-action="CreateComment" method="post">
-                                            <input type="hidden" name="PostId" value="@Model.Post.Id" />
-                                            <input type="hidden" name="ParentId" value="@comment.Id" />
-                                            <textarea class="someTextBox form-control" name="Content" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
-                                            <div>
-                                                <a href="#" onclick="$(this).closest('form').submit()">add comment</a>
-                                            </div>
-                                        </form>
-                                        @*<partial name="_CreateCommentPartial" model="new UpYourChannel.Web.ViewModels.Comment.CommentInputModel
-                                            { ParentId = comment.Id, PostId = Model.Post.Id }" />*@
-                                    </div>
+                            <div class="text-muted ">   
+                                <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, true)">
+                                    <i class="fa fa-thumbs-up"></i>
+                                </a>
+                                <a id=@id>@comment.VotesCount</a>
+                                <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, false)">
+                                    <i class="fa fa-thumbs-down"></i>
+                                </a>
+                                <a href="javascript:void(0)" onclick="showAddComment(@comment.Id)">reply</a>
+                                @if (comment.IsThisUser == true)
+                                {
+                                    <a href="javascript:void(0)" onclick="showEditComment(@comment.Id)">edit</a>
+                                    <a class="text-danger" 
+                                       asp-controller="Comment" asp-action="DeleteComment" 
+                                       asp-route-id="@comment.Id" asp-route-postId="@Model.Post.Id" >delete</a>
+                                }
+                                <div id="@editComment" style="display : none">
+                                    <hr />
+                                    <form asp-controller="Comment" asp-action="EditComment" method="post">
+                                        <input type="hidden" name="postId" value="@Model.Post.Id" />
+                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                        <textarea class="someTextBox form-control" name="newContent" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
+                                        <div>
+                                            <a href="#" onclick="$(this).closest('form').submit()">edit comment</a>
+                                        </div>
+                                    </form>
                                 </div>
+                                <div id="@comment.Id" style="display : none">
+                                    <hr />
+                                    <form asp-controller="Comment" asp-action="CreateComment" method="post">
+                                        <input type="hidden" name="PostId" value="@Model.Post.Id" />
+                                        <input type="hidden" name="ParentId" value="@comment.Id" />
+                                        <textarea class="someTextBox form-control" name="Content" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
+                                        <div>
+                                            <a href="#" onclick="$(this).closest('form').submit()">add comment</a>
+                                        </div>
+                                    </form>
+                                    @*<partial name="_CreateCommentPartial" model="new UpYourChannel.Web.ViewModels.Comment.CommentInputModel
+            { ParentId = comment.Id, PostId = Model.Post.Id }" />*@
+                                </div>
+                            </div>
 
                             </div>
 
@@ -174,6 +177,7 @@
 </div>
 @section Scripts {
     <script>
+        
         function showAddComment(commentId) {
             $('#' + commentId).toggle();
             //$([document.documentElement, document.body]).animate({

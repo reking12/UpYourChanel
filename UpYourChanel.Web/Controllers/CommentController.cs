@@ -31,7 +31,13 @@ namespace UpYourChannel.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditComment(int commentId, string newContent, int postId)
         {
-            await commentService.EditComment(commentId,newContent);
+            await commentService.EditCommentAsync(commentId,newContent);
+            return Redirect($"/Post/ById/{postId}");
+        }
+
+        public async Task<IActionResult> DeleteComment(int id, int postId)
+        {
+            await commentService.DeleteCommentByIdAsync(id);
             return Redirect($"/Post/ById/{postId}");
         }
     }

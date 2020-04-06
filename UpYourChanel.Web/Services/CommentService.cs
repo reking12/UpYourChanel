@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,10 +45,20 @@ namespace UpYourChannel.Web.Services
             return mapper.Map<IEnumerable<CommentViewModel>>(comments);
         }
 
-        public async Task EditComment(int commentId, string newContent)
+        public async Task EditCommentAsync(int commentId, string newContent)
         {
             var comment = await db.Comments.FirstOrDefaultAsync(x => x.Id == commentId);
             comment.Content = newContent;
+            await db.SaveChangesAsync();
+        }
+
+        public async Task DeleteCommentByIdAsync(int id)
+        {
+            var comment = await db.Comments.FirstOrDefaultAsync(x => x.Id == id);
+            var votes = db.Votes.Where(x => x.CommentId == id);
+            await db.Comments.Where(x => x.ParentId == id).ForEachAsync(x => x.ParentId = null);
+            db.Comments.Remove(comment);
+            db.Votes.RemoveRange(votes);
             await db.SaveChangesAsync();
         }
     }

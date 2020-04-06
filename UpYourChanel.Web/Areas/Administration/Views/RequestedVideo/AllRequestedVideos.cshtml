@@ -1,10 +1,7 @@
-﻿@using UpYourChannel.Web.ViewModels.RequestedVideo
-@model AllRequestedVideosViewModel
+﻿@using UpYourChannel.Web.ViewModels.Video
+@using UpYourChannel.Web.Paging
+@model PaginatedList<VideoInputModel>
 
-<br />
-<br />
-<br />
-<br />
 <head>
     <link rel="stylesheet" href="~/css/d.css" />
 </head>
@@ -14,7 +11,7 @@
 <br />
 <div class="container">
     <div class="row">
-        @foreach (var video in Model.AllVideos)
+        @foreach (var video in Model)
         {
 
             <div class="col-sm-4">
@@ -26,15 +23,48 @@
                 <div>Description: @video.Description</div>
                 <br />
                 <div>
-                    <p class="float-left">
-                        @Html.ActionLink("Add", "AddVideoAndRemoveItFromRequested", "RequestedVideo", video, new { @class = "btn btn-primary" })
-                    </p>
-                    <p class="float-right">
-                        @Html.ActionLink("Remove", "RemoveRequestedVideo", "RequestedVideo", video, new { @class = "btn btn-primary" })
-                    </p>
+                    <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="AddVideoAndRemoveItFromRequested" method="post">
+                        <input type="hidden" name="Id" value="@video.Id" />
+                        <input type="hidden" name="Link" value="@video.Link" />
+                        <input type="hidden" name="Title" value="@video.Title" />
+                        <input type="hidden" name="Description" value="@video.Description" />
+                        <div>
+                            <input class="float-left btn btn-primary" type="submit" value="Add" />
+                        </div>
+                    </form>
+                    <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="RemoveRequestedVideo" method="post">
+                        <input type="hidden" name="Id" value="@video.Id" />
+                        <div>
+                            <input class="float-right btn btn-primary" type="submit" value="Remove" />
+                        </div>
+                    </form>
                 </div>
             </div>
         }
     </div>
 </div>
 <br />
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<div class="text-center">
+    <a asp-area="Administration" asp-controller="RequestedVideo" asp-action="AllRequestedVideos"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn btn-default page-item  @prevDisabled">
+        Previous
+    </a>
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a asp-area="Administration" asp-controller="RequestedVideo" asp-action="AllRequestedVideos"
+           asp-route-pageNumber="@(i)"
+           class="btn btn-default">
+            @i
+        </a>
+    }
+    <a asp-area="Administration" asp-controller="RequestedVideo" asp-action="AllRequestedVideos"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+</div>
