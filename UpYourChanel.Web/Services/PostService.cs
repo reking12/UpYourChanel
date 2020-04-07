@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
@@ -11,13 +10,11 @@ namespace UpYourChannel.Web.Services
 {
     public class PostService : IPostService
     {
-        private readonly ICommentService commentService;
         private readonly ApplicationDbContext db;
         private readonly IMapper mapper;
 
-        public PostService(ICommentService commentService, ApplicationDbContext db, IMapper mapper)
+        public PostService(ApplicationDbContext db, IMapper mapper)
         {
-            this.commentService = commentService;
             this.db = db;
             this.mapper = mapper;
         }

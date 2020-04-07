@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Models;
@@ -10,7 +9,7 @@ using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels.Comment;
 using UpYourChannel.Web.ViewModels.Post;
 using AutoMapper.QueryableExtensions;
-using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -92,7 +91,7 @@ namespace UpYourChannel.Web.Controllers
             }
             postViewModel.Post.Comments.Where(x => x.UserId == userId).ToList().ForEach(x => x.IsThisUser = true);
             postViewModel.Post.VotesCount = voteService.AllVotesForPost(id);
-            postViewModel.Top3Comments = commentService.Top3CommentsForPost(id);
+            postViewModel.Top3Comments = mapper.Map<IEnumerable<CommentViewModel>>(commentService.Top3CommentsForPost(id));
             return this.View(postViewModel);
         }
 

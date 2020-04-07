@@ -1,25 +1,19 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
-using UpYourChannel.Web.ViewModels.Comment;
 
 namespace UpYourChannel.Web.Services
 {
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext db;
-        private readonly IMapper mapper;
 
-        public CommentService(ApplicationDbContext db, IMapper mapper)
+        public CommentService(ApplicationDbContext db)
         {
             this.db = db;
-            this.mapper = mapper;
         }
         public async Task CreateCommentAsync(int postId, string userId, string content,int? parentId)
         {
@@ -34,15 +28,14 @@ namespace UpYourChannel.Web.Services
             await db.SaveChangesAsync();
         }
 
-        public IEnumerable<CommentViewModel> AllCommentsForPost(int postId)
+        public IEnumerable<Comment> AllCommentsForPost(int postId)
         {
-            return mapper.Map<IEnumerable<CommentViewModel>>(db.Comments.Where(x => x.PostId == postId));
+            return db.Comments.Where(x => x.PostId == postId);
         }
 
-        public IEnumerable<CommentViewModel> Top3CommentsForPost(int postId)
+        public IEnumerable<Comment> Top3CommentsForPost(int postId)
         {
-            var comments = db.Comments.Where(x => x.PostId == postId).OrderBy(x => x).Take(3);
-            return mapper.Map<IEnumerable<CommentViewModel>>(comments);
+            return db.Comments.Where(x => x.PostId == postId).OrderByDescending(x => x.Votes.Sum(y => (int)y.VoteType)).Take(3);
         }
 
         public async Task EditCommentAsync(int commentId, string newContent)

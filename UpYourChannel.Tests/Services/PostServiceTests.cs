@@ -5,7 +5,7 @@ using UpYourChannel.Data.Data;
 using UpYourChannel.Web.Services;
 using Xunit;
 
-namespace UpYourChannel.Tests
+namespace UpYourChannel.Tests.Services
 {
     public class PostServiceTests
     {
@@ -16,10 +16,10 @@ namespace UpYourChannel.Tests
                     .UseInMemoryDatabase(databaseName: "Posts_Database")
                     .Options;
             var dbContext = new ApplicationDbContext(options);
-            var postService = new PostService(null, dbContext, null);
+            var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "h1");
-            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "h2");
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
+            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u2");
 
             var postCount = await dbContext.Posts.CountAsync();
             var post = await dbContext.Posts.FirstAsync();
@@ -27,7 +27,7 @@ namespace UpYourChannel.Tests
             Assert.Equal(1, post.Id);
             Assert.Equal("Tweets", post.Title);
             Assert.Equal("Hello i am tweet", post.Content);
-            Assert.Equal("h1", post.UserId);
+            Assert.Equal("u1", post.UserId);
             Assert.Equal(2, postCount);
         }
 
@@ -38,11 +38,11 @@ namespace UpYourChannel.Tests
                     .UseInMemoryDatabase(databaseName: "PostsCount_Database")
                     .Options;
             var dbContext = new ApplicationDbContext(options);
-            var postService = new PostService(null, dbContext, null);
+            var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "h1");
-            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "h2");
-
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
+            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u2");
+        
             Assert.Equal(2, await postService.PostsCountAsync());
         }
 
@@ -53,9 +53,9 @@ namespace UpYourChannel.Tests
                     .UseInMemoryDatabase(databaseName: "EditPost_Database")
                     .Options;
             var dbContext = new ApplicationDbContext(options);
-            var postService = new PostService(null, dbContext, null);
+            var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "h1");
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
             await postService.EditPostAsync(1,"Hello i am new content","Hello i am new title");
 
             var post = await dbContext.Posts.FirstAsync();
@@ -63,7 +63,7 @@ namespace UpYourChannel.Tests
             Assert.Equal(1, post.Id);
             Assert.Equal("Hello i am new content", post.Content);
             Assert.Equal("Hello i am new title", post.Title);
-            Assert.Equal("h1", post.UserId);
+            Assert.Equal("u1", post.UserId);
             Assert.Equal(1, await postService.PostsCountAsync());
         }
 
@@ -74,15 +74,36 @@ namespace UpYourChannel.Tests
                     .UseInMemoryDatabase(databaseName: "B_Database")
                     .Options;
             var dbContext = new ApplicationDbContext(options);
-            var postService = new PostService(null, dbContext, null);
+            var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "h1");
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
             var post = postService.ById(1);
 
             Assert.Equal(1, post.Id);
             Assert.Equal("Tweets", post.Title);
             Assert.Equal("Hello i am tweet", post.Content);
-            Assert.Equal("h1", post.UserId);
+            Assert.Equal("u1", post.UserId);
+        }
+
+        [Fact]
+        public async Task AllPosts()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                    .UseInMemoryDatabase(databaseName: "AllPosts_Database")
+                    .Options;
+            var dbContext = new ApplicationDbContext(options);
+            var postService = new PostService(dbContext, null);
+
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
+            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u1");
+
+            var allPosts = postService.AllPosts();
+            var firstPost = await allPosts.FirstAsync();
+
+            Assert.Equal("Tweets", firstPost.Title);
+            Assert.Equal("Hello i am tweet", firstPost.Content);
+            Assert.Equal("u1", firstPost.UserId);
+            Assert.Equal(2, await allPosts.CountAsync());
         }
     }
 }

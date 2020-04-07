@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using UpYourChannel.Web.ViewModels.Comment;
+using UpYourChannel.Data.Models;
 
 namespace UpYourChannel.Web.Services
 {
@@ -8,9 +8,9 @@ namespace UpYourChannel.Web.Services
     {
         Task CreateCommentAsync(int postId, string UserId, string content, int? parentId);
 
-        IEnumerable<CommentViewModel> AllCommentsForPost(int postId);
+        IEnumerable<Comment> AllCommentsForPost(int postId);
 
-        IEnumerable<CommentViewModel> Top3CommentsForPost(int postId);
+        IEnumerable<Comment> Top3CommentsForPost(int postId);
 
         Task EditCommentAsync(int commentId, string newContent);
 

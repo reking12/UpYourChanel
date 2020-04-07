@@ -2,12 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
-using UpYourChannel.Data.Models;
 using UpYourChannel.Web.Services;
-using UpYourChannel.Web.ViewModels.Video;
 using Xunit;
 
-namespace UpYourChannel.Tests
+namespace UpYourChannel.Tests.Services
 {
     public class VideoServiceTests
     {
