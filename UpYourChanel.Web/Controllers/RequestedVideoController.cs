@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UpYourChannel.Web.Services;
-using UpYourChannel.Web.ViewModels;
+using UpYourChannel.Web.ViewModels.Video;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -20,13 +20,14 @@ namespace UpYourChannel.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRequestedVideo(AddVideoInputViewModel input)
+        public async Task<IActionResult> AddRequestedVideo(VideoInputModel input)
         {
             if (!ModelState.IsValid)
             {
-                return this.View(input);
+                return this.View("~/Views/Video/AddVideo.cshtml", input);
             }
-            await requestedVideoService.AddRequestedVideoAsync(input);
+            await requestedVideoService.AddRequestedVideoAsync(input.Title, input.Link, input.Description);
+            TempData["SuccessOnAddVideo"] = "Thanks for adding your video.";
             return Redirect("/Video/AllVideos");
         }
     }

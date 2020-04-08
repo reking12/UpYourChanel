@@ -1,32 +1,17 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace UpYourChannel.Web.ViewModels.Video
 {
     public class VideoInputModel
     {
-        public int Id { get; set; }
-
+        [Required]
         public string Title { get; set; }
 
+        [Url]
+        [Required]
         public string Link { get; set; }
 
+        [Required]
         public string Description { get; set; }
-
-        public string IFrameSource
-        {
-            get
-            {
-                if (this.Link.Contains("youtube"))
-                {
-                    var regex = new Regex(@"youtu(?:\.be|be\.com)/(?:(.*)v(/|=)|(.*/)?)(?<id>[a-zA-Z0-9-_]+)", RegexOptions.IgnoreCase);
-                    var videoId = regex.Match(this.Link).Groups["id"];
-                    return $"https://www.youtube.com/embed/{videoId}";
-                }
-                else
-                {
-                    return this.Link;
-                }
-            }
-        }
     }
 }

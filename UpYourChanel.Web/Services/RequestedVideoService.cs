@@ -12,16 +12,19 @@ namespace UpYourChannel.Web.Services
     public class RequestedVideoService : IRequestedVideoService
     {
         private readonly ApplicationDbContext db;
-        private readonly IMapper mapper;
 
-        public RequestedVideoService(ApplicationDbContext db, IMapper mapper)
+        public RequestedVideoService(ApplicationDbContext db)
         {
             this.db = db;
-            this.mapper = mapper;
         }
-        public async Task AddRequestedVideoAsync(AddVideoInputViewModel input)
+        public async Task AddRequestedVideoAsync(string title, string link, string description)
         {
-            var requestedVideo = mapper.Map<RequestedVideo>(input);
+            var requestedVideo = new RequestedVideo()
+            {
+                Title = title,
+                Link = link,
+                Description = description
+            };
             await db.RequestedVideos.AddAsync(requestedVideo);
             await db.SaveChangesAsync();
         }
@@ -30,7 +33,7 @@ namespace UpYourChannel.Web.Services
         {
             return new AllRequestedVideosViewModel()
             {
-                AllVideos = db.RequestedVideos.Select(x => new VideoInputModel()
+                AllVideos = db.RequestedVideos.Select(x => new VideoViewModel()
                 {
                     Id = x.Id,
                     Title = x.Title,

@@ -1,36 +1,47 @@
-﻿@model UpYourChannel.Web.ViewModels.AddVideoInputViewModel
+﻿@model UpYourChannel.Web.ViewModels.Video.VideoInputModel
 
 <br />
 <br />
 <br />
 <br />
-<div class="col-md-4">
-    <h1>Add Your Video:</h1>
-</div>
-<div class="col-md-4">
-    <form asp-controller="RequestedVideo" asp-action="AddRequestedVideo" method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Add Your Video:</h1>
+            <form asp-controller="RequestedVideo" asp-action="AddRequestedVideo" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
 
-        <div class="form-group">
-            <label asp-for="Title"></label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="form-control" placeholder="ex: Google" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Link"></label>
+                    <input asp-for="Link" class="form-control" placeholder="ex: https://www.google.com/" />
+                    <span asp-validation-for="Link" class=" = text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" rows="7" class="form-control" aria-label="With textarea" placeholder="ex: Google LLC is an American multinational technology company that specializes in Internet-related services and products, which include online advertising technologies, search engine, cloud computing, software, and hardware. It is considered one of the Big Four technology companies, alongside Amazon, Apple, and Microsoft."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <hr />
+                <input type="submit" class="btn btn-primary" value="Add">
+                <a class="btn btn-primary float-right" asp-controller="Video" asp-action="AllVideos" role="button">Go to all videos</a>
+            </form>
         </div>
-
-        <div class="form-group">
-            <label asp-for="Link"></label>
-            <input asp-for="Link" class="form-control" />
-            <span asp-validation-for="Link" class=" = text-danger"></span>
+        <div class="col-md-6">
+            <h1 class="text-center">We look through every video!</h1>
+            <br />
+            <strong>How to approve your video?</strong>
+            <hr />
+            <p>1. Make good video that will help someone grow his channel.</p>
+            <p>2. Add a valid Link.</p>
+            <p>3. Use good Title and Description.</p>
         </div>
-
-        <div class="form-group">
-            <label asp-for="Description"></label>
-            <textarea asp-for="Description" rows="7" class="form-control" aria-label="With textarea"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
-        </div>
-
-        <hr />
-        <input type="submit" class="btn btn-primary" value="Add">
-        <a class="btn btn-primary float-right" asp-controller="Video" asp-action="AllVideos" role="button">Go to videos</a>
-    </form>
+    </div>
 </div>

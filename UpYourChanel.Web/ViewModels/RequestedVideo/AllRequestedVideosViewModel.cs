@@ -5,6 +5,6 @@ namespace UpYourChannel.Web.ViewModels.RequestedVideo
 {
     public class AllRequestedVideosViewModel
     {
-        public IEnumerable<VideoInputModel> AllVideos { get; set; }
+        public IEnumerable<VideoViewModel> AllVideos { get; set; }
     }
 }

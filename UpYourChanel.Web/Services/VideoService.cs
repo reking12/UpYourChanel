@@ -45,7 +45,7 @@ namespace UpYourChannel.Web.Services
             // map it in controller
             return new AllVideosViewModel()
             {
-                AllVideos = db.Videos.Select(x => new VideoInputModel()
+                AllVideos = db.Videos.Select(x => new VideoViewModel()
                 {
                     Id= x.Id,
                     Title = x.Title,

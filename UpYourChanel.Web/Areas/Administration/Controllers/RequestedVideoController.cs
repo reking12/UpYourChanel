@@ -26,7 +26,7 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
         }    
 
         [HttpPost]
-        public async Task<IActionResult> AddVideoAndRemoveItFromRequested(VideoInputModel input)
+        public async Task<IActionResult> AddVideoAndRemoveItFromRequested(VideoViewModel input)
         {
             var userId = userManager.GetUserId(this.User);
             await videoService.AddVideoAsync(input.Link,input.Title,input.Description, userId);
@@ -35,16 +35,16 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveRequestedVideo(VideoInputModel input)
+        public async Task<IActionResult> RemoveRequestedVideo(int id)
         {
-            await requestedVideoService.RemoveRequestedVideoAsync(input.Id);
+            await requestedVideoService.RemoveRequestedVideoAsync(id);
             return Redirect("/Administration/RequestedVideo/AllRequestedVideos");
         }
 
         public IActionResult AllRequestedVideos(int? pageNumber)
         {
             var allRequestedVideos = requestedVideoService.AllRequestedVideos();
-            return View(PaginatedList<VideoInputModel>.Create(allRequestedVideos.AllVideos, pageNumber ?? 1, GlobalConstants.PageSize));
+            return View(PaginatedList<VideoViewModel>.Create(allRequestedVideos.AllVideos, pageNumber ?? 1, GlobalConstants.PageSize));
         }
     }
 }

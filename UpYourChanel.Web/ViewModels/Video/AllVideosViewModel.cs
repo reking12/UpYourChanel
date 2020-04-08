@@ -8,7 +8,7 @@ namespace UpYourChannel.Web.ViewModels.Video
 {
     public class AllVideosViewModel
     {
-        public IQueryable<VideoInputModel> AllVideos { get; set; }
+        public IQueryable<VideoViewModel> AllVideos { get; set; }
 
        // [Required]
        // [MinLength(1)]

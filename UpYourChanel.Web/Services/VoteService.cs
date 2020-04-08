@@ -31,8 +31,7 @@ namespace UpYourChannel.Web.Services
 
             if (vote != null)
             {
-                vote.VoteType = ReturnVoteTypeFromVote(vote, isUpVote);
-                //vote.VoteType = isUpVote ? VoteType.Up : VoteType.Down;
+                vote.VoteType = ReturnVoteTypeFromVote(vote.VoteType, isUpVote);
             }
             else
             {
@@ -52,7 +51,7 @@ namespace UpYourChannel.Web.Services
 
             if (vote != null)
             {
-                vote.VoteType = ReturnVoteTypeFromVote(vote, isUpVote);
+                vote.VoteType = ReturnVoteTypeFromVote(vote.VoteType, isUpVote);
             }
             else
             {
@@ -66,28 +65,28 @@ namespace UpYourChannel.Web.Services
             }
             await db.SaveChangesAsync();
         }
-        public VoteType ReturnVoteTypeFromVote(Vote vote, bool isUpVote)
+        public VoteType ReturnVoteTypeFromVote(VoteType voteType, bool isUpVote)
         {
             // vote.VoteType = isUpVote ? VoteType.Up : VoteType.Down;
             // don't use this because i have neutral vote
-            if (isUpVote && vote.VoteType == VoteType.Down)
+            if (isUpVote && voteType == VoteType.Down)
             {
-                vote.VoteType = VoteType.Neutral;
+                voteType = VoteType.Neutral;
             }
-            else if (isUpVote && vote.VoteType == VoteType.Neutral)
+            else if (isUpVote && voteType == VoteType.Neutral)
             {
-                vote.VoteType = VoteType.Up;
+                voteType = VoteType.Up;
             }
-            else if (isUpVote == false && vote.VoteType == VoteType.Up)
+            else if (isUpVote == false && voteType == VoteType.Up)
             {
-                vote.VoteType = VoteType.Neutral;
+                voteType = VoteType.Neutral;
             }
-            else if (isUpVote == false && vote.VoteType == VoteType.Neutral)
+            else if (isUpVote == false && voteType == VoteType.Neutral)
             {
-                vote.VoteType = VoteType.Down;
+                voteType = VoteType.Down;
             }
 
-            return vote.VoteType;
+            return voteType;
         }
 
     }

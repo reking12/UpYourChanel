@@ -36,7 +36,7 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
             ViewData["CurrentFilter"] = searchString;
             var videos = string.IsNullOrEmpty(searchString) ? videoService.AllVideos()
                 : videoService.VideosBySearch(searchString);
-            return View(PaginatedList<VideoInputModel>.Create(videos.AllVideos, pageNumber ?? 1, GlobalConstants.PageSize));
+            return View(PaginatedList<VideoViewModel>.Create(videos.AllVideos, pageNumber ?? 1, GlobalConstants.PageSize));
         }
     }
 }

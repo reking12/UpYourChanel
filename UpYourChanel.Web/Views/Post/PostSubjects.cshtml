@@ -3,13 +3,9 @@
 <br />
 <br />
 <br />
-<br />
 <head>
     <link rel="stylesheet" href="~/css/forumSubjects.css" />
 </head>
-
-<br />
-
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -25,14 +21,16 @@
                         <p class="text-center">Feel free to choose topic you're interested in.</p>
                     </div>
                 </div>
-                <a asp-controller="Post" asp-action="CreatePost">AddPost</a>
                 <div class="ibox-content forum-container">
 
                     <div class="forum-title">
                         <div class="pull-right forum-desc">
                             <samll>Total posts: @Model.TotalPosts</samll>
+                            <a class="float-right btn btn-primary" asp-controller="Post" asp-action="CreatePost">AddPost</a>
+                            <h3>Topics</h3>
                         </div>
-                        <h3>Topics</h3>
+
+
                     </div>
 
                     <div class="forum-item active">
