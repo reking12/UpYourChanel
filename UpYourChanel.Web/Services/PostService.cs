@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
@@ -29,7 +31,7 @@ namespace UpYourChannel.Web.Services
         public async Task CreatePostAsync(string title, string content, string userId)
         {
             var post = new Post
-            { 
+            {
                 Title = title,
                 Content = content,
                 UserId = userId
@@ -37,19 +39,10 @@ namespace UpYourChannel.Web.Services
             await db.Posts.AddAsync(post);
             await db.SaveChangesAsync();
         }
-
-        public async Task EditPostAsync(int postId, string newContent, string newTitle)
-        {
-            var post = await db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
-            post.Content = newContent;
-            post.Title = newTitle;
-            await db.SaveChangesAsync();
-        }
-
         //TODO: make it async
         public IQueryable<Post> AllPosts()
         {
-            return db.Posts.Include(x => x.User).Include(x => x.Comments);  
+            return db.Posts.Include(x => x.User).Include(x => x.Comments);
             //----- Old Way
             //var posts = new AllPostsViewModel()
             //{
@@ -74,6 +67,34 @@ namespace UpYourChannel.Web.Services
         public async Task<int> PostsCountAsync()
         => await db.Posts.CountAsync();
 
-        
+        public async Task<bool> EditPostAsync(int postId, string newContent, string newTitle, string userId)
+        {
+            var post = await db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
+            if (post.UserId != userId)
+            {
+                return false;
+            }
+            post.Content = newContent;
+            post.Title = newTitle;
+            await db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeletePostAsync(int postId, string userId)
+        {
+            var commentService = new CommentService(db);
+            var postToRemove = await db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
+            if (postToRemove.UserId != userId)
+            {
+                return false;
+            }
+            var commentsToRemove = db.Comments.Where(x => x.PostId == postId);
+            var votesToRemove = db.Votes.Where(x => commentsToRemove.Any(y => y.Id == x.CommentId));
+            db.Comments.RemoveRange(commentsToRemove);
+            db.Votes.RemoveRange(votesToRemove);
+            db.Posts.Remove(postToRemove);
+            await db.SaveChangesAsync();
+            return true;
+        }
     }
 }

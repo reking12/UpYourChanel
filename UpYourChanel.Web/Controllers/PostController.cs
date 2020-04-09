@@ -10,6 +10,7 @@ using UpYourChannel.Web.ViewModels.Comment;
 using UpYourChannel.Web.ViewModels.Post;
 using AutoMapper.QueryableExtensions;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -34,16 +35,35 @@ namespace UpYourChannel.Web.Controllers
         {
             return this.View();
         }
-        public async Task<IActionResult> EditPost(int postId)
+        public async Task<IActionResult> EditPost(int postId, int pageNumber)
         {
             TempData["postId"] = postId;
+            TempData["pageNumber"] = pageNumber;
             var post = await postService.ReturnPostByIdAsync(postId);
             return View(post);
         }
-        [HttpPost] 
-        public async Task<IActionResult> EditPost(PostInputViewModel input, int postId)
+        [HttpPost]
+        public async Task<IActionResult> EditPost(PostInputViewModel input, int postId, int? pageNumber)
         {
-            await postService.EditPostAsync(postId, input.Content, input.Title);
+            var userId = userManager.GetUserId(this.User);
+            if (await postService.EditPostAsync(postId, input.Content, input.Title, userId) == false)
+            {
+                return NotFound();
+            }
+            if (pageNumber == null)
+            {
+                return Redirect("/Post/AllPosts");
+            }
+            return Redirect($"/Post/AllPosts?pagenumber={pageNumber}");
+        }
+
+        public async Task<IActionResult> DeletePost(int postId)
+        {
+            var userId = userManager.GetUserId(this.User);
+            if (await postService.DeletePostAsync(postId, userId) == false)
+            {
+                return NotFound();
+            }
             return Redirect("/Post/AllPosts");
         }
         
@@ -80,6 +100,7 @@ namespace UpYourChannel.Web.Controllers
 
         public IActionResult ById(int id)
         {
+            // maybe make comment from tinyMce like answers 
             var userId = userManager.GetUserId(this.User);
             var postViewModel = new PostIndexModel()
             {
@@ -89,9 +110,11 @@ namespace UpYourChannel.Web.Controllers
             {
                 return this.NotFound();
             }
+            
             postViewModel.Post.Comments.Where(x => x.UserId == userId).ToList().ForEach(x => x.IsThisUser = true);
             postViewModel.Post.VotesCount = voteService.AllVotesForPost(id);
             postViewModel.Top3Comments = mapper.Map<IEnumerable<CommentViewModel>>(commentService.Top3CommentsForPost(id));
+            postViewModel.Post.Comments.ToList().ForEach(x => x.VotesCount = voteService.AllVotesForComment(x.Id));
             return this.View(postViewModel);
         }
 

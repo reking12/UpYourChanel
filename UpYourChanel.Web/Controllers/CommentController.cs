@@ -31,13 +31,21 @@ namespace UpYourChannel.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditComment(int commentId, string newContent, int postId)
         {
-            await commentService.EditCommentAsync(commentId,newContent);
+            var userId = this.userManager.GetUserId(this.User);
+            if (await commentService.EditCommentAsync(commentId, newContent, userId) == false)
+            {
+                return NotFound();
+            }
             return Redirect($"/Post/ById/{postId}");
         }
 
         public async Task<IActionResult> DeleteComment(int id, int postId)
         {
-            await commentService.DeleteCommentByIdAsync(id);
+            var userId = this.userManager.GetUserId(this.User);
+            if (await commentService.DeleteCommentByIdAsync(id,postId, userId) == false)
+            {
+                return NotFound();
+            }
             return Redirect($"/Post/ById/{postId}");
         }
     }

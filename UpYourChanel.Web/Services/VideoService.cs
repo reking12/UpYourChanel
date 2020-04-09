@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
@@ -59,6 +61,13 @@ namespace UpYourChannel.Web.Services
         {
             string searchStringToLower = searchString.ToLower();
             return new AllVideosViewModel() { AllVideos = AllVideos().AllVideos.Where(x => x.Title.ToLower().Contains(searchStringToLower)) };
+        }
+
+        public async Task EditVideoTitleAsync(int videoId, string newTitle)
+        {
+            var video = await db.Videos.FirstOrDefaultAsync(x => x.Id == videoId);
+            video.Title = newTitle;
+            await db.SaveChangesAsync();
         }
     }
 }

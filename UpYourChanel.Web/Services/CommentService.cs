@@ -38,21 +38,34 @@ namespace UpYourChannel.Web.Services
             return db.Comments.Where(x => x.PostId == postId).OrderByDescending(x => x.Votes.Sum(y => (int)y.VoteType)).Take(3);
         }
 
-        public async Task EditCommentAsync(int commentId, string newContent)
+        public async Task<bool> EditCommentAsync(int commentId, string newContent, string userId)
         {
             var comment = await db.Comments.FirstOrDefaultAsync(x => x.Id == commentId);
+            if (comment.UserId != userId)
+            {
+                return false;
+            }
             comment.Content = newContent;
             await db.SaveChangesAsync();
+            return true;
         }
 
-        public async Task DeleteCommentByIdAsync(int id)
+        public async Task<bool> DeleteCommentByIdAsync(int id, int postId, string userId)
         {
-            var comment = await db.Comments.FirstOrDefaultAsync(x => x.Id == id);
-            var votes = db.Votes.Where(x => x.CommentId == id);
+            // make it in better way
+            // dont like this 
+            // make it in controller
+            var comment = await db.Comments.FirstOrDefaultAsync(x => x.Id == id && x.PostId == postId);
+            if (comment.UserId != userId)
+            {
+                return false;
+            }
+            var votesToRemove = db.Votes.Where(x => x.CommentId == id);
             await db.Comments.Where(x => x.ParentId == id).ForEachAsync(x => x.ParentId = null);
             db.Comments.Remove(comment);
-            db.Votes.RemoveRange(votes);
+            db.Votes.RemoveRange(votesToRemove);
             await db.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -18,6 +18,7 @@
     <form asp-controller="Post" asp-action="EditPost" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
         <input type="hidden" name="postId" value="@TempData["postId"]">
+        <input type="hidden" name="pageNumber" value="@TempData["pageNumber"]"> 
         <div class="form-group md-f">
             <label asp-for="Title"></label>
             <input asp-for="Title" class="form-control" />

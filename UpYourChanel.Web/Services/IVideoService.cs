@@ -11,6 +11,8 @@ namespace UpYourChannel.Web.Services
 
         AllVideosViewModel VideosBySearch(string searchString);
 
-        Task RemoveVideoByIdAsync(int id); 
+        Task RemoveVideoByIdAsync(int id);
+
+        Task EditVideoTitleAsync(int videoId, string newTitle);
     }
 }

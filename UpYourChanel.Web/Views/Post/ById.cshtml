@@ -27,51 +27,49 @@
                                 <div class="mt-0 text-muted small">@comment.CreatedOn.ToString()</div>
 
                                 @Html.Raw(comment.SanitizedContent)
-                            <div class="text-muted ">   
-                                <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, true)">
-                                    <i class="fa fa-thumbs-up"></i>
-                                </a>
-                                <a id=@id>@comment.VotesCount</a>
-                                <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, false)">
-                                    <i class="fa fa-thumbs-down"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="showAddComment(@comment.Id)">reply</a>
-                                @if (comment.IsThisUser == true)
-                                {
-                                    <a href="javascript:void(0)" onclick="showEditComment(@comment.Id)">edit</a>
-                                    <a class="text-danger" 
-                                       asp-controller="Comment" asp-action="DeleteComment" 
-                                       asp-route-id="@comment.Id" asp-route-postId="@Model.Post.Id" >delete</a>
-                                }
-                                <div id="@editComment" style="display : none">
-                                    <hr />
-                                    <form asp-controller="Comment" asp-action="EditComment" method="post">
-                                        <input type="hidden" name="postId" value="@Model.Post.Id" />
-                                        <input type="hidden" name="commentId" value="@comment.Id" />
-                                        <textarea class="someTextBox form-control" name="newContent" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
-                                        <div>
-                                            <a href="#" onclick="$(this).closest('form').submit()">edit comment</a>
-                                        </div>
-                                    </form>
+                                <div class="text-muted ">
+                                    <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, true)">
+                                        <i class="fa fa-thumbs-up"></i>
+                                    </a>
+                                    <a id=@id>@comment.VotesCount</a>
+                                    <a href="javascript:void(0)" onclick="sendVoteForComment(@comment.Id, false)">
+                                        <i class="fa fa-thumbs-down"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="showAddComment(@comment.Id)">reply</a>
+                                    @if (comment.IsThisUser == true)
+                                    {
+                                        <a href="javascript:void(0)" onclick="showEditComment(@comment.Id)">edit</a>
+                                        <a class="text-danger"
+                                           asp-controller="Comment" asp-action="DeleteComment"
+                                           asp-route-id="@comment.Id" asp-route-postId="@Model.Post.Id">delete</a>
+                                    }
+                                    <div id="@editComment" style="display : none">
+                                        <hr />
+                                        <form asp-controller="Comment" asp-action="EditComment" method="post">
+                                            <input type="hidden" name="postId" value="@Model.Post.Id" />
+                                            <input type="hidden" name="commentId" value="@comment.Id" />
+                                            <textarea class="someTextBox form-control" name="newContent" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
+                                            <div>
+                                                <a href="#" onclick="$(this).closest('form').submit()">edit comment</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="@comment.Id" style="display : none">
+                                        <hr />
+                                        <form asp-controller="Comment" asp-action="CreateComment" method="post">
+                                            <input type="hidden" name="PostId" value="@Model.Post.Id" />
+                                            <input type="hidden" name="ParentId" value="@comment.Id" />
+                                            <textarea class="someTextBox form-control" name="Content" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
+                                            <div>
+                                                <a href="#" onclick="$(this).closest('form').submit()">add comment</a>
+                                            </div>
+                                        </form>
+                                        @*<partial name="_CreateCommentPartial" model="new UpYourChannel.Web.ViewModels.Comment.CommentInputModel
+                                            { ParentId = comment.Id, PostId = Model.Post.Id }" />*@
+                                    </div>
                                 </div>
-                                <div id="@comment.Id" style="display : none">
-                                    <hr />
-                                    <form asp-controller="Comment" asp-action="CreateComment" method="post">
-                                        <input type="hidden" name="PostId" value="@Model.Post.Id" />
-                                        <input type="hidden" name="ParentId" value="@comment.Id" />
-                                        <textarea class="someTextBox form-control" name="Content" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
-                                        <div>
-                                            <a href="#" onclick="$(this).closest('form').submit()">add comment</a>
-                                        </div>
-                                    </form>
-                                    @*<partial name="_CreateCommentPartial" model="new UpYourChannel.Web.ViewModels.Comment.CommentInputModel
-            { ParentId = comment.Id, PostId = Model.Post.Id }" />*@
-                                </div>
-                            </div>
 
                             </div>
-
-                            <button type="submit" class="btn btn-primary" onclick="showAddCommentForm(@comment.Id)">Comment &nbsp;<i class="far fa-comment-dots"></i></button>
                         </div>
                         <hr />
                         <div class="card-body">
@@ -139,7 +137,7 @@
                             <input type="hidden" name="Comment.PostId" value="@Model.Post.Id">
                             <textarea required asp-for="Comment.Content" rows="2" cols="70" class="form-control" aria-label="With textarea" placeholder="Comment..."></textarea>
                             <div class="px-4 "> <button type="submit" class="btn btn-primary">Comment &nbsp;<i class="far fa-comment-dots"></i></button> </div>
-                            <div class="px-4 "> <button class="btn btn-primary">Answer &nbsp;<i class="far fa-comment-dots"></i></button> </div>
+                            <div class="px-4 "> <button type="submit" class="btn btn-primary" onclick="showAddCommentForm()">Answer &nbsp;<i class="far fa-comment-dots"></i></button> </div>
                         </div>
                     </form>
                     <br />
@@ -152,12 +150,11 @@
 <br />
 <br />
 <div class="container">
-    <form asp-controller="Comment" asp-action="CreateComment" method="post" id="AddCommentForm" style="display: none">
-        <input type="hidden" name="PostId" value="@Model.Post.Id" />
-        <input type="hidden" name="ParentId" value="0" />
+    <form asp-controller="Post" asp-action="AddCommentToPost" method="post" id="AddCommentForm" style="display: none">
+        <input type="hidden" name="Comment.PostId" value="@Model.Post.Id" />
         <div>
             <label for="Content"></label>
-            <textarea class="tinyMce form-control" name="Content" id="Content"></textarea>
+            <textarea asp-for="Comment.Content" class="tinyMce form-control"></textarea>
         </div>
         <div>
             <input type="submit" class="btn btn-primary" value="Add answer" />
@@ -167,19 +164,25 @@
 <h1 class="text-center">Top 3 Comments</h1>
 <br />
 <div class="container">
-    @foreach (var comment in Model.Top3Comments)
-    {
-        <div>
-            @comment.Content;
-        </div>
-        <br />
+    @{var count = 1;
+        foreach (var comment in Model.Top3Comments)
+        {
+
+            <div>
+                <strong>Number @count best answer</strong>
+                <br />
+                <div>@Html.Raw(comment.SanitizedContent)</div>
+            </div>
+            <hr />
+            count++;
+        }
     }
 </div>
 @section Scripts {
     <script>
-        
+
         function showAddComment(commentId) {
-            $('#' + commentId).toggle();
+            $("#" + commentId).toggle();
             //$([document.documentElement, document.body]).animate({
             //    scrollTop: $('#' + commentId).offset().top
             //}, 1000);
@@ -190,7 +193,7 @@
         }
 
         function showAddCommentForm(parentId) {
-            $("#AddCommentForm input[name='ParentId']").val(parentId);
+            //$("#AddCommentForm input[name='ParentId']").val(parentId);
             $("#AddCommentForm").show();
             $([document.documentElement, document.body]).animate({
                 scrollTop: $("#AddCommentForm").offset().top

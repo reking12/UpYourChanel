@@ -25,7 +25,11 @@
                 @if (post.IsThisUser == true)
                 {
                     <li class="list-inline-item">
-                        <a asp-controller="Post" asp-action="EditPost" asp-route-postId="@post.Id">Edit</a>
+                        <a asp-controller="Post" asp-action="EditPost" asp-route-postId="@post.Id" 
+                           asp-route-pageNumber="@Model.PageIndex">Edit</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="text-danger" asp-controller="Post" asp-action="DeletePost" asp-route-postId="@post.Id">Delete</a>
                     </li>
                 }
             </ul>

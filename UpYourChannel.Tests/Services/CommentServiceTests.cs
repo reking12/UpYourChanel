@@ -40,15 +40,15 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var commentService = new CommentService(dbContext);
 
-            await commentService.CreateCommentAsync(1, "Tweets", "Hello i am tweet", null);
-            await commentService.CreateCommentAsync(1, "Tweets2", "Hello i am tweet2", 1);
-            await commentService.EditCommentAsync(2, "Hell i am new tweet");
+            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null);
+            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1);
+            await commentService.EditCommentAsync(2, "Hell i am new tweet","u2");
 
             var comentsCount = await dbContext.Comments.CountAsync();
             var comment = await dbContext.Comments.LastOrDefaultAsync();
 
             Assert.Equal(2, comment.Id);
-            Assert.Equal("Tweets2", comment.UserId);
+            Assert.Equal("u2", comment.UserId);
             Assert.Equal("Hell i am new tweet", comment.Content);
             Assert.Equal(1,comment.ParentId);
             Assert.Equal(2, comentsCount);
@@ -67,8 +67,8 @@ namespace UpYourChannel.Tests.Services
             await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null);
             await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1);
             await voteService.VoteForCommentAsync("u1",1,true);
-            await commentService.EditCommentAsync(2, "Hello i am new tweet2");
-            await commentService.DeleteCommentByIdAsync(1);
+            await commentService.EditCommentAsync(2, "Hello i am new tweet2","u2");
+            await commentService.DeleteCommentByIdAsync(1,1,"u1");
 
             var comentsCount = await dbContext.Comments.CountAsync();
             var comment = await dbContext.Comments.LastOrDefaultAsync();

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
+using UpYourChannel.Data.Models;
 using UpYourChannel.Web.Paging;
 using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels.Video;
@@ -28,6 +29,13 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
         public async Task<IActionResult> RemoveVideoById(int id)
         {
             await videoService.RemoveVideoByIdAsync(id);
+            return Redirect("/Administration/Video/AllVideos");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditVideoTitle(int videoId,string newTitle)
+        {
+            await videoService.EditVideoTitleAsync(videoId, newTitle);
             return Redirect("/Administration/Video/AllVideos");
         }
 

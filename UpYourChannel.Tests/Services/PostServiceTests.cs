@@ -56,7 +56,7 @@ namespace UpYourChannel.Tests.Services
             var postService = new PostService(dbContext, null);
 
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
-            await postService.EditPostAsync(1,"Hello i am new content","Hello i am new title");
+            await postService.EditPostAsync(1,"Hello i am new content","Hello i am new title","u1");
 
             var post = await dbContext.Posts.FirstAsync();
 

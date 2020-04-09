@@ -11,7 +11,9 @@ namespace UpYourChannel.Web.Services
 
         Task CreatePostAsync(string title, string content, string userId);
 
-        Task EditPostAsync(int postId, string newContent, string newTitle);
+        Task<bool> EditPostAsync(int postId, string newContent, string newTitle, string userId);
+
+        Task<bool> DeletePostAsync(int postId, string userId);
 
         IQueryable<Post> AllPosts();
 
