@@ -16,6 +16,7 @@ namespace UpYourChannel.Data.Models
         public string Description { get; set; }
 
         public string UserId { get; set; }
+
         public virtual User User { get; set; }
 
         public string IFrameSource

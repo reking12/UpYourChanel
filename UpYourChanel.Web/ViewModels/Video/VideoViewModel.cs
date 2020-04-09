@@ -12,6 +12,9 @@ namespace UpYourChannel.Web.ViewModels.Video
 
         public string Description { get; set; }
 
+        // MAYBE REMOVE UserId
+        public string UserId { get; set; }
+
         public string IFrameSource
         {
             get

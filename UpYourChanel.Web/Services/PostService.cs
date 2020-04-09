@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
@@ -89,9 +88,11 @@ namespace UpYourChannel.Web.Services
                 return false;
             }
             var commentsToRemove = db.Comments.Where(x => x.PostId == postId);
-            var votesToRemove = db.Votes.Where(x => commentsToRemove.Any(y => y.Id == x.CommentId));
+            var votesForCommentsToRemove = db.Votes.Where(x => commentsToRemove.Any(y => y.Id == x.CommentId));
+            var votesForPostToRemove = db.Votes.Where(x => x.PostId == postId);
             db.Comments.RemoveRange(commentsToRemove);
-            db.Votes.RemoveRange(votesToRemove);
+            db.Votes.RemoveRange(votesForCommentsToRemove);
+            db.Votes.RemoveRange(votesForPostToRemove);
             db.Posts.Remove(postToRemove);
             await db.SaveChangesAsync();
             return true;

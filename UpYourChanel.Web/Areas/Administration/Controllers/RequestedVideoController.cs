@@ -26,9 +26,8 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
         }    
 
         [HttpPost]
-        public async Task<IActionResult> AddVideoAndRemoveItFromRequested(VideoViewModel input)
+        public async Task<IActionResult> AddVideoAndRemoveItFromRequested(VideoViewModel input, string userId)
         {
-            var userId = userManager.GetUserId(this.User);
             await videoService.AddVideoAsync(input.Link,input.Title,input.Description, userId);
             await requestedVideoService.RemoveRequestedVideoAsync(input.Id);
             return Redirect("/Administration/RequestedVideo/AllRequestedVideos");

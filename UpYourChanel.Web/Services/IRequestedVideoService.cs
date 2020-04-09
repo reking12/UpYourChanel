@@ -6,7 +6,7 @@ namespace UpYourChannel.Web.Services
 {
     public interface IRequestedVideoService 
     {
-        Task AddRequestedVideoAsync(string link, string title, string description);
+        Task AddRequestedVideoAsync(string link, string title, string description, string userId);
 
         Task RemoveRequestedVideoAsync(int id);
 

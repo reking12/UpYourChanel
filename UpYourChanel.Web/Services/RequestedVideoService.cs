@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
@@ -17,13 +18,14 @@ namespace UpYourChannel.Web.Services
         {
             this.db = db;
         }
-        public async Task AddRequestedVideoAsync(string title, string link, string description)
+        public async Task AddRequestedVideoAsync(string title, string link, string description, string userId)
         {
             var requestedVideo = new RequestedVideo()
             {
                 Title = title,
                 Link = link,
-                Description = description
+                Description = description,
+                UserId = userId
             };
             await db.RequestedVideos.AddAsync(requestedVideo);
             await db.SaveChangesAsync();
@@ -38,9 +40,11 @@ namespace UpYourChannel.Web.Services
                     Id = x.Id,
                     Title = x.Title,
                     Link = x.Link,
-                    Description = x.Description
+                    Description = x.Description,
+                    UserId = x.UserId
                 })
             };
+            // do it in controller
         }
 
         public async Task RemoveRequestedVideoAsync(int id)
