@@ -20,8 +20,6 @@ namespace UpYourChannel.Data.Models
 
         public string UserId { get; set; }
 
-        public Category? Category { get; set; }
-
         public string IFrameSource
         {
             get

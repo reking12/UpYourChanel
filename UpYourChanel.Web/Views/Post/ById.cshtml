@@ -99,6 +99,16 @@
 <br />
 <h1 class="text-center">@Model.Post.Title</h1>
 <br />
+@if ((string)TempData["newPost"] == "Successfully created Post!")
+{
+    <div class="container">
+        <div class="text-center alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>@TempData["newPost"]</strong>
+        </div>
+    </div>
+    @*<script>alert("@TempData["SuccessOnAddVideo"]");</script>*@
+}
 <div class="container">
     <!-- maybe container-fluid -->
     <div class="row">
@@ -110,6 +120,11 @@
                         <div class="media-body ml-3">
                             @Model.Post.UserUserName
                             <div class="text-muted small">@Model.Post.CreatedOn</div>
+                            @if (Model.Post.IsThisUser == true)
+                            {
+                                <a asp-controller="Post" asp-action="EditPost" asp-route-postId="@Model.Post.Id">Edit</a>
+                                <a class="text-danger" asp-controller="Post" asp-action="DeletePost" asp-route-postId="@Model.Post.Id">Delete</a>
+                            }
                         </div>
                         <div class="text-muted ml-3">
                             <form id="votesForm" method="post"></form>

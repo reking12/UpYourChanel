@@ -18,8 +18,8 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
-            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u2");
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
+            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u2",1);
 
             var postCount = await dbContext.Posts.CountAsync();
             var post = await dbContext.Posts.FirstAsync();
@@ -40,8 +40,8 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
-            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u2");
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
+            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u2",1);
         
             Assert.Equal(2, await postService.PostsCountAsync());
         }
@@ -55,7 +55,7 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
             await postService.EditPostAsync(1,"Hello i am new content","Hello i am new title","u1");
 
             var post = await dbContext.Posts.FirstAsync();
@@ -76,7 +76,7 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
             var post = postService.ById(1);
 
             Assert.Equal(1, post.Id);
@@ -94,8 +94,8 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1");
-            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u1");
+            await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
+            await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u1",1);
 
             var allPosts = postService.AllPosts();
             var firstPost = await allPosts.FirstAsync();

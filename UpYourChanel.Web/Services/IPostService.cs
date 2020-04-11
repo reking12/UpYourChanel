@@ -9,13 +9,13 @@ namespace UpYourChannel.Web.Services
     {
         Post ById(int id);
 
-        Task CreatePostAsync(string title, string content, string userId);
+        Task<int> CreatePostAsync(string title, string content, string userId, int category);
 
         Task<bool> EditPostAsync(int postId, string newContent, string newTitle, string userId);
 
         Task<bool> DeletePostAsync(int postId, string userId);
 
-        IQueryable<Post> AllPosts();
+        IQueryable<Post> AllPosts(int? category);
 
         Task<int> PostsCountAsync();
 

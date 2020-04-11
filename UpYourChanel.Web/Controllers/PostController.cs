@@ -10,7 +10,7 @@ using UpYourChannel.Web.ViewModels.Comment;
 using UpYourChannel.Web.ViewModels.Post;
 using AutoMapper.QueryableExtensions;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -31,10 +31,28 @@ namespace UpYourChannel.Web.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize]
         public IActionResult CreatePost()
         {
             return this.View();
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreatePost(PostInputViewModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+            TempData["newPost"] = "Successfully created Post!";
+            // maybe remove UserId From input
+            input.UserId = userManager.GetUserId(this.User);
+            var postId = await postService.CreatePostAsync(input.Title, input.Content, input.UserId, input.Category);
+            return Redirect($"/Post/ById/{postId}");
+        }
+
+        [Authorize]
         public async Task<IActionResult> EditPost(int postId, int pageNumber)
         {
             TempData["postId"] = postId;
@@ -42,6 +60,8 @@ namespace UpYourChannel.Web.Controllers
             var post = await postService.ReturnPostByIdAsync(postId);
             return View(post);
         }
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> EditPost(PostInputViewModel input, int postId, int? pageNumber)
         {
@@ -50,13 +70,10 @@ namespace UpYourChannel.Web.Controllers
             {
                 return NotFound();
             }
-            if (pageNumber == null)
-            {
-                return Redirect("/Post/AllPosts");
-            }
-            return Redirect($"/Post/AllPosts?pagenumber={pageNumber}");
+            return Redirect($"/Post/ById/{postId}");
         }
 
+        [Authorize]
         public async Task<IActionResult> DeletePost(int postId)
         {
             var userId = userManager.GetUserId(this.User);
@@ -66,23 +83,10 @@ namespace UpYourChannel.Web.Controllers
             }
             return Redirect("/Post/AllPosts");
         }
-        
-        [HttpPost]
-        public async Task<IActionResult> CreatePost(PostInputViewModel input)
-        {
-            if (!ModelState.IsValid)
-            {
-                return this.View(input);
-            }
-            // maybe remove UserId From input
-            input.UserId = userManager.GetUserId(this.User);
-            await postService.CreatePostAsync(input.Title, input.Content, input.UserId);
-            return Redirect("/Post/AllPosts");
-        }
 
-        public IActionResult AllPosts(int? pageNumber)
+        public IActionResult AllPosts(int? pageNumber, int? category)
         {
-            var dbPosts = postService.AllPosts();
+            var dbPosts = postService.AllPosts(category);
             var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Comment, CommentViewModel>();
@@ -110,7 +114,10 @@ namespace UpYourChannel.Web.Controllers
             {
                 return this.NotFound();
             }
-            
+            if (postViewModel.Post.UserId == userId)
+            {
+                postViewModel.Post.IsThisUser = true;
+            }
             postViewModel.Post.Comments.Where(x => x.UserId == userId).ToList().ForEach(x => x.IsThisUser = true);
             postViewModel.Post.VotesCount = voteService.AllVotesForPost(id);
             postViewModel.Top3Comments = mapper.Map<IEnumerable<CommentViewModel>>(commentService.Top3CommentsForPost(id));
@@ -123,6 +130,7 @@ namespace UpYourChannel.Web.Controllers
             return this.View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddCommentToPost(PostIndexModel input)
         {

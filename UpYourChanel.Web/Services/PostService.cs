@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
+using UpYourChannel.Data.Models.Enums;
 using UpYourChannel.Web.ViewModels.Post;
 
 namespace UpYourChannel.Web.Services
@@ -27,20 +28,26 @@ namespace UpYourChannel.Web.Services
                 .Include(x => x.Comments).ThenInclude(x => x.User).FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task CreatePostAsync(string title, string content, string userId)
+        public async Task<int> CreatePostAsync(string title, string content, string userId, int category)
         {
             var post = new Post
             {
                 Title = title,
                 Content = content,
-                UserId = userId
+                UserId = userId,
+                Category = (CategoryType)category
             };
             await db.Posts.AddAsync(post);
             await db.SaveChangesAsync();
+            return post.Id;
         }
         //TODO: make it async
-        public IQueryable<Post> AllPosts()
+        public IQueryable<Post> AllPosts(int? category)
         {
+            if (category != null)
+            {
+                return db.Posts.Include(x => x.User).Include(x => x.Comments).Where(x => x.Category == (CategoryType)category);
+            }
             return db.Posts.Include(x => x.User).Include(x => x.Comments);
             //----- Old Way
             //var posts = new AllPostsViewModel()

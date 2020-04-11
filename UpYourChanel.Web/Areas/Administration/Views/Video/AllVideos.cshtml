@@ -7,7 +7,7 @@
 </head>
 
 <div class="text-center">
-    <h1 class="display-4">Requested Videos!</h1>
+    <h1 class="display-4">All Videos!</h1>
 </div>
 <br />
 <div class="container">
@@ -23,15 +23,25 @@
     <div class="row">
         @foreach (var video in Model)
         {
-            <div class="col-sm-4">
-                <br />
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src=@video.IFrameSource allowfullscreen></iframe>
-                </div>
-                <label text-justify text-dark">@video.Title </label>
-                <a class="btn btn-danger float-right" asp-area="Administration" asp-controller="Video" asp-action="RemoveVideoById"
+        <div class="col-sm-4">
+            <br />
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src=@video.IFrameSource allowfullscreen></iframe>
+            </div>
+            <label text-justify text-dark">@video.Title </label>
+            <form asp-area="Administration" asp-controller="Video" asp-action="EditVideoTitle" method="post">
+                <input type="hidden" name="videoId" value="@video.Id" />
+                <input required name="newTitle" class="form-control" type="text" placeholder="ChangeTitle..." />
+            </form>
+            <br />
+            <div class="float-right">
+                <a class="btn btn-danger btn-sm" asp-area="Administration" asp-controller="Video" asp-action="RemoveVideoById"
+                   asp-route-id="@video.Id">Edit Link</a>
+                <a class="btn btn-danger btn-sm" asp-area="Administration" asp-controller="Video" asp-action="RemoveVideoById"
                    asp-route-id="@video.Id">Delele</a>
             </div>
+            
+        </div>
         }
     </div>
 </div>

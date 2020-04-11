@@ -1,4 +1,5 @@
-﻿@model UpYourChannel.Web.ViewModels.Post.PostInputViewModel
+﻿@using UpYourChannel.Data.Models.Enums
+@model UpYourChannel.Web.ViewModels.Post.PostInputViewModel
 
 <br />
 <br />
@@ -17,7 +18,8 @@
     <h1>Add your post:</h1>
     <form asp-controller="Post" asp-action="CreatePost" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
-
+        <div class="btn-group">
+        </div>
         <div class="form-group md-f">
             <label asp-for="Title"></label>
             <input asp-for="Title" class="form-control" />
@@ -29,9 +31,17 @@
             <textarea asp-for="Content" rows="10" class="form-control" aria-label="With textarea"></textarea>
             <span asp-validation-for="Content" class="text-danger"></span>
         </div>
-
-        <hr />
-        <input type="submit" class="btn btn-primary" value="Post">
-        <button class="float-right btn btn-primary" asp-controller="Post" asp-action="PostSubjects">Back to Forum</button>
+        <div class="form-group">
+            <select class="form-control" required placeholder="cat"
+                    asp-for="Category">
+                <option value="" disabled selected hidden>Category:</option>
+                <option value="1">General Discussions</option>
+                <option value="2">Introduction</option>
+            </select>
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+            <hr />
+            <input type="submit" class="btn btn-primary" value="Post">
+            <button class="float-right btn btn-primary" asp-controller="Post" asp-action="PostSubjects">Back to Forum</button>
     </form>
 </div>

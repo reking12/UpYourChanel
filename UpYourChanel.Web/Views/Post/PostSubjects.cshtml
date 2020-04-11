@@ -26,7 +26,7 @@
                     <div class="forum-title">
                         <div class="pull-right forum-desc">
                             <samll>Total posts: @Model.TotalPosts</samll>
-                            <a class="float-right btn btn-primary" asp-controller="Post" asp-action="CreatePost">AddPost</a>
+                            <a class="float-right btn btn-primary" asp-controller="Post" asp-action="CreatePost">Add Post</a>
                             <h3>Topics</h3>
                         </div>
 
@@ -39,7 +39,7 @@
                                 <div class="forum-icon">
                                     <i class="fa fa-shield"></i>
                                 </div>
-                                <a asp-controller="Post" asp-action="AllPosts" class="forum-item-title">General Discussions</a>
+                                <a asp-controller="Post" asp-action="AllPosts" asp-route-category="1" class="forum-item-title">General Discussions</a>
                                 <div class="forum-sub-title">Discuss about general things in youtube system!</div>
                             </div>
                             <div class="col-md-1 forum-info">
@@ -74,7 +74,7 @@
                                 <div class="forum-icon">
                                     <i class="fa fa-bolt"></i>
                                 </div>
-                                <a href="forum_post.html" class="forum-item-title">Introduction</a>
+                                <a asp-controller="Post" asp-action="AllPosts" asp-route-category="2" class="forum-item-title">Introduction</a>
                                 <div class="forum-sub-title">New to the youtube community? How to start youtube channel? </div>
                             </div>
                             <div class="col-md-1 forum-info">
@@ -109,7 +109,7 @@
                                 <div class="forum-icon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <a href="forum_post.html" class="forum-item-title">Announcements</a>
+                                <a asp-controller="Post" asp-action="AllPosts" class="forum-item-title">All Posts</a>
                                 <div class="forum-sub-title">This forum features announcements from the community staff. If there is a new post in this forum, please check it out. </div>
                             </div>
                             <div class="col-md-1 forum-info">

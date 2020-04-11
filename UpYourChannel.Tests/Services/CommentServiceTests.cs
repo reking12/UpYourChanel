@@ -90,7 +90,7 @@ namespace UpYourChannel.Tests.Services
             var commentService = new CommentService(dbContext);
             var postService = new PostService(dbContext, null);
 
-            await postService.CreatePostAsync("Hello","I am Kris", "Kris");
+            await postService.CreatePostAsync("Hello","I am Kris", "Kris",1);
             await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null);
             await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1);
             var commentsForPost = commentService.AllCommentsForPost(1);
@@ -109,7 +109,7 @@ namespace UpYourChannel.Tests.Services
             var postService = new PostService(dbContext, null);
             var voteService = new VoteService(dbContext);
 
-            await postService.CreatePostAsync("Hello", "I am Kris", "Kris");
+            await postService.CreatePostAsync("Hello", "I am Kris", "Kris",1);
             await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null);
             await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1);
             await commentService.CreateCommentAsync(1, "u3", "Hello i am tweet3", 1);
