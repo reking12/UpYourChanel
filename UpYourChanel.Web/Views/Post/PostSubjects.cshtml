@@ -42,28 +42,14 @@
                                 <a asp-controller="Post" asp-action="AllPosts" asp-route-category="1" class="forum-item-title">General Discussions</a>
                                 <div class="forum-sub-title">Discuss about general things in youtube system!</div>
                             </div>
-                            <div class="col-md-1 forum-info">
-                                <span class="views-number">
-                                    1216
-                                </span>
-                                <div>
-                                    <small>Views</small>
-                                </div>
-                            </div>
-                            <div class="col-md-1 forum-info">
-                                <span class="views-number">
-                                    368
-                                </span>
-                                <div>
-                                    <small>Topics</small>
-                                </div>
-                            </div>
-                            <div class="col-md-1 forum-info">
-                                <span class="views-number">
-                                    140
-                                </span>
-                                <div>
-                                    <small>Posts</small>
+                            <div class="col">
+                                <div class="float-right forum-info">
+                                    <span class="views-number text-center">
+                                        @Model.PostForCategories["GeneralDiscussions"]
+                                    </span>
+                                    <div>
+                                        <small>Posts</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -77,28 +63,14 @@
                                 <a asp-controller="Post" asp-action="AllPosts" asp-route-category="2" class="forum-item-title">Introduction</a>
                                 <div class="forum-sub-title">New to the youtube community? How to start youtube channel? </div>
                             </div>
-                            <div class="col-md-1 forum-info">
-                                <span class="views-number">
-                                    890
-                                </span>
-                                <div>
-                                    <small>Views</small>
-                                </div>
-                            </div>
-                            <div class="col-md-1 forum-info">
-                                <span class="views-number">
-                                    120
-                                </span>
-                                <div>
-                                    <small>Topics</small>
-                                </div>
-                            </div>
-                            <div class="col-md-1 forum-info">
-                                <span class="views-number">
-                                    154
-                                </span>
-                                <div>
-                                    <small>Posts</small>
+                            <div class="col">
+                                <div class="float-right forum-info">
+                                    <span class="views-number text-center">
+                                        @Model.PostForCategories["Introduction"]
+                                    </span>
+                                    <div>
+                                        <small>Posts</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +102,7 @@
                             </div>
                             <div class="col-md-1 forum-info">
                                 <span class="views-number">
-                                    61
+                                    @Model.TotalPosts
                                 </span>
                                 <div>
                                     <small>Posts</small>

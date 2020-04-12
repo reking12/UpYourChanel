@@ -70,8 +70,9 @@ namespace UpYourChannel.Web.Services
             return mapper.Map<PostInputViewModel>(await db.Posts.FirstOrDefaultAsync(x => x.Id == postId));
         }
 
-        public async Task<int> PostsCountAsync()
-        => await db.Posts.CountAsync();
+        public async Task<int> PostsCountAsync(int? category)
+        => category != null ? await db.Posts.Where(x => x.Category == (CategoryType)category).CountAsync() 
+            : await db.Posts.CountAsync();
 
         public async Task<bool> EditPostAsync(int postId, string newContent, string newTitle, string userId)
         {

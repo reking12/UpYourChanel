@@ -17,7 +17,7 @@ namespace UpYourChannel.Web.Services
 
         IQueryable<Post> AllPosts(int? category);
 
-        Task<int> PostsCountAsync();
+        Task<int> PostsCountAsync(int? category);
 
         Task<PostInputViewModel> ReturnPostByIdAsync(int postId);
     }

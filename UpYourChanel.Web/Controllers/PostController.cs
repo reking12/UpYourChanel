@@ -11,6 +11,8 @@ using UpYourChannel.Web.ViewModels.Post;
 using AutoMapper.QueryableExtensions;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using System;
+using UpYourChannel.Data.Models.Enums;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -142,11 +144,16 @@ namespace UpYourChannel.Web.Controllers
 
         public async Task<IActionResult> PostSubjects()
         {
-            var postSubect = new PostSubjectViewModel()
+            var postSubject = new PostSubjectViewModel()
             {
-                TotalPosts = await postService.PostsCountAsync()
+                TotalPosts = await postService.PostsCountAsync(null),
+                PostForCategories = new Dictionary<string, int>()
             };
-            return this.View(postSubect);
+            foreach (Enum category in Enum.GetValues(typeof(CategoryType)))
+            {
+                postSubject.PostForCategories[category.ToString()] = await postService.PostsCountAsync(Convert.ToInt32(category));
+            }
+            return this.View(postSubject);
         }
     }
 }
