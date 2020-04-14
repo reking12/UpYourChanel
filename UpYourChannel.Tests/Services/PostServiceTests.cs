@@ -43,7 +43,7 @@ namespace UpYourChannel.Tests.Services
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
             await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u2",1);
         
-            Assert.Equal(2, await postService.PostsCountAsync());
+            Assert.Equal(2, await postService.PostsCountAsync(null));
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace UpYourChannel.Tests.Services
             Assert.Equal("Hello i am new content", post.Content);
             Assert.Equal("Hello i am new title", post.Title);
             Assert.Equal("u1", post.UserId);
-            Assert.Equal(1, await postService.PostsCountAsync());
+            Assert.Equal(1, await postService.PostsCountAsync(null));
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace UpYourChannel.Tests.Services
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
             await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u1",1);
 
-            var allPosts = postService.AllPosts();
+            var allPosts = postService.AllPosts(null);
             var firstPost = await allPosts.FirstAsync();
 
             Assert.Equal("Tweets", firstPost.Title);

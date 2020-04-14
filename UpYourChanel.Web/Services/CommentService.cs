@@ -15,14 +15,15 @@ namespace UpYourChannel.Web.Services
         {
             this.db = db;
         }
-        public async Task CreateCommentAsync(int postId, string userId, string content,int? parentId)
+        public async Task CreateCommentAsync(int postId, string userId, string content,int? parentId, bool isAnswer)
         {
             var comment = new Comment()
             {
                 Content = content,
                 PostId = postId,
                 UserId = userId,
-                ParentId = parentId
+                ParentId = parentId,
+                IsAnswer = isAnswer
             };
             await db.Comments.AddAsync(comment);
             await db.SaveChangesAsync();

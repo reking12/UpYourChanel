@@ -27,6 +27,8 @@ namespace UpYourChannel.Data.Models
 
         public DateTime CreatedOn { get; set; }
 
+        public bool IsAnswer { get; set; }
+
         public virtual IEnumerable<Vote> Votes { get; set; }
     }
 }

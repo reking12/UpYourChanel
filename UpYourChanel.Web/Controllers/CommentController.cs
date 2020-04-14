@@ -19,12 +19,12 @@ namespace UpYourChannel.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateComment(CommentInputModel input)
+        public async Task<IActionResult> CreateComment(CommentInputModel input, bool isAnswer)
         {
             //remove userId FROM input Model
             var userId = this.userManager.GetUserId(this.User);
             input.UserId = userId;
-            await commentService.CreateCommentAsync(input.PostId, input.UserId, input.Content, input.ParentId);
+            await commentService.CreateCommentAsync(input.PostId, input.UserId, input.Content, input.ParentId, isAnswer);
             return Redirect($"/Post/ById/{input.PostId}");
         }
 

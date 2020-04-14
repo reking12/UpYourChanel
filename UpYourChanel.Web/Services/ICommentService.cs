@@ -6,7 +6,7 @@ namespace UpYourChannel.Web.Services
 {
     public interface ICommentService
     {
-        Task CreateCommentAsync(int postId, string UserId, string content, int? parentId);
+        Task CreateCommentAsync(int postId, string UserId, string content, int? parentId, bool isAnswer);
 
         IEnumerable<Comment> AllCommentsForPost(int postId);
 

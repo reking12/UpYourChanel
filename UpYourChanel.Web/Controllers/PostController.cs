@@ -134,11 +134,11 @@ namespace UpYourChannel.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> AddCommentToPost(PostIndexModel input)
+        public async Task<IActionResult> AddCommentToPost(PostIndexModel input, bool isAnswer)
         {
             // maybe remove PostId from comment ViewModel UserId
             input.Comment.UserId = userManager.GetUserId(this.User);
-            await commentService.CreateCommentAsync(input.Comment.PostId, input.Comment.UserId, input.Comment.Content, input.Comment.ParentId);
+            await commentService.CreateCommentAsync(input.Comment.PostId, input.Comment.UserId, input.Comment.Content, input.Comment.ParentId, isAnswer);
             return Redirect($"/Post/ById/{input.Comment.PostId}");
         }
 

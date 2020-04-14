@@ -22,5 +22,7 @@ namespace UpYourChannel.Web.ViewModels.Comment
         public int VotesCount { get; set; }
 
         public bool IsThisUser { get; set; }
+
+        public bool IsAnswer { get; set; }
     }
 }

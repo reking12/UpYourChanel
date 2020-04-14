@@ -13,6 +13,7 @@
 
         @foreach (var comment in comments)
         {
+            var isAnswer = comment.IsAnswer ? "<i class=\"fas fa-star\"></i>Answer" : "";
             var id = "v" + comment.Id;
             var editComment = "e" + comment.Id;
             <div class="container-fluid mt-100">
@@ -23,7 +24,10 @@
                         <div class="media flex-wrap w-100 ml-4">
                             <img src="https://www.haber.ba/wp-content/uploads/2018/03/Azis-450x270.jpg" alt="" class="d-block rounded-circle" style="width:50px; height:50px">
                             <div class="media-body ml-3">
-                                <strong class="mt-0 text-success">@comment.UserUserName</strong>
+                                <div>
+                                    <strong class="text-danger">@Html.Raw(isAnswer)</strong>
+                                </div>
+                                <strong class="mt-0 text-primary">@comment.UserUserName</strong>
                                 <div class="mt-0 text-muted small">@comment.CreatedOn.ToString()</div>
 
                                 @Html.Raw(comment.SanitizedContent)
@@ -59,6 +63,7 @@
                                         <form asp-controller="Comment" asp-action="CreateComment" method="post">
                                             <input type="hidden" name="PostId" value="@Model.Post.Id" />
                                             <input type="hidden" name="ParentId" value="@comment.Id" />
+                                            <input type="hidden" name="isAnswer" value="false" />
                                             <textarea class="someTextBox form-control" name="Content" rows="2" style="width:50%" ; aria-label="With textarea" placeholder="comment..."></textarea>
                                             <div>
                                                 <a href="#" onclick="$(this).closest('form').submit()">add comment</a>
@@ -118,7 +123,7 @@
                     <div class="media flex-wrap w-100 align-items-center">
                         <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
                         <div class="media-body ml-3">
-                            @Model.Post.UserUserName
+                            <strong class="text-primary">@Model.Post.UserUserName</strong>
                             <div class="text-muted small">@Model.Post.CreatedOn</div>
                             @if (Model.Post.IsThisUser == true)
                             {
@@ -167,6 +172,7 @@
 <div class="container">
     <form asp-controller="Post" asp-action="AddCommentToPost" method="post" id="AddCommentForm" style="display: none">
         <input type="hidden" name="Comment.PostId" value="@Model.Post.Id" />
+        <input type="hidden" name="isAnswer" value="true" />
         <div>
             <label for="Content"></label>
             <textarea asp-for="Comment.Content" class="tinyMce form-control"></textarea>
