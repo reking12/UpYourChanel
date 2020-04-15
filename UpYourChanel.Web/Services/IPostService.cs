@@ -15,7 +15,7 @@ namespace UpYourChannel.Web.Services
 
         Task<bool> DeletePostAsync(int postId, string userId);
 
-        IQueryable<Post> AllPosts(int? category);
+        IQueryable<Post> AllPosts(string category, string sortBy);
 
         Task<int> PostsCountAsync(int? category);
 

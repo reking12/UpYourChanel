@@ -42,5 +42,9 @@ namespace UpYourChannel.Web.Paging
             var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
+
+        public string Category { get; set; }
+
+        public string SortBy { get; set; }
     }
 }

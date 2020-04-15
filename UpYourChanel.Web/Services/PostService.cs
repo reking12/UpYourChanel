@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
@@ -42,28 +43,27 @@ namespace UpYourChannel.Web.Services
             return post.Id;
         }
         //TODO: make it async
-        public IQueryable<Post> AllPosts(int? category)
+        public IQueryable<Post> AllPosts(string category, string sortBy)
         {
+            IQueryable<Post> posts;
             if (category != null)
             {
-                return db.Posts.Include(x => x.User).Include(x => x.Comments).Where(x => x.Category == (CategoryType)category);
+                Enum.TryParse(category, out CategoryType categoryType);
+                posts = db.Posts.Include(x => x.User).Include(x => x.Comments).Where(x => x.Category == categoryType);
             }
-            return db.Posts.Include(x => x.User).Include(x => x.Comments);
-            //----- Old Way
-            //var posts = new AllPostsViewModel()
-            //{
-            //    Posts = dbPosts.Select(x => new PostViewModel
-            //    {
-            //        Id = x.Id,
-            //        Comments = commentService.AllCommentsForPost(x.Id),
-            //        CommentsCount = x.CommentsCount,
-            //        VotesCount = x.Votes.Count(),
-            //        Content = x.Content,
-            //        CreatedOn = x.CreatedOn,
-            //        Title = x.Title,
-            //        UserUserName = x.User.UserName
-            //    })
-            //};
+            else
+            {
+                posts = db.Posts.Include(x => x.User).Include(x => x.Comments);
+            }
+            if (sortBy == "Recent")
+            {
+                posts = posts.OrderByDescending(x => x.CreatedOn);
+            }
+            else if (sortBy == "Popular")
+            {
+                posts = posts.OrderByDescending(x => x.Votes.Sum(x => (int)x.VoteType));
+            }
+            return posts;
         }
         public async Task<PostInputViewModel> ReturnPostByIdAsync(int postId)
         {

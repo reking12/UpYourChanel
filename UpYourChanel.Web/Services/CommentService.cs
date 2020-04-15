@@ -38,6 +38,10 @@ namespace UpYourChannel.Web.Services
         {
             return db.Comments.Where(x => x.PostId == postId).OrderByDescending(x => x.Votes.Sum(y => (int)y.VoteType)).Take(3);
         }
+        public IEnumerable<Comment> Top3AnswersForPost(int postId)
+        {
+            return db.Comments.Where(x => x.PostId == postId && x.IsAnswer == true).OrderByDescending(x => x.Votes.Sum(y => (int)y.VoteType)).Take(3);
+        }
 
         public async Task<bool> EditCommentAsync(int commentId, string newContent, string userId)
         {

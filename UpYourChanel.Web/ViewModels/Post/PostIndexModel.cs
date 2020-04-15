@@ -10,5 +10,7 @@ namespace UpYourChannel.Web.ViewModels.Post
         public CommentInputModel Comment { get; set; }
 
         public IEnumerable<CommentViewModel> Top3Comments { get; set; }
+
+        public IEnumerable<CommentViewModel> Top3Answers { get; set; }
     }
 }

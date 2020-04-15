@@ -65,7 +65,7 @@ namespace UpYourChannel.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> EditPost(PostInputViewModel input, int postId, int? pageNumber)
+        public async Task<IActionResult> EditPost(PostInputViewModel input, int postId)
         {
             var userId = userManager.GetUserId(this.User);
             if (await postService.EditPostAsync(postId, input.Content, input.Title, userId) == false)
@@ -85,10 +85,10 @@ namespace UpYourChannel.Web.Controllers
             }
             return Redirect("/Post/AllPosts");
         }
-
-        public IActionResult AllPosts(int? pageNumber, int? category)
+        [HttpGet]
+        public IActionResult AllPosts(int? pageNumber, string category, string sortBy)
         {
-            var dbPosts = postService.AllPosts(category);
+            var dbPosts = postService.AllPosts(category, sortBy);
             var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Comment, CommentViewModel>();
@@ -101,7 +101,10 @@ namespace UpYourChannel.Web.Controllers
             };
             var userId = userManager.GetUserId(this.User);
             allPosts.Posts.Where(x => x.UserId == userId).ToList().ForEach(x => x.IsThisUser = true);
-            return View(PaginatedList<PostViewModel>.Create(allPosts.Posts, pageNumber ?? 1, GlobalConstants.PageSize));
+            var pagination = PaginatedList<PostViewModel>.Create(allPosts.Posts, pageNumber ?? 1, GlobalConstants.PageSize);
+            pagination.Category = category;
+            pagination.SortBy = sortBy;
+            return View(pagination);
         }
 
         public IActionResult ById(int id)
@@ -123,6 +126,7 @@ namespace UpYourChannel.Web.Controllers
             postViewModel.Post.Comments.Where(x => x.UserId == userId).ToList().ForEach(x => x.IsThisUser = true);
             postViewModel.Post.VotesCount = voteService.AllVotesForPost(id);
             postViewModel.Top3Comments = mapper.Map<IEnumerable<CommentViewModel>>(commentService.Top3CommentsForPost(id));
+            postViewModel.Top3Answers = mapper.Map<IEnumerable<CommentViewModel>>(commentService.Top3AnswersForPost(id));
             postViewModel.Post.Comments.ToList().ForEach(x => x.VotesCount = voteService.AllVotesForComment(x.Id));
             return this.View(postViewModel);
         }
