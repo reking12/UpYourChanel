@@ -54,7 +54,7 @@ namespace UpYourChannel.Tests.Services
             var commentService = new CommentService(dbContext);
 
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
-            await commentService.CreateCommentAsync(1,"u1","TweetsComment",null);
+            await commentService.CreateCommentAsync(1,"u1","TweetsComment",null,false);
             await voteService.VoteForCommentAsync("u1", 1, true);
             await voteService.VoteForCommentAsync("u2", 1, true);
             for (int i = 0; i < 10; i++)
@@ -125,7 +125,7 @@ namespace UpYourChannel.Tests.Services
             var commentService = new CommentService(dbContext);
 
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
-            await commentService.CreateCommentAsync(1, "u1", "TweetsComment", null);
+            await commentService.CreateCommentAsync(1, "u1", "TweetsComment", null,false);
             await voteService.VoteForCommentAsync("u1", 1, true);
             await voteService.VoteForCommentAsync("u1", 1, false);
             for (int i = 0; i < 10; i++)

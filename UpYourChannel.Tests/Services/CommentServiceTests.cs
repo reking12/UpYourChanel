@@ -18,8 +18,8 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var commentService = new CommentService(dbContext);
 
-            await commentService.CreateCommentAsync(1,"Tweets", "Hello i am tweet",null);
-            await commentService.CreateCommentAsync(1,"Tweets2", "Hello i am tweet2", 1);
+            await commentService.CreateCommentAsync(1,"Tweets", "Hello i am tweet",null,false);
+            await commentService.CreateCommentAsync(1,"Tweets2", "Hello i am tweet2", 1,false);
 
             var comentsCount = await dbContext.Comments.CountAsync();
             var comment = await dbContext.Comments.FirstAsync();
@@ -40,8 +40,8 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var commentService = new CommentService(dbContext);
 
-            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null);
-            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1);
+            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null,false);
+            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1,false);
             await commentService.EditCommentAsync(2, "Hell i am new tweet","u2");
 
             var comentsCount = await dbContext.Comments.CountAsync();
@@ -64,8 +64,8 @@ namespace UpYourChannel.Tests.Services
             var commentService = new CommentService(dbContext);
             var voteService = new VoteService(dbContext);
 
-            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null);
-            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1);
+            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null,false);
+            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1,false);
             await voteService.VoteForCommentAsync("u1",1,true);
             await commentService.EditCommentAsync(2, "Hello i am new tweet2","u2");
             await commentService.DeleteCommentByIdAsync(1,1,"u1");
@@ -91,8 +91,8 @@ namespace UpYourChannel.Tests.Services
             var postService = new PostService(dbContext, null);
 
             await postService.CreatePostAsync("Hello","I am Kris", "Kris",1);
-            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null);
-            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1);
+            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null,false);
+            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1,false);
             var commentsForPost = commentService.AllCommentsForPost(1);
 
             Assert.Equal(2, commentsForPost.Count());
@@ -110,10 +110,10 @@ namespace UpYourChannel.Tests.Services
             var voteService = new VoteService(dbContext);
 
             await postService.CreatePostAsync("Hello", "I am Kris", "Kris",1);
-            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null);
-            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1);
-            await commentService.CreateCommentAsync(1, "u3", "Hello i am tweet3", 1);
-            await commentService.CreateCommentAsync(1, "u4", "Hello i am tweet4", 1);
+            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null,false);
+            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1,false);
+            await commentService.CreateCommentAsync(1, "u3", "Hello i am tweet3", 1,false);
+            await commentService.CreateCommentAsync(1, "u4", "Hello i am tweet4", 1,false);
             await voteService.VoteForCommentAsync("Kris",1,true);
             
             var commentsForPost = commentService.Top3CommentsForPost(1);

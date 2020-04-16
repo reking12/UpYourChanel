@@ -97,7 +97,7 @@ namespace UpYourChannel.Tests.Services
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
             await postService.CreatePostAsync("Tweets2", "Hello i am tweet2", "u1",1);
 
-            var allPosts = postService.AllPosts(null);
+            var allPosts = postService.AllPosts(null,null);
             var firstPost = await allPosts.FirstAsync();
 
             Assert.Equal("Tweets", firstPost.Title);

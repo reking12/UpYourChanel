@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using UpYourChannel.Data.Models.Enums;
+using UpYourChannel.Web.MyCloudinary;
+using Microsoft.AspNetCore.Http;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -75,6 +77,13 @@ namespace UpYourChannel.Web.Controllers
             return Redirect($"/Post/ById/{postId}");
         }
 
+        [HttpPost]
+        public IActionResult AddPhoto(IFormFile files)
+        {
+            var mycloud = new MyCloud();
+            mycloud.Upload(files.Name,files.OpenReadStream());
+            return Redirect("/Post/AllPosts");
+        }
         [Authorize]
         public async Task<IActionResult> DeletePost(int postId)
         {
