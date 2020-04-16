@@ -15,7 +15,7 @@ namespace UpYourChannel.Web.Services
         {
             this.db = db;
         }
-        public async Task AddVideoAsync(string link,string title,string description, string userId)
+        public async Task AddVideoAsync(string link, string title, string description, string userId)
         {
             var video = new Video
             {
@@ -44,7 +44,7 @@ namespace UpYourChannel.Web.Services
             {
                 AllVideos = db.Videos.Select(x => new VideoViewModel()
                 {
-                    Id= x.Id,
+                    Id = x.Id,
                     Title = x.Title,
                     Link = x.Link,
                     Description = x.Description
@@ -54,6 +54,26 @@ namespace UpYourChannel.Web.Services
 
         public AllVideosViewModel VideosBySearch(string searchString)
         {
+            //IQueryable<Video> query = db.Videos;
+            //var words = searchString?.Split(' ').Select(x => x.Trim())
+            //    .Where(x => !string.IsNullOrWhiteSpace(x) && x.Length >= 2).ToList();
+            //if (words != null)
+            //{
+            //    foreach (var word in words)
+            //    {
+            //        query = query.Where(c => EF.Functions.FreeText(c.Title, word));
+            //    }
+            //}
+            //return new AllVideosViewModel()
+            //{
+            //    AllVideos = query.Select(x => new VideoViewModel()
+            //    {
+            //        Id = x.Id,
+            //        Title = x.Title,
+            //        Link = x.Link,
+            //        Description = x.Description
+            //    })
+            //};
             string searchStringToLower = searchString.ToLower();
             return new AllVideosViewModel() { AllVideos = AllVideos().AllVideos.Where(x => x.Title.ToLower().Contains(searchStringToLower)) };
         }

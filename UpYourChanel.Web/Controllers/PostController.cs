@@ -88,6 +88,7 @@ namespace UpYourChannel.Web.Controllers
         [HttpGet]
         public IActionResult AllPosts(int? pageNumber, string category, string sortBy)
         {
+           
             var dbPosts = postService.AllPosts(category, sortBy);
             var configuration = new MapperConfiguration(cfg =>
             {
