@@ -62,13 +62,19 @@ namespace UpYourChannel.Web
             });
             services.AddRazorPages();
             // add options for https
-            services.AddResponseCompression(options => 
+            services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
             });
             services.AddAutoMapper(c =>
                 c.AddProfile<UpYourChannelProfile>(), typeof(Startup));
 
+
+            services.AddTransient<ICloudinaryService>(
+            serviceProvider => new CloudinaryService(
+            Configuration.GetConnectionString("CLOUD_NAME"),
+            Configuration.GetConnectionString("API_KEY"),
+            Configuration.GetConnectionString("API_SECRET")));
 
             services.AddTransient<IVideoService, VideoService>();
             services.AddTransient<ITagService, TagService>();
@@ -118,7 +124,7 @@ namespace UpYourChannel.Web
 
             app.UseEndpoints(endpoints =>
             {
-   
+
 
                 endpoints.MapControllerRoute(
                      name: "areaRoute",

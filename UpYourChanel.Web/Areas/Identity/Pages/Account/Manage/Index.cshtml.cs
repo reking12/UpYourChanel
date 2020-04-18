@@ -22,6 +22,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        public string ProfilePictureUrl { get; set; }
 
         public string Username { get; set; }
 
@@ -44,7 +45,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
-
+            ProfilePictureUrl = user.ProfilePictureUrl;
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber

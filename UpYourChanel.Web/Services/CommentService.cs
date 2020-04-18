@@ -36,7 +36,7 @@ namespace UpYourChannel.Web.Services
 
         public IEnumerable<Comment> Top3CommentsForPost(int postId)
         {
-            return db.Comments.Where(x => x.PostId == postId).OrderByDescending(x => x.Votes.Sum(y => (int)y.VoteType)).Take(3);
+            return db.Comments.Where(x => x.PostId == postId && x.IsAnswer == false).OrderByDescending(x => x.Votes.Sum(y => (int)y.VoteType)).Take(3);
         }
         public IEnumerable<Comment> Top3AnswersForPost(int postId)
         {

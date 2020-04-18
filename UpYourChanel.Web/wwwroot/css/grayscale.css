@@ -149,6 +149,10 @@
   background-color: #64a19d;
 }
 
+.btn-primary:focus, .btn-primary:active {
+    outline: none !important;
+    box-shadow: none;
+}
 .btn-primary:hover {
   background-color: #4f837f;
 }
