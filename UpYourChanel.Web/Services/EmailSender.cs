@@ -8,12 +8,12 @@ namespace UpYourChannel.Web.Services
 {
     public class EmailSender : IEmailSender
     {
-        private const string SENDER_EMAIL = "no-reply@UpYourChannel.com";
+        private const string SENDER_EMAIL = "reking12@abv.bg";
         private const string NAME_OF_THE_SENDER = "UpYourChannel";
 
         public EmailSender(IConfiguration Configuration)
         {
-            this.SendGridKey = Configuration["Authentication:SendGridKey"];
+            this.SendGridKey = Configuration["Authentication:SENDGRID_API_KEY"];
         }
 
         public string SendGridUser { get; set; }
