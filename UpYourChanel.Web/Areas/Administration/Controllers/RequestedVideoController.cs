@@ -16,12 +16,14 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
     {
         private readonly IRequestedVideoService requestedVideoService;
         private readonly IVideoService videoService;
+        private readonly IMessageService messageService;
         private readonly UserManager<User> userManager;
 
-        public RequestedVideoController(IRequestedVideoService requestedVideoService, IVideoService videoService, UserManager<User> userManager)
+        public RequestedVideoController(IRequestedVideoService requestedVideoService, IVideoService videoService,IMessageService messageService, UserManager<User> userManager)
         {
             this.requestedVideoService = requestedVideoService;
             this.videoService = videoService;
+            this.messageService = messageService;
             this.userManager = userManager;
         }    
 
@@ -30,6 +32,7 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
         {
             await videoService.AddVideoAsync(input.Link,input.Title,input.Description, userId);
             await requestedVideoService.RemoveRequestedVideoAsync(input.Id);
+            await messageService.AddMessageToUserAsync("Your video was approved. We appreciate that",userId);
             return Redirect("/Administration/RequestedVideo/AllRequestedVideos");
         }
 

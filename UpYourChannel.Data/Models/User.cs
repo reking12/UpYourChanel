@@ -10,6 +10,7 @@ namespace UpYourChannel.Data.Models
         {
             Videos = new HashSet<Video>();
             Posts = new HashSet<Post>();
+            Messages = new HashSet<Message>();
             ProfilePictureUrl = "https://res.cloudinary.com/upyourchannel/image/upload/v1587136691/Facebook-no-profile-picture-icon-620x389_hwyvki.jpg";
         }
 

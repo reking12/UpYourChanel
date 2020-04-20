@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using UpYourChannel.Data.Models;
+using UpYourChannel.Web.ViewModels.Message;
 
 namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -14,14 +17,20 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IMapper mapper;
 
         public IndexModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.mapper = mapper;
         }
+
+        public IEnumerable<MessageViewModel> Messages { get; set; }
+
         public string ProfilePictureUrl { get; set; }
 
         public string Username { get; set; }
@@ -46,6 +55,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
             ProfilePictureUrl = user.ProfilePictureUrl;
+            Messages = mapper.Map<IEnumerable<MessageViewModel>>(user.Messages);
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber
@@ -54,7 +64,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.Users.Include(x => x.Messages).SingleOrDefaultAsync(x=> x.Id == _userManager.GetUserId(User));
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");

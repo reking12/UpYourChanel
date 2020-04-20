@@ -82,6 +82,7 @@ namespace UpYourChannel.Web
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IVoteService, VoteService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IMessageService, MessageService>();
 
             services.AddSingleton<IEmailSender, EmailSender>();
         }
