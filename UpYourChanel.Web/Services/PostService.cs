@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Linq;
@@ -7,26 +6,23 @@ using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
 using UpYourChannel.Data.Models.Enums;
-using UpYourChannel.Web.ViewModels.Post;
 
 namespace UpYourChannel.Web.Services
 {
     public class PostService : IPostService
     {
         private readonly ApplicationDbContext db;
-        private readonly IMapper mapper;
 
-        public PostService(ApplicationDbContext db, IMapper mapper)
+        public PostService(ApplicationDbContext db)
         {
             this.db = db;
-            this.mapper = mapper;
         }
 
-        public Post ById(int id)
+        public async Task<Post> ByIdAsync(int id)
         {
             // then include e da se hodi navutre
-            return db.Posts.Include(x => x.User)
-                .Include(x => x.Comments).ThenInclude(x => x.User).FirstOrDefault(x => x.Id == id);
+            return await db.Posts.Include(x => x.User)
+                .Include(x => x.Comments).ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<int> CreatePostAsync(string title, string content, string userId, int category)
@@ -65,9 +61,9 @@ namespace UpYourChannel.Web.Services
             }
             return posts;
         }
-        public async Task<PostInputViewModel> ReturnPostByIdAsync(int postId)
+        public async Task<Post> ReturnPostInputModelByIdAsync(int postId)
         {
-            return mapper.Map<PostInputViewModel>(await db.Posts.FirstOrDefaultAsync(x => x.Id == postId));
+            return await db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
         }
 
         public async Task<int> PostsCountAsync(int? category)
@@ -105,5 +101,6 @@ namespace UpYourChannel.Web.Services
             await db.SaveChangesAsync();
             return true;
         }
+
     }
 }

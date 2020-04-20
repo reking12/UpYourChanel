@@ -1,3 +1,4 @@
+using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -93,5 +94,29 @@ namespace UpYourChannel.Tests.Services
             Assert.Equal(1, videoCount);
 
         }
+
+        [Fact]
+        public async Task EditVideoTitle()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                    .UseInMemoryDatabase(databaseName: "EditVideoTitle_Database")
+                    .Options;
+            var dbContext = new ApplicationDbContext(options);
+            var videoService = new VideoService(dbContext);
+
+            await videoService.AddVideoAsync("https://www.youtube.com/watch?v=mjrOA8Qe38k", "TE AMO1", "COVER BY GABBY G1", "asdf1");
+            await videoService.AddVideoAsync("https://www.youtube.com/watch?v=mjrOA8Qe38k", "TE AMO2", "COVER BY GABBY G2", "asdf2");
+
+            var videoCount = await videoService.VideosBySearch("TE AMO1").AllVideos.CountAsync();
+            await videoService.EditVideoTitleAsync(1,"new title");
+            var video = videoService.VideosBySearch("new title").AllVideos.ToList().First();
+
+            Assert.Equal("https://www.youtube.com/watch?v=mjrOA8Qe38k", video.Link);
+            Assert.Equal("new title", video.Title);
+            Assert.Equal("COVER BY GABBY G1", video.Description);
+            Assert.Equal(1, videoCount);
+
+        }
+        
     }
 }

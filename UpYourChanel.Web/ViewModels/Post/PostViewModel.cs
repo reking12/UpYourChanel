@@ -31,5 +31,7 @@ namespace UpYourChannel.Web.ViewModels.Post
         public string SanitizedContentWith150Symbols => SanitizedContent.Substring(0,Math.Min(SanitizedContent.Length,150));
 
         public bool IsThisUser { get; set; }
+
+        public string UserProfilePictureUrl { get; set; }
     }
 }

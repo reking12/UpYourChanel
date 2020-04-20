@@ -60,7 +60,7 @@ namespace UpYourChannel.Web.Controllers
         {
             TempData["postId"] = postId;
             TempData["pageNumber"] = pageNumber;
-            var post = await postService.ReturnPostByIdAsync(postId);
+            var post = mapper.Map<PostInputViewModel>(await postService.ReturnPostInputModelByIdAsync(postId));
             return View(post);
         }
 
@@ -89,7 +89,6 @@ namespace UpYourChannel.Web.Controllers
         [HttpGet]
         public IActionResult AllPosts(int? pageNumber, string category, string sortBy)
         {
-           
             var dbPosts = postService.AllPosts(category, sortBy);
             var configuration = new MapperConfiguration(cfg =>
             {
@@ -109,13 +108,12 @@ namespace UpYourChannel.Web.Controllers
             return View(pagination);
         }
 
-        public IActionResult ById(int id)
+        public async Task<IActionResult> ById(int id)
         {
-            // maybe make comment from tinyMce like answers 
             var userId = userManager.GetUserId(this.User);
             var postViewModel = new PostIndexModel()
             {
-                Post = mapper.Map<PostViewModel>(postService.ById(id))
+                Post = mapper.Map<PostViewModel>(await postService.ByIdAsync(id))
             };
             if (postViewModel == null)
             {

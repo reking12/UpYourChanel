@@ -10,6 +10,7 @@ namespace UpYourChannel.Web.ViewModels.Post
         [Required]
         public string Content { get; set; }
 
+        [Required]
         public int Category { get; set; }
 
         public string UserId { get; set; }

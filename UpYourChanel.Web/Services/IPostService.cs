@@ -7,7 +7,7 @@ namespace UpYourChannel.Web.Services
 {
      public interface IPostService
     {
-        Post ById(int id);
+        Task<Post> ByIdAsync(int id);
 
         Task<int> CreatePostAsync(string title, string content, string userId, int category);
 
@@ -19,6 +19,6 @@ namespace UpYourChannel.Web.Services
 
         Task<int> PostsCountAsync(int? category);
 
-        Task<PostInputViewModel> ReturnPostByIdAsync(int postId);
+        Task<Post> ReturnPostInputModelByIdAsync(int postId);
     }
 }

@@ -88,7 +88,7 @@ namespace UpYourChannel.Tests.Services
                     .Options;
             var dbContext = new ApplicationDbContext(options);
             var commentService = new CommentService(dbContext);
-            var postService = new PostService(dbContext, null);
+            var postService = new PostService(dbContext);
 
             await postService.CreatePostAsync("Hello","I am Kris", "Kris",1);
             await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null,false);
@@ -106,7 +106,7 @@ namespace UpYourChannel.Tests.Services
                     .Options;
             var dbContext = new ApplicationDbContext(options);
             var commentService = new CommentService(dbContext);
-            var postService = new PostService(dbContext, null);
+            var postService = new PostService(dbContext);
             var voteService = new VoteService(dbContext);
 
             await postService.CreatePostAsync("Hello", "I am Kris", "Kris",1);
@@ -120,6 +120,33 @@ namespace UpYourChannel.Tests.Services
             var commentWithMostLikes = commentsForPost.FirstOrDefault();
             
             Assert.Equal(1,commentWithMostLikes.Id);
+            Assert.Equal("u1", commentWithMostLikes.UserId);
+            Assert.Equal("Hello i am tweet", commentWithMostLikes.Content);
+            Assert.Null(commentWithMostLikes.ParentId);
+            Assert.Equal(3, commentsForPost.Count());
+        }
+        [Fact]
+        public async Task Top3AnswersForPost()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                    .UseInMemoryDatabase(databaseName: "TopAnswers_Database")
+                    .Options;
+            var dbContext = new ApplicationDbContext(options);
+            var commentService = new CommentService(dbContext);
+            var postService = new PostService(dbContext);
+            var voteService = new VoteService(dbContext);
+
+            await postService.CreatePostAsync("Hello", "I am Kris", "Kris", 1);
+            await commentService.CreateCommentAsync(1, "u1", "Hello i am tweet", null, true);
+            await commentService.CreateCommentAsync(1, "u2", "Hello i am tweet2", 1, true);
+            await commentService.CreateCommentAsync(1, "u3", "Hello i am tweet3", 1, true);
+            await commentService.CreateCommentAsync(1, "u4", "Hello i am tweet4", 1, true);
+            await voteService.VoteForCommentAsync("Kris", 1, true);
+
+            var commentsForPost = commentService.Top3AnswersForPost(1);
+            var commentWithMostLikes = commentsForPost.FirstOrDefault();
+
+            Assert.Equal(1, commentWithMostLikes.Id);
             Assert.Equal("u1", commentWithMostLikes.UserId);
             Assert.Equal("Hello i am tweet", commentWithMostLikes.Content);
             Assert.Null(commentWithMostLikes.ParentId);

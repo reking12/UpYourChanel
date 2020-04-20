@@ -121,7 +121,7 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <div class="media flex-wrap w-100 align-items-center">
-                        <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
+                        <img src=@Model.Post.UserProfilePictureUrl class="d-block rounded-circle" style="border-radius:50%; width:70px; height:70px">
                         <div class="media-body ml-3">
                             <strong class="text-primary">@Model.Post.UserUserName</strong>
                             <div class="text-muted small">@Model.Post.CreatedOn</div>
@@ -229,17 +229,13 @@
 
         function showAddComment(commentId) {
             $("#" + commentId).toggle();
-            //$([document.documentElement, document.body]).animate({
-            //    scrollTop: $('#' + commentId).offset().top
-            //}, 1000);
         }
 
         function showEditComment(commentId) {
             $('#e' + commentId).toggle();
         }
 
-        function showAddCommentForm(parentId) {
-            //$("#AddCommentForm input[name='ParentId']").val(parentId);
+        function showAddCommentForm() {
             $("#AddCommentForm").show();
             $([document.documentElement, document.body]).animate({
                 scrollTop: $("#AddCommentForm").offset().top
@@ -262,7 +258,6 @@
             });
         }
 
-
         function sendVoteForComment(postId, isUpVote) {
             var token = $("#votesForm input[name=__RequestVerificationToken]").val();
             var json = { postId: postId, isUpVote: isUpVote };
@@ -278,23 +273,5 @@
                 }
             });
         }
-
-//      $('#someTextBox').keypress(function (event) {
-//          var keycode = (event.keyCode ? event.keyCode : event.which);
-//          if (keycode == '13') {
-//              alert('You pressed a "enter" key in textbox');
-//          }
-//      });
-
-//      $(document).ready(function() {
-
-//$('.submit_on_enter').keydown(function(event) {
-//  // enter has keyCode = 13, change it if you want to use another button
-//  if (event.keyCode == 13) {
-//    this.form.submit();
-//    return false;
-//  }
-//});
-
     </script>
 }

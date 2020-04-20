@@ -17,7 +17,7 @@ namespace UpYourChannel.Tests.Services
                     .Options;
             var dbContext = new ApplicationDbContext(options);
             var voteService = new VoteService(dbContext);
-            var postService = new PostService(dbContext, null);
+            var postService = new PostService(dbContext);
 
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
             await voteService.VoteAsync("u1", 1, true);
@@ -50,7 +50,7 @@ namespace UpYourChannel.Tests.Services
                     .Options;
             var dbContext = new ApplicationDbContext(options);
             var voteService = new VoteService(dbContext);
-            var postService = new PostService(dbContext, null);
+            var postService = new PostService(dbContext);
             var commentService = new CommentService(dbContext);
 
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
@@ -86,7 +86,7 @@ namespace UpYourChannel.Tests.Services
                     .Options;
             var dbContext = new ApplicationDbContext(options);
             var voteService = new VoteService(dbContext);
-            var postService = new PostService(dbContext, null);
+            var postService = new PostService(dbContext);
 
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
             await voteService.VoteAsync("u1", 1, true);
@@ -121,7 +121,7 @@ namespace UpYourChannel.Tests.Services
                     .Options;
             var dbContext = new ApplicationDbContext(options);
             var voteService = new VoteService(dbContext);
-            var postService = new PostService(dbContext, null);
+            var postService = new PostService(dbContext);
             var commentService = new CommentService(dbContext);
 
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);

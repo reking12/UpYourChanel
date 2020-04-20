@@ -17,6 +17,8 @@ namespace UpYourChannel.Data.Models
 
         public virtual IEnumerable<Video> Videos { get; set; }
 
+        public virtual IEnumerable<Message> Messages { get; set; }
+
         public int PostsCount => Posts.Count();
 
         public int VideosCount => Videos.Count();
