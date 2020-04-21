@@ -32,14 +32,15 @@ namespace UpYourChannel.Web.Areas.Administration.Controllers
         {
             await videoService.AddVideoAsync(input.Link,input.Title,input.Description, userId);
             await requestedVideoService.RemoveRequestedVideoAsync(input.Id);
-            await messageService.AddMessageToUserAsync("Your video was approved. We appreciate that",userId);
+            await messageService.AddMessageToUserAsync(GlobalConstants.MessageForGoodVideo,userId);
             return Redirect("/Administration/RequestedVideo/AllRequestedVideos");
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveRequestedVideo(int id)
+        public async Task<IActionResult> RemoveRequestedVideo(int id, string message, string userId)
         {
             await requestedVideoService.RemoveRequestedVideoAsync(id);
+            await messageService.AddMessageToUserAsync(message, userId);
             return Redirect("/Administration/RequestedVideo/AllRequestedVideos");
         }
 

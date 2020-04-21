@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
 using UpYourChannel.Data.Models;
@@ -30,9 +32,16 @@ namespace UpYourChannel.Web.Services
             throw new NotImplementedException();
         }
 
-        public Task RemoveMessageFromUserAsync(int messageId, string userId)
+        public async Task<bool> RemoveMessageFromUserAsync(int messageId, string userId)
         {
-            throw new NotImplementedException();
+            var message = await db.Messages.FirstOrDefaultAsync(x => x.Id == messageId);
+            if (message.UserId != userId)
+            {
+                return false;
+            }
+            db.Messages.Remove(message);
+            await db.SaveChangesAsync();
+            return true;
         }
     }
 }

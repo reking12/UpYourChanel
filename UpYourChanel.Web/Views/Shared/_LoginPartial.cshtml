@@ -2,25 +2,53 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link text-dark">Hello @User.Identity.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{   
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
-</ul>
+    <ul class="navbar-nav">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <li class="nav-item">
+                <div class="col-sm-4">
+                    <div class="item">
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index">
+                            <span class="notify-badge">4</span>
+                            <img src="https://res.cloudinary.com/upyourchannel/image/upload/v1587158426/zimkuvhlnksbvezvyywz.jpg" class="d-block rounded-circle" style="border-radius:50%; width:50px; height:50px" alt="" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link text-dark">Hello @User.Identity.Name!</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+        }
+    </ul>
+<style>
+    .item {
+        position: relative;
+        right: -25px;
+        padding-top: 20px;
+        display: inline-block;
+    }
+
+    .notify-badge {
+        position: absolute;
+        right: -7px;
+        top: 15px;
+        background: red;
+        text-align: center;
+        border-radius: 50%;
+        color: white;
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+</style>

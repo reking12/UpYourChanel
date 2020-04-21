@@ -55,7 +55,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
             ProfilePictureUrl = user.ProfilePictureUrl;
-            Messages = mapper.Map<IEnumerable<MessageViewModel>>(user.Messages);
+            Messages = mapper.Map<IEnumerable<MessageViewModel>>(user.Messages.OrderByDescending(x => x.CreatedOn));
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber

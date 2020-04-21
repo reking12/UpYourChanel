@@ -14,34 +14,45 @@
         @foreach (var video in Model)
         {
 
-        <div class="col-sm-4">
-            <br />
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src=@video.IFrameSource allowfullscreen></iframe>
+            <div class="col-sm-4">
+                <br />
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src=@video.IFrameSource allowfullscreen></iframe>
+                </div>
+                <label text-justify text-dark">Title: @video.Title</label>
+                <div>Link: @video.Link</div>
+                <div>Description: @video.Description</div>
+                <br />
+                <div>
+                    <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="AddVideoAndRemoveItFromRequested" method="post">
+                        <input type="hidden" name="Id" value="@video.Id" />
+                        <input type="hidden" name="Link" value="@video.Link" />
+                        <input type="hidden" name="Title" value="@video.Title" />
+                        <input type="hidden" name="Description" value="@video.Description" />
+                        <input type="hidden" name="userId" value="@video.UserId" />
+                        <div>
+                            <input class="float-left btn btn-primary" type="submit" value="Add" />
+                        </div>
+                    </form>
+                    <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="RemoveRequestedVideo" method="post">
+                        <input type="hidden" name="id" value="@video.Id" />
+                        <div>
+                            <input class="float-right btn btn-primary" type="submit" value="Remove" />
+                        </div>
+                    </form>
+                    <br />
+                    <br />
+                    <br />
+                    <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="RemoveRequestedVideo" method="post">
+                        <div class="form-group">
+                            <input type="hidden" name="id" value="@video.Id" />
+                            <input type="hidden" name="userId" value="@video.UserId" />
+                            <textarea required rows="2" name="message" class="form-control" aria-label="With textarea">Your video was not approved.</textarea>
+                            <a href="#" onclick="$(this).closest('form').submit()">apply</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <label text-justify text-dark">Title: @video.Title</label>
-            <div>Link: @video.Link</div>
-            <div>Description: @video.Description</div>
-            <br />
-            <div>
-                <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="AddVideoAndRemoveItFromRequested" method="post">
-                    <input type="hidden" name="Id" value="@video.Id" />
-                    <input type="hidden" name="Link" value="@video.Link" />
-                    <input type="hidden" name="Title" value="@video.Title" />
-                    <input type="hidden" name="Description" value="@video.Description" />
-                    <input type="hidden" name="userId" value="@video.UserId" />
-                    <div>
-                        <input class="float-left btn btn-primary" type="submit" value="Add" />
-                    </div>
-                </form>
-                <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="RemoveRequestedVideo" method="post">
-                    <input type="hidden" name="id" value="@video.Id" />
-                    <div>
-                        <input class="float-right btn btn-primary" type="submit" value="Remove" />
-                    </div>
-                </form>
-            </div>
-        </div>
         }
     </div>
 </div>
@@ -70,3 +81,9 @@
         Next
     </a>
 </div>
+@section Scripts
+{
+    <script>
+
+    </script>
+}
