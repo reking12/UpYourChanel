@@ -7,6 +7,7 @@ namespace UpYourChannel.Data.Models
         public Message()
         {
             CreatedOn = DateTime.UtcNow;
+            IsNew = true;
         }
         public int Id { get; set; }
 

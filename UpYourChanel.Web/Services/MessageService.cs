@@ -32,6 +32,12 @@ namespace UpYourChannel.Web.Services
             throw new NotImplementedException();
         }
 
+        public async Task MakeAllMessagesOld(string userId)
+        {
+            await db.Messages.Where(x => x.UserId == userId).ForEachAsync(x => x.IsNew = false);
+            await db.SaveChangesAsync();
+        }
+
         public async Task<bool> RemoveMessageFromUserAsync(int messageId, string userId)
         {
             var message = await db.Messages.FirstOrDefaultAsync(x => x.Id == messageId);

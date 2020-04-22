@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using UpYourChannel.Data.Models;
+using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels.Message;
 
 namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
@@ -18,15 +19,18 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper mapper;
+        private readonly IMessageService messageService;
 
         public IndexModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IMapper mapper)
+            IMapper mapper,
+            IMessageService messageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this.mapper = mapper;
+            this.messageService = messageService;
         }
 
         public IEnumerable<MessageViewModel> Messages { get; set; }
@@ -56,12 +60,13 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
             Username = userName;
             ProfilePictureUrl = user.ProfilePictureUrl;
             Messages = mapper.Map<IEnumerable<MessageViewModel>>(user.Messages.OrderByDescending(x => x.CreatedOn));
+            await messageService.MakeAllMessagesOld(user.Id);
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber
             };
         }
-
+        
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.Users.Include(x => x.Messages).SingleOrDefaultAsync(x=> x.Id == _userManager.GetUserId(User));

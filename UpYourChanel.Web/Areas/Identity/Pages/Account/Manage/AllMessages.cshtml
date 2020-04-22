@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "All Messages";
+    ViewData["ActivePage"] = ManageNavPages.AllMessages;
+}
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<h4>@ViewData["Title"]</h4>
+@foreach (var message in Model.Messages)
+{
+    if (message.IsNew)
+    {
+        <strong class="text-primary">UpYourChannel Service:</strong> <strong style="font-size:110%; color: red">NEW</strong>
+    }
+    else
+    {
+        <strong class="text-primary">UpYourChannel Service:</strong>
+    }
+    <div class="text-muted small">@message.CreatedOn.ToString()</div>
+    <div>@message.Content</div>
+    <br />
+}
+<div class="text-center">
+    <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
+       asp-route-pageNumber="" asp-route-sortBy=""
+       class="btn btn-default page-item">
+        Previous
+    </a>
+    @for (int i = 1; i <= 3; i++)
+    {
+        <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
+           asp-route-pageNumber="@(i)" asp-route-sortBy=""
+           class="btn btn-default">
+            @i
+        </a>
+    }
+    <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
+       asp-route-pageNumber="" asp-route-sortBy=""
+       class="btn btn-default">
+        Next
+    </a>
+</div>

@@ -9,6 +9,8 @@ namespace UpYourChannel.Web.ViewModels.Message
     {
         public string Content { get; set; }
 
-        public bool IsBool { get; set; }
+        public bool IsNew { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

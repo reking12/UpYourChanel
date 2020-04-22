@@ -11,5 +11,7 @@ namespace UpYourChannel.Web.Services
         Task AddMessageToUserAsync(string content, string userId);
 
         Task<bool> RemoveMessageFromUserAsync(int messageId, string userId);
+
+        Task MakeAllMessagesOld(string userId);
     }
 }

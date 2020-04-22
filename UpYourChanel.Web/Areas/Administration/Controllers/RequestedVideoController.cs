@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using UpYourChannel.Data.Models;
 using UpYourChannel.Web.Paging;
 using UpYourChannel.Web.Services;
-using UpYourChannel.Web.ViewModels;
 using UpYourChannel.Web.ViewModels.Video;
 
 namespace UpYourChannel.Web.Areas.Administration.Controllers

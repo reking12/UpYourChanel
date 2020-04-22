@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using UpYourChannel.Data.Models.Enums;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace UpYourChannel.Web.Controllers
 {
@@ -38,6 +39,11 @@ namespace UpYourChannel.Web.Controllers
         public IActionResult CreatePost()
         {
             return this.View();
+        }
+        public async Task<int> OnGetAsync()
+        {
+            var user = await userManager.Users.Include(x => x.Messages).SingleOrDefaultAsync(x => x.Id == userManager.GetUserId(User));
+            return user.Messages.Count();
         }
 
         [Authorize]

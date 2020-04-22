@@ -24,6 +24,8 @@ namespace UpYourChannel.Data.Models
 
         public int VideosCount => Videos.Count();
 
+        public int MessagesCount => Messages.Count();
+
         public string ProfilePictureUrl { get; set; }
 
         public string ProfilePicturePublicId { get; set; }

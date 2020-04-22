@@ -23,37 +23,26 @@
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
         </form>
         <hr />
-        <h4>New Messages:</h4>
-        <ul>
-            @foreach (var message in Model.Messages)
+        <h4>Recent Messages:</h4>
+        <br />
+        @foreach (var message in Model.Messages.Take(5))
+        {
+            if (message.IsNew)
             {
-                <li>@message.Content</li>
+                <strong class="text-primary">UpYourChannel Service:</strong> <strong style="font-size:110%; color: red">NEW</strong>
             }
-        </ul>
-        <div class="text-center">
-            <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-               asp-route-pageNumber="" asp-route-sortBy=""
-               class="btn btn-default page-item">
-                Previous
-            </a>
-            @for (int i = 1; i <= 3; i++)
+            else
             {
-                <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-                   asp-route-pageNumber="@(i)" asp-route-sortBy=""
-                   class="btn btn-default">
-                    @i
-                </a>
+                <strong class="text-primary">UpYourChannel Service:</strong> <a  class="text-danger float-right" href="#">Delete</a>
             }
-            <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-               asp-route-pageNumber="" asp-route-sortBy=""
-               class="btn btn-default">
-                Next
-            </a>
-        </div>
+            <div class="text-muted small">@message.CreatedOn.ToString()</div>
+            <div>@message.Content</div>
+            <br />
+        }
     </div>
     <div class="col-md-6">
         <h4>Your Profile Picture:</h4>
-        <img src="@Model.ProfilePictureUrl" alt="You have no image" style="height:250px;width:250px;"/>
+        <img src="@Model.ProfilePictureUrl" alt="You have no image" style="height:250px;width:250px;" />
         <form method="post" enctype="multipart/form-data" asp-area="Identity" asp-controller="User" asp-action="AddPhoto">
             <div class="form-group">
                 <div class="col-md-10">

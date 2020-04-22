@@ -17,7 +17,7 @@ namespace UpYourChannel.Web
 
         public const int PageSize = 6;
 
-        public const string MessageForGoodVideo = "Your video was approved. We appreciate that";
+        public const string MessageForGoodVideo = "Your video was approved. We appreciate that!";
 
       //  public const string MessageForBadVideo = "Your video was not approved. We appreciate that";
     }
