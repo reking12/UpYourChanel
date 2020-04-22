@@ -14,12 +14,14 @@ namespace UpYourChannel.Web.Areas.Identity.Controllers
     public class UserController : Controller
     {
         private readonly ICloudinaryService cloudinaryService;
+        private readonly IMessageService messageService;
         private readonly UserManager<User> userManager;
         private readonly ApplicationDbContext db;
 
-        public UserController(ICloudinaryService cloudinaryService, UserManager<User> userManager, ApplicationDbContext db)
+        public UserController(ICloudinaryService cloudinaryService, IMessageService messageService, UserManager<User> userManager, ApplicationDbContext db)
         {
             this.cloudinaryService = cloudinaryService;
+            this.messageService = messageService;
             this.userManager = userManager;
             this.db = db;
         }
@@ -36,6 +38,16 @@ namespace UpYourChannel.Web.Areas.Identity.Controllers
             user.ProfilePictureUrl = imageParameters.ProfilePictureUrl;
             user.ProfilePicturePublicId = imageParameters.ProfilePicturePublicId;
             await db.SaveChangesAsync();
+            return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
+        }
+
+        public async Task<IActionResult> DeleteMessage(int messageId)
+        {
+            var userId = userManager.GetUserId(User);
+            if (await messageService.RemoveMessageFromUserAsync(messageId, userId) == false)
+            {
+                return NotFound();
+            }
             return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
         }
     }

@@ -13,7 +13,7 @@
     <div class="row">
         @foreach (var video in Model)
         {
-
+            var delete = "v" + video.Id;
             <div class="col-sm-4">
                 <br />
                 <div class="embed-responsive embed-responsive-16by9">
@@ -34,16 +34,17 @@
                             <input class="float-left btn btn-primary" type="submit" value="Add" />
                         </div>
                     </form>
-                    <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="RemoveRequestedVideo" method="post">
+                    <button class="float-right btn btn-primary" onclick="showDeleteWindow(@video.Id)">Remove</button>
+                    @*<form asp-area="Administration" asp-controller="RequestedVideo" asp-action="RemoveRequestedVideo" method="post">
                         <input type="hidden" name="id" value="@video.Id" />
                         <div>
                             <input class="float-right btn btn-primary" type="submit" value="Remove" />
                         </div>
-                    </form>
+                    </form>*@
                     <br />
                     <br />
                     <br />
-                    <form asp-area="Administration" asp-controller="RequestedVideo" asp-action="RemoveRequestedVideo" method="post">
+                    <form id="@delete" asp-area="Administration" asp-controller="RequestedVideo" asp-action="RemoveRequestedVideo" method="post" style="display : none">
                         <div class="form-group">
                             <input type="hidden" name="id" value="@video.Id" />
                             <input type="hidden" name="userId" value="@video.UserId" />
@@ -84,6 +85,8 @@
 @section Scripts
 {
     <script>
-
+        function showDeleteWindow(videoId) {
+            $('#v' + videoId).toggle();
+        }
     </script>
 }

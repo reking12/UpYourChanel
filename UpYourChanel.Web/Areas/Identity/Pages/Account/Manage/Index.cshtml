@@ -30,10 +30,16 @@
             if (message.IsNew)
             {
                 <strong class="text-primary">UpYourChannel Service:</strong> <strong style="font-size:110%; color: red">NEW</strong>
+                <a class="text-danger float-right"
+                   asp-area="Identity" asp-controller="User" asp-action="DeleteMessage"
+                   asp-route-messageId="@message.Id">Delete</a>
             }
             else
             {
-                <strong class="text-primary">UpYourChannel Service:</strong> <a  class="text-danger float-right" href="#">Delete</a>
+                <strong class="text-primary">UpYourChannel Service:</strong>
+                <a class="text-danger float-right"
+                   asp-area="Identity" asp-controller="User" asp-action="DeleteMessage"
+                   asp-route-messageId="@message.Id">Delete</a>
             }
             <div class="text-muted small">@message.CreatedOn.ToString()</div>
             <div>@message.Content</div>

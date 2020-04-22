@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "All Messages";
+    ViewData["Title"] = "All Messages:";
     ViewData["ActivePage"] = ManageNavPages.AllMessages;
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -11,10 +11,16 @@
     if (message.IsNew)
     {
         <strong class="text-primary">UpYourChannel Service:</strong> <strong style="font-size:110%; color: red">NEW</strong>
+        <a class="text-danger float-right"
+           asp-area="Identity" asp-controller="User" asp-action="DeleteMessage"
+           asp-route-messageId="@message.Id">Delete</a>
     }
     else
     {
         <strong class="text-primary">UpYourChannel Service:</strong>
+        <a class="text-danger float-right"
+           asp-area="Identity" asp-controller="User" asp-action="DeleteMessage"
+           asp-route-messageId="@message.Id">Delete</a>
     }
     <div class="text-muted small">@message.CreatedOn.ToString()</div>
     <div>@message.Content</div>
