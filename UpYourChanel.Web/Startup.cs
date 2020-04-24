@@ -42,7 +42,7 @@ namespace UpYourChannel.Web
             services.AddIdentity<User, IdentityRole>(options =>
              {
                  options.Password.RequireDigit = false;
-                 options.Password.RequiredLength = 3;
+                 options.Password.RequiredLength = 6;
                  options.Password.RequireLowercase = false;
                  options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequireUppercase = false;
@@ -77,7 +77,6 @@ namespace UpYourChannel.Web
             Configuration.GetConnectionString("API_SECRET")));
 
             services.AddTransient<IVideoService, VideoService>();
-            services.AddTransient<ITagService, TagService>();
             services.AddTransient<IRequestedVideoService, RequestedVideoService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IVoteService, VoteService>();
