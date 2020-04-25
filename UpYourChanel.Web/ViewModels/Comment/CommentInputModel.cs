@@ -13,6 +13,6 @@ namespace UpYourChannel.Web.ViewModels.Comment
 
         public string Content { get; set; }
 
-        public string UserId { get; set; }
+       // public string UserId { get; set; }
     }
 }

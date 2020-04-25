@@ -57,7 +57,7 @@ namespace UpYourChannel.Web.Services
             }
             else if (sortBy == "Popular")
             {
-                posts = posts.OrderByDescending(x => x.Votes.Sum(x => (int)x.VoteType));
+                posts = posts.OrderByDescending(x => x.Votes.Sum(x => (int)x.VoteType)).ThenByDescending(x => x.Comments.Count());
             }
             return posts;
         }
@@ -70,10 +70,10 @@ namespace UpYourChannel.Web.Services
         => category != null ? await db.Posts.Where(x => x.Category == (CategoryType)category).CountAsync() 
             : await db.Posts.CountAsync();
 
-        public async Task<bool> EditPostAsync(int postId, string newContent, string newTitle, string userId)
+        public async Task<bool> EditPostAsync(int postId, string newContent, string newTitle, string userId, bool isAdmin)
         {
             var post = await db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
-            if (post.UserId != userId)
+            if (post.UserId != userId && isAdmin == false)
             {
                 return false;
             }
@@ -83,11 +83,11 @@ namespace UpYourChannel.Web.Services
             return true;
         }
 
-        public async Task<bool> DeletePostAsync(int postId, string userId)
+        public async Task<bool> DeletePostAsync(int postId, string userId, bool isAdmin)
         {
             var commentService = new CommentService(db);
             var postToRemove = await db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
-            if (postToRemove.UserId != userId)
+            if (postToRemove.UserId != userId && isAdmin == false)
             {
                 return false;
             }

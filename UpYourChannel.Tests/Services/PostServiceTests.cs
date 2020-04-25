@@ -56,7 +56,7 @@ namespace UpYourChannel.Tests.Services
             var postService = new PostService(dbContext);
 
             await postService.CreatePostAsync("Tweets", "Hello i am tweet", "u1",1);
-            await postService.EditPostAsync(1,"Hello i am new content","Hello i am new title","u1");
+            await postService.EditPostAsync(1,"Hello i am new content","Hello i am new title","u1", false);
 
             var post = await dbContext.Posts.FirstAsync();
 
@@ -119,8 +119,8 @@ namespace UpYourChannel.Tests.Services
             await postService.CreatePostAsync("newPost1", "Hello i am tweet", "u1", 1);
             await postService.CreatePostAsync("newPost2", "Hello i am tweet2", "u2", 1);
             await voteService.VoteAsync("u1", 1, true);
-            await postService.EditPostAsync(1, "Hello i am new tweet2 new","new title", "u1");
-            await postService.DeletePostAsync(1, "u1");
+            await postService.EditPostAsync(1, "Hello i am new tweet2 new","new title", "u1", false);
+            await postService.DeletePostAsync(1, "u1", false);
 
             var postsCount = await dbContext.Posts.CountAsync();
             var post = await dbContext.Posts.FirstOrDefaultAsync();
@@ -145,8 +145,8 @@ namespace UpYourChannel.Tests.Services
             await postService.CreatePostAsync("newPost1", "Hello i am tweet", "u1", 1);
             await postService.CreatePostAsync("newPost2", "Hello i am tweet2", "u2", 1);
             await postService.CreatePostAsync("newPost3", "Hello i am tweet3", "u3", 2);
-            await postService.EditPostAsync(1, "Hello i am new tweet2 new", "new title", "u1");
-            await postService.DeletePostAsync(1, "u1");
+            await postService.EditPostAsync(1, "Hello i am new tweet2 new", "new title", "u1", false);
+            await postService.DeletePostAsync(1, "u1", false);
 
             var postsCount = await dbContext.Posts.CountAsync();
             var post = await postService.ReturnPostInputModelByIdAsync(2);

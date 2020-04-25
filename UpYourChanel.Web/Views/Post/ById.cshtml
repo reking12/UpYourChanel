@@ -2,7 +2,6 @@
 @{
     this.ViewData["Title"] = Model.Post.Title;
 
-    this.ViewData["Title"] = Model.Post.Title;
     async Task DisplayComments(int? parentId)
     {
         var comments = this.Model.Post.Comments.Where(x => x.ParentId == parentId);

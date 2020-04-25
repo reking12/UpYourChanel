@@ -22,24 +22,26 @@
     <br />
     @foreach (var post in Model)
     {
-    <div class="media-body">
-        <h4 class="media-heading"><a asp-controller="Post" asp-action="ById" asp-route-id="@post.Id">@post.Title</a></h4>
-        <p>@Html.Raw(post.SanitizedContentWith150Symbols) ...</p>
-        <ul class="list-inline list-unstyled text-left">
-            <li class="list-inline-item">
-                <i class="fas fa-user-edit"></i> @post.UserUserName
-            </li>
-            <li class="list-inline-item">
-                <i class="far fa-calendar"></i> @post.CreatedOn
-            </li>
-            <li class="list-inline-item">
-                <i class="fas fa-comments"></i> @post.CommentsCount
-            </li>
-            <li class="list-inline-item">
-                <i class="fas fa-thumbs-up"></i> @post.VotesCount
-            </li>
-            @if (post.IsThisUser == true || User.IsInRole("Admin"))
-                {
+<div class="media-body">
+    <h4 class="media-heading"><a asp-controller="Post" asp-action="ById" asp-route-id="@post.Id">@post.Title</a></h4>
+    <p>
+        @Html.Raw(post.SanitizedContentWith150Symbols + "...")
+    </p>
+    <ul class="list-inline list-unstyled text-left">
+        <li class="list-inline-item">
+            <i class="fas fa-user-edit"></i> @post.UserUserName
+        </li>
+        <li class="list-inline-item">
+            <i class="far fa-calendar"></i> @post.CreatedOn
+        </li>
+        <li class="list-inline-item">
+            <i class="fas fa-comments"></i> @post.CommentsCount
+        </li>
+        <li class="list-inline-item">
+            <i class="fas fa-thumbs-up"></i> @post.VotesCount
+        </li>
+        @if (post.IsThisUser == true || User.IsInRole("Admin"))
+        {
             <li class="list-inline-item">
                 <a asp-controller="Post" asp-action="EditPost" asp-route-postId="@post.Id">
                     Edit
@@ -48,9 +50,9 @@
             <li class="list-inline-item">
                 <a class="text-danger" asp-controller="Post" asp-action="DeletePost" asp-route-postId="@post.Id">Delete</a>
             </li>
-                }
-        </ul>
-    </div>
+        }
+    </ul>
+</div>
     }
 </div>
 <br />
@@ -67,11 +69,11 @@
     </a>
     @for (int i = 1; i <= Model.TotalPages; i++)
     {
-    <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=@Model.Category
-       asp-route-pageNumber="@(i)" asp-route-sortBy=@Model.SortBy
-       class="btn btn-default">
-        @i
-    </a>
+        <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=@Model.Category
+           asp-route-pageNumber="@(i)" asp-route-sortBy=@Model.SortBy
+           class="btn btn-default">
+            @i
+        </a>
     }
     <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=@Model.Category
        asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-sortBy=@Model.SortBy

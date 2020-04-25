@@ -72,5 +72,10 @@ namespace UpYourChannel.Web.Services
             await db.SaveChangesAsync();
             return true;
         }
+
+        public Task<Comment> GetCommentByIdAsync(int? id)
+        {
+            return db.Comments.FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

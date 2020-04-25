@@ -26,23 +26,24 @@
     <div>@message.Content</div>
     <br />
 }
-<div class="text-center">
-    <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-       asp-route-pageNumber="" asp-route-sortBy=""
-       class="btn btn-default page-item">
-        Previous
-    </a>
-    @for (int i = 1; i <= 3; i++)
-    {
+@*
+    <div class="text-center">
         <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-           asp-route-pageNumber="@(i)" asp-route-sortBy=""
-           class="btn btn-default">
-            @i
+           asp-route-pageNumber="" asp-route-sortBy=""
+           class="btn btn-default page-item">
+            Previous
         </a>
-    }
-    <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-       asp-route-pageNumber="" asp-route-sortBy=""
-       class="btn btn-default">
-        Next
-    </a>
-</div>
+        @for (int i = 1; i <= 3; i++)
+        {
+            <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
+               asp-route-pageNumber="@(i)" asp-route-sortBy=""
+               class="btn btn-default">
+                @i
+            </a>
+        }
+        <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
+           asp-route-pageNumber="" asp-route-sortBy=""
+           class="btn btn-default">
+            Next
+        </a>
+    </div>*@

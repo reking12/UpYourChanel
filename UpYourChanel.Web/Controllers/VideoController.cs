@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace UpYourChannel.Web.Controllers
             this.videoService = videoService;
         }
 
+        [Authorize]
         public IActionResult AddVideo()
         {
             return this.View();

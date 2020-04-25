@@ -28,11 +28,11 @@
 @if ((string)TempData["SuccessOnAddVideo"] == "Thanks for adding your video.")
 {
     <div class="container">
-            <div class="text-center alert alert-success alert-dismissible fade show">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>@TempData["SuccessOnAddVideo"] We will see it under 1 hour.</strong>
-            </div>
+        <div class="text-center alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>@TempData["SuccessOnAddVideo"] We will see it under 1 hour.</strong>
         </div>
+    </div>
     @*<script>alert("@TempData["SuccessOnAddVideo"]");</script>*@
 }
 <div class="container text-center">
@@ -46,44 +46,6 @@
             <input name="search" class="form-control" type="text" placeholder="Search"
                    aria-label="Search">
         </form>
-        <div class="col-sm-4 text-center">
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sort by:
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Date</a>
-                </div>
-            </div>
-            <div class="btn-group">
-                <a class="btn btn-primary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Category:
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a asp- class="dropdown-item" href="#">FilmAndAnimation</a>
-                    <a class="dropdown-item" data->Music</a>
-                    <a class="dropdown-item" href="#">Sport</a>
-                    <a class="dropdown-item" href="#">CarsAndVehicles</a>
-                    <a class="dropdown-item" href="#">PetsAndAnimals</a>
-                    <a class="dropdown-item" href="#">TravelAndEvents</a>
-                    <a class="dropdown-item" href="#">Gaming</a>
-                    <a class="dropdown-item" href="#">PeopleAndBlogs</a>
-                    <a class="dropdown-item" href="#">Comedy</a>
-                    <a class="dropdown-item" href="#">Entertainment</a>
-                    <a class="dropdown-item" href="#">NewsAndPolitics</a>
-                    <a class="dropdown-item" href="#">HowToAndStyle</a>
-                    <a class="dropdown-item" href="#">Education</a>
-                    <a class="dropdown-item" href="#">ScienceAndTechnology</a>
-                </div>
-            </div>
-            @*izpolzvaiki enumeraciqta   <div class="btn-group">
-                    <select class="btn btn-danger dropdown-toggle form-control" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
-                            asp-for="Category" asp-items="@Html.GetEnumSelectList<Category>()">
-                        <option value="1">sdfsdfsdf</option>
-                    </select>
-                </div>*@
-
-        </div>
     </div>
 </div>
 <br />

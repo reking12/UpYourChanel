@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Models;
@@ -18,11 +19,13 @@ namespace UpYourChannel.Web.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize]
         public IActionResult AddRequestedVideo()
         {
             return this.View("~/Views/Video/AddVideo.cshtml");
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddRequestedVideo(VideoInputModel input)
         {

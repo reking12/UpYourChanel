@@ -8,5 +8,7 @@ namespace UpYourChannel.Web.ViewModels.Userr
     public class UserViewModel
     {
         public string ProfilePictureUrl { get; set; }
+
+        public int NotificationsCount { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Models;
+using UpYourChannel.Web.ViewModels.Userr;
 
 namespace UpYourChannel.Web.ViewComponents
 {
@@ -18,8 +19,12 @@ namespace UpYourChannel.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = await userManager.Users.Include(x => x.Messages).SingleOrDefaultAsync(x => x.Id == userManager.GetUserId(HttpContext.User));
-            var messagesCount = user.Messages.Where(x => x.IsNew == true).Count();
-            return View(messagesCount);
+            var userViewModel = new UserViewModel
+            {
+                ProfilePictureUrl = user.ProfilePictureUrl,
+                NotificationsCount = user.Messages.Where(x => x.IsNew == true).Count()
+            };
+            return View(userViewModel);
         }
     }
 }

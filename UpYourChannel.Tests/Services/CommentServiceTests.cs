@@ -45,7 +45,7 @@ namespace UpYourChannel.Tests.Services
             await commentService.EditCommentAsync(2, "Hell i am new tweet","u2");
 
             var comentsCount = await dbContext.Comments.CountAsync();
-            var comment = await dbContext.Comments.LastOrDefaultAsync();
+            var comment = await commentService.GetCommentByIdAsync(2);
 
             Assert.Equal(2, comment.Id);
             Assert.Equal("u2", comment.UserId);

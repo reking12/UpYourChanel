@@ -19,6 +19,8 @@ using AutoMapper;
 using UpYourChannel.Web.MappingConfiguration;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace UpYourChannel.Web
 {
@@ -47,11 +49,12 @@ namespace UpYourChannel.Web
                  options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequireUppercase = false;
                  options.Password.RequiredUniqueChars = 0;
+                 options.User.RequireUniqueEmail = true;
              }
            ).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddMvc();
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -68,7 +71,7 @@ namespace UpYourChannel.Web
             });
             services.AddAutoMapper(c =>
                 c.AddProfile<UpYourChannelProfile>(), typeof(Startup));
-
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Identity/Account/Login");
 
             services.AddTransient<ICloudinaryService>(
             serviceProvider => new CloudinaryService(

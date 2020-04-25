@@ -29,7 +29,7 @@ namespace UpYourChannel.Web.Areas.Identity.Controllers
         public async Task<IActionResult> AddPhoto(IFormFile file)
         {
             // think a little how can make this method better
-            if (file == null)
+            if (file.FileName == null)
             {
                 return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
             }

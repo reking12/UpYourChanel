@@ -15,23 +15,27 @@ using System;
 using UpYourChannel.Data.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 
 namespace UpYourChannel.Web.Controllers
 {
+
     public class PostController : Controller
     {
         private readonly IMapper mapper;
         private readonly IPostService postService;
         private readonly IVoteService voteService;
         private readonly ICommentService commentService;
+        private readonly IMessageService messageService;
         private readonly UserManager<User> userManager;
 
-        public PostController(IMapper mapper, IPostService postService, IVoteService voteService, ICommentService commentService, UserManager<User> userManager)
+        public PostController(IMapper mapper, IPostService postService, IVoteService voteService, ICommentService commentService,IMessageService messageService, UserManager<User> userManager)
         {
             this.mapper = mapper;
             this.postService = postService;
             this.voteService = voteService;
             this.commentService = commentService;
+            this.messageService = messageService;
             this.userManager = userManager;
         }
 
@@ -74,8 +78,9 @@ namespace UpYourChannel.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPost(PostInputViewModel input, int postId)
         {
-            var userId = userManager.GetUserId(this.User);
-            if (await postService.EditPostAsync(postId, input.Content, input.Title, userId) == false)
+            var user = await userManager.GetUserAsync(this.User);
+            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
+            if (await postService.EditPostAsync(postId, input.Content, input.Title, user.Id, isAdmin) == false)
             {
                 return NotFound();
             }
@@ -85,13 +90,15 @@ namespace UpYourChannel.Web.Controllers
         [Authorize]
         public async Task<IActionResult> DeletePost(int postId)
         {
-            var userId = userManager.GetUserId(this.User);
-            if (await postService.DeletePostAsync(postId, userId) == false)
+            var user = await userManager.GetUserAsync(this.User);
+            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
+            if (await postService.DeletePostAsync(postId, user.Id, isAdmin) == false)
             {
                 return NotFound();
             }
             return Redirect("/Post/AllPosts");
         }
+
         [HttpGet]
         public IActionResult AllPosts(int? pageNumber, string category, string sortBy)
         {
@@ -137,6 +144,7 @@ namespace UpYourChannel.Web.Controllers
             return this.View(postViewModel);
         }
 
+        [Authorize]
         public IActionResult AddCommentToPost()
         {
             return this.View();
@@ -146,9 +154,10 @@ namespace UpYourChannel.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCommentToPost(PostIndexModel input, bool isAnswer)
         {
-            // maybe remove PostId from comment ViewModel UserId
-            input.Comment.UserId = userManager.GetUserId(this.User);
-            await commentService.CreateCommentAsync(input.Comment.PostId, input.Comment.UserId, input.Comment.Content, input.Comment.ParentId, isAnswer);
+            var post = await postService.ByIdAsync(input.Comment.PostId);
+            var user = await userManager.GetUserAsync(this.User);
+            await commentService.CreateCommentAsync(input.Comment.PostId, user.Id, input.Comment.Content, input.Comment.ParentId, isAnswer);
+            await messageService.AddMessageToUserAsync($"Your post was commented by {user.UserName}",post.UserId);
             return Redirect($"/Post/ById/{input.Comment.PostId}");
         }
 
