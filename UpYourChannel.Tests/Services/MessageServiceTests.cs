@@ -17,8 +17,8 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var messageService = new MessageService(dbContext);
 
-            await messageService.AddMessageToUserAsync("Message1", "u1");
-            await messageService.AddMessageToUserAsync("Message2", "u2");
+            await messageService.AddMessageToUserAsync("Message1", "u1", null);
+            await messageService.AddMessageToUserAsync("Message2", "u2", null);
 
             var messagesCount = await dbContext.Messages.CountAsync();
             var message = await dbContext.Messages.FirstAsync();
@@ -39,8 +39,8 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var messageService = new MessageService(dbContext);
 
-            await messageService.AddMessageToUserAsync("Message1", "u1");
-            await messageService.AddMessageToUserAsync("Message2", "u2");
+            await messageService.AddMessageToUserAsync("Message1", "u1", null);
+            await messageService.AddMessageToUserAsync("Message2", "u2", null);
             await messageService.MakeAllMessagesOld("u1");
 
             var messagesCount = await dbContext.Messages.CountAsync();
@@ -62,8 +62,8 @@ namespace UpYourChannel.Tests.Services
             var dbContext = new ApplicationDbContext(options);
             var messageService = new MessageService(dbContext);
 
-            await messageService.AddMessageToUserAsync("Message1", "u1");
-            await messageService.AddMessageToUserAsync("Message2", "u2");
+            await messageService.AddMessageToUserAsync("Message1", "u1", null);
+            await messageService.AddMessageToUserAsync("Message2", "u2", null);
             await messageService.MakeAllMessagesOld("u1");
             await messageService.RemoveMessageFromUserAsync(1,"u1");
 

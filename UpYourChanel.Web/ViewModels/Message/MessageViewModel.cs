@@ -14,5 +14,7 @@ namespace UpYourChannel.Web.ViewModels.Message
         public bool IsNew { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public int PostId { get; set; }
     }
 }

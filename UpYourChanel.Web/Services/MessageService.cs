@@ -15,12 +15,13 @@ namespace UpYourChannel.Web.Services
         {
             this.db = db;
         }
-        public async Task AddMessageToUserAsync(string content, string userId)
+        public async Task AddMessageToUserAsync(string content, string userId, int? postId)
         {
             var message = new Message
             {
                 Content = content,
-                UserId = userId
+                UserId = userId,
+                PostId = postId
             };
             await db.Messages.AddAsync(message);
             await db.SaveChangesAsync();

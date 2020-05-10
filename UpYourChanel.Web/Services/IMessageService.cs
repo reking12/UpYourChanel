@@ -6,7 +6,7 @@ namespace UpYourChannel.Web.Services
 {
     public interface IMessageService
     {
-        Task AddMessageToUserAsync(string content, string userId);
+        Task AddMessageToUserAsync(string content, string userId, int? postId);
 
         Task<bool> RemoveMessageFromUserAsync(int messageId, string userId);
 

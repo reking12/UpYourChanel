@@ -61,13 +61,23 @@ namespace UpYourChannel.Web.Areas.Identity.Controllers
             return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
         }
 
-        public IActionResult AllMessages(int? pageNumber)
+        public async Task<IActionResult> DeleteMessageFromAll(int messageId, int? pagenumber)
         {
             var userId = userManager.GetUserId(User);
-            var messages = mapper.Map<IEnumerable<MessageViewModel>>(messageService.AllMessagesForUser(userId).OrderByDescending(x => x.CreatedOn));
-            var pagination = PaginatedList<MessageViewModel>.Create(messages, pageNumber ?? 1, GlobalConstants.PageSize);
-           // return View("/Areas/Identity/Pages/Account/Manage/AllMessages.cshtml", pagination);
-            return RedirectToPage("/Account/Manage/AllMessages", pagination);
+            if (await messageService.RemoveMessageFromUserAsync(messageId, userId) == false)
+            {
+                return NotFound();
+            }
+            return RedirectToPage("/Account/Manage/AllMessages", new { area = "Identity", pagenumber });
         }
+
+        //public IActionResult AllMessages(int? pageNumber)
+        //{
+        //    var userId = userManager.GetUserId(User);
+        //    var messages = mapper.Map<IEnumerable<MessageViewModel>>(messageService.AllMessagesForUser(userId).OrderByDescending(x => x.CreatedOn));
+        //    var pagination = PaginatedList<MessageViewModel>.Create(messages, pageNumber ?? 1, GlobalConstants.PageSize);
+        //   // return View("/Areas/Identity/Pages/Account/Manage/AllMessages.cshtml", pagination);
+        //    return RedirectToPage("/Account/Manage/AllMessages", new { area = "Identity" });
+        //}
     }
 }

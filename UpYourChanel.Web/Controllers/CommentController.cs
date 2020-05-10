@@ -30,11 +30,11 @@ namespace UpYourChannel.Web.Controllers
             var post = await postService.ByIdAsync(input.PostId);
             var user = await userManager.GetUserAsync(this.User);
             await commentService.CreateCommentAsync(input.PostId, user.Id, input.Content, input.ParentId, isAnswer);
-            await messageService.AddMessageToUserAsync($"Your post was commented by {user.UserName}", post.UserId);
+            await messageService.AddMessageToUserAsync($"Your post was commented by {user.UserName}", post.UserId, post.Id);
             if (input.ParentId != 0)
             {
                 var comment = await commentService.GetCommentByIdAsync(input.ParentId);
-                await messageService.AddMessageToUserAsync($"Your comment was commented by {user.UserName}", comment.UserId);
+                await messageService.AddMessageToUserAsync($"Your comment was commented by {user.UserName}", comment.UserId, post.Id);
             }
             return Redirect($"/Post/ById/{input.PostId}");
         }

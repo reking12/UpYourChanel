@@ -42,6 +42,10 @@
                    asp-route-messageId="@message.Id">Delete</a>
             }
             <div class="text-muted small">@message.CreatedOn.ToString()</div>
+            if (message.PostId != 0)
+            {
+                <strong><a class="text-success" asp-area="" asp-controller="Post" asp-action="ById" asp-route-id="@message.PostId">GO TO POST</a></strong>
+            }
             <div>@message.Content</div>
             <br />
         }

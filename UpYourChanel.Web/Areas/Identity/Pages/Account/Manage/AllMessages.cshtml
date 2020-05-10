@@ -17,18 +17,19 @@
     if (message.IsNew)
     {
         <strong class="text-primary">UpYourChannel Service:</strong> <strong style="font-size:110%; color: red">NEW</strong>
-        <a class="text-danger float-right"
-           asp-area="Identity" asp-controller="User" asp-action="DeleteMessage"
-           asp-route-messageId="@message.Id">Delete</a>
     }
     else
     {
         <strong class="text-primary">UpYourChannel Service:</strong>
-        <a class="text-danger float-right"
-           asp-area="Identity" asp-controller="User" asp-action="DeleteMessage"
-           asp-route-messageId="@message.Id">Delete</a>
     }
+    <a class="text-danger float-right"
+       asp-area="Identity" asp-controller="User" asp-action="DeleteMessageFromAll"
+       asp-route-messageId="@message.Id" asp-route-pagenumber="@Model.PaginatedMessages.PageIndex">Delete</a>
     <div class="text-muted small">@message.CreatedOn.ToString()</div>
+    if (message.PostId != 0)
+    {
+        <strong><a class="text-success" asp-area="" asp-controller="Post" asp-action="ById" asp-route-id="@message.PostId">GO TO POST</a></strong>
+    }
     <div>@message.Content</div>
     <br />
 }
