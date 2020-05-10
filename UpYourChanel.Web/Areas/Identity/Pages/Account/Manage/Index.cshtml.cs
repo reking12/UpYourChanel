@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using UpYourChannel.Data.Models;
+using UpYourChannel.Web.Paging;
 using UpYourChannel.Web.Services;
 using UpYourChannel.Web.ViewModels.Message;
 
@@ -35,6 +36,8 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
 
         public IEnumerable<MessageViewModel> Messages { get; set; }
 
+        public PaginatedList<MessageViewModel> PaginatedMessages { get; set; }
+
         public string ProfilePictureUrl { get; set; }
 
         public string Username { get; set; }
@@ -52,7 +55,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(User user)
+        private async Task LoadAsync(User user, int? pageNumber)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -60,6 +63,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
             Username = userName;
             ProfilePictureUrl = user.ProfilePictureUrl;
             Messages = mapper.Map<IEnumerable<MessageViewModel>>(user.Messages.OrderByDescending(x => x.CreatedOn));
+            PaginatedMessages = PaginatedList<MessageViewModel>.Create(Messages, pageNumber ?? 1, GlobalConstants.PageSize);
             await messageService.MakeAllMessagesOld(user.Id);
             Input = new InputModel
             {
@@ -67,7 +71,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
             };
         }
         
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? pageNumber)
         {
             var user = await _userManager.Users.Include(x => x.Messages).SingleOrDefaultAsync(x=> x.Id == _userManager.GetUserId(User));
             if (user == null)
@@ -75,11 +79,11 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            await LoadAsync(user);
+            await LoadAsync(user, pageNumber);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? pageNumber)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -89,7 +93,7 @@ namespace UpYourChannel.Web.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
+                await LoadAsync(user, pageNumber);
                 return Page();
             }
 

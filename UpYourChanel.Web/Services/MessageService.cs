@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UpYourChannel.Data.Data;
@@ -23,6 +24,11 @@ namespace UpYourChannel.Web.Services
             };
             await db.Messages.AddAsync(message);
             await db.SaveChangesAsync();
+        }
+
+        public IEnumerable<Message> AllMessagesForUser(string userId)
+        {
+            return db.Messages.Where(x => x.UserId == userId);
         }
 
         public async Task MakeAllMessagesOld(string userId)

@@ -1,12 +1,18 @@
 ﻿@page
+@using UpYourChannel.Web.Paging;
+@using UpYourChannel.Web.ViewModels.Message;
+@using UpYourChannel.Data.Models;
 @model IndexModel
 @{
+    //Layout = "/Areas/Identity/Pages/Account/Manage/_Layout.cshtml";
     ViewData["Title"] = "All Messages:";
     ViewData["ActivePage"] = ManageNavPages.AllMessages;
 }
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+@*<partial name="_StatusMessage" model="Your profile has been updated" />*@
 <h4>@ViewData["Title"]</h4>
-@foreach (var message in Model.Messages)
+@foreach (var message in Model.PaginatedMessages)
 {
     if (message.IsNew)
     {
@@ -26,24 +32,27 @@
     <div>@message.Content</div>
     <br />
 }
-@*
-    <div class="text-center">
-        <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-           asp-route-pageNumber="" asp-route-sortBy=""
-           class="btn btn-default page-item">
-            Previous
-        </a>
-        @for (int i = 1; i <= 3; i++)
-        {
-            <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-               asp-route-pageNumber="@(i)" asp-route-sortBy=""
-               class="btn btn-default">
-                @i
-            </a>
-        }
-        <a asp-area="" asp-controller="Post" asp-action="AllPosts" asp-route-category=""
-           asp-route-pageNumber="" asp-route-sortBy=""
+@{
+    var prevDisabled = !Model.PaginatedMessages.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.PaginatedMessages.HasNextPage ? "disabled" : "";
+}
+<div class="text-center">
+    <a asp-area="Identity" asp-controller="User" asp-action="AllMessages"
+       asp-route-pageNumber="@(Model.PaginatedMessages.PageIndex - 1)"
+       class="btn btn-default page-item @prevDisabled">
+        Previous
+    </a>
+    @for (int i = 1; i <= Model.PaginatedMessages.TotalPages; i++)
+    {
+        <a asp-page="./AllMessages"
+           asp-route-pageNumber="@(i)"
            class="btn btn-default">
-            Next
+            @i
         </a>
-    </div>*@
+    }
+    <a asp-page="./AllMessages"
+       asp-route-pageNumber="@(Model.PaginatedMessages.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+</div>

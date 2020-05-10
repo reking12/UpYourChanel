@@ -11,5 +11,7 @@ namespace UpYourChannel.Web.Services
         Task<bool> RemoveMessageFromUserAsync(int messageId, string userId);
 
         Task MakeAllMessagesOld(string userId);
+
+        public IEnumerable<Message> AllMessagesForUser(string userId);
     }
 }

@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Http;
+using UpYourChannel.Web.Hubs;
 
 namespace UpYourChannel.Web
 {
@@ -49,12 +50,13 @@ namespace UpYourChannel.Web
                  options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequireUppercase = false;
                  options.Password.RequiredUniqueChars = 0;
-                 options.User.RequireUniqueEmail = true;
+                // options.User.RequireUniqueEmail = true;
              }
            ).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddSignalR();
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -136,6 +138,8 @@ namespace UpYourChannel.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<NotificationHub>("/notification");
 
                 endpoints.MapRazorPages();
             });
